@@ -234,16 +234,23 @@ async function calculateResults() {
         resultsContainer.style.animation = 'fadeIn 0.3s ease';
         
         try {
+            // Debug: Log what we're sending
+            console.log('Sending answers to API:', answers);
+            
             // Send answers to API
             const response = await fetch('/.netlify/functions/api-calculate', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ answers: answers })
+                body: JSON.stringify(answers)
             });
             
             const data = await response.json();
+            
+            // Debug: Log what we received
+            console.log('Received from API:', data);
+            console.log('User compass position:', data.user_compass);
             
             if (data.error) {
                 throw new Error(data.error);
@@ -649,8 +656,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (checkbox) {
         checkbox.addEventListener('change', () => {
             const question = questions[currentQuestion];
-            if (answers[question.id] && answers[question.id].position > 0) {
-                answers[question.id].importance = checkbox.checked ? 2 : 1;
+            if (answers[question.id] && answers[question.id].value !== null) {
+                answers[question.id].important = checkbox.checked;
                 
                 // Visual feedback handled by CSS hover states
             }
