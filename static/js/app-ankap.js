@@ -388,7 +388,7 @@ function shareResults() {
         })
         .join('\n');
     
-    const text = `Moje výsledky z Volební kalkulačky 2025:\n\n${resultsText}\n\nVyzkoušejte si ji také na kalkulacka.kdobystavelsilnice.cz`;
+    const text = `Moje výsledky z Volební kalkulačky 2025:\n\n${resultsText}\n\nVyzkoušejte si ji také na volby.kdobystavelsilnice.cz`;
     
     if (navigator.clipboard) {
         navigator.clipboard.writeText(text).then(() => {
