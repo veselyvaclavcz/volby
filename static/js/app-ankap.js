@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 // Load questions from API
 async function loadQuestions() {
     try {
-        const response = await fetch('/api/questions');
+        const response = await fetch('/.netlify/functions/api-questions');
         questions = await response.json();
     } catch (error) {
         console.error('Error loading questions:', error);
@@ -36,7 +36,7 @@ async function loadQuestions() {
 // Load parties from API
 async function loadParties() {
     try {
-        const response = await fetch('/api/parties');
+        const response = await fetch('/.netlify/functions/api-parties');
         parties = await response.json();
     } catch (error) {
         console.error('Error loading parties:', error);
@@ -235,7 +235,7 @@ async function calculateResults() {
         
         try {
             // Send answers to API
-            const response = await fetch('/api/calculate', {
+            const response = await fetch('/.netlify/functions/api-calculate', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

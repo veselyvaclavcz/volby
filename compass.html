@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Politický kompas 2025 | Volební kalkulačka</title>
+    <meta name="description" content="3D politický kompas českých stran pro volby 2025">
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/static/css/style-ankap.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Matching main page color scheme */
+            --color-primary: #FFD93D;
+            --color-secondary: #FFF200;
+            --color-bg-dark: #0A0A0A;
+            --color-bg-darker: #000000;
+            --color-text: #FFFFFF;
+            --color-text-muted: #CCCCCC;
+            --color-text-dark: #999999;
+            --border: #333;
+            
+            /* Aliases for compatibility */
+            --bg-primary: var(--color-bg-dark);
+            --bg-secondary: var(--color-bg-darker);
+            --text-primary: var(--color-text);
+            --text-secondary: var(--color-text-muted);
+            --accent: var(--color-primary);
+        }
+        
+        /* Light theme variables */
+        .theme-light {
+            --color-primary: #E6B800;
+            --color-secondary: #D4AF00;
+            --color-bg-dark: #FFFFFF;
+            --color-bg-darker: #F5F5F5;
+            --color-text: #1A1A1A;
+            --color-text-muted: #4A4A4A;
+            --color-text-dark: #666666;
+            
+            /* Update aliases */
+            --bg-primary: var(--color-bg-dark);
+            --bg-secondary: var(--color-bg-darker);
+            --text-primary: var(--color-text);
+            --text-secondary: var(--color-text-muted);
+            --accent: var(--color-primary);
+        }
+        
+        body {
+            background: var(--color-bg-dark);
+            color: var(--color-text);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        .theme-light body {
+            background: var(--color-bg-dark);
+            color: var(--color-text);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Header */
+        .header-sticky {
+            position: sticky;
+            top: 0;
+            background: rgba(15, 15, 15, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .logo h1 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+            color: var(--color-primary);
+        }
+        
+        .nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+        
+        /* Theme Toggle - matching main page */
+        .theme-toggle {
+            width: 44px;
+            height: 44px;
+            border: 2px solid var(--text-secondary);
+            border-radius: 50%;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            margin-left: 1rem;
+        }
+        
+        .theme-toggle:hover {
+            border-color: var(--accent);
+        }
+        
+        .theme-toggle-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        /* Dark theme - white circle */
+        .theme-dark .theme-toggle-icon {
+            background: #FFFFFF;
+        }
+        
+        /* Light theme - black circle */
+        .theme-light .theme-toggle-icon {
+            background: #000000;
+        }
+        
+        /* Mobile Menu Button */
+        .mobile-menu-button {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+        
+        .mobile-menu-button span {
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .nav {
+                display: none;
+            }
+            
+            .mobile-menu-button {
+                display: flex;
+            }
+        }
+        
+        /* Compass Section */
+        .compass-hero {
+            padding: 2rem 0 4rem;
+            background: var(--color-bg-dark);
+            min-height: 100vh;
+        }
+        
+        .compass-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .compass-header h2 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+            color: var(--color-text);
+        }
+        
+        .compass-header p {
+            font-size: 1rem;
+            color: var(--color-text-muted);
+            margin-bottom: 0;
+        }
+        
+        .compass-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .compass-container {
+            background: var(--color-bg-darker);
+            border: 1px solid rgba(255, 217, 61, 0.2);
+            border-radius: 8px;
+            padding: 2rem;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .compass-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            text-align: center;
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+        
+        .compass-wrapper {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            margin: 0 auto;
+            background: var(--color-bg-dark);
+            border-radius: 8px;
+            overflow: visible;
+            flex: 1;
+        }
+        
+        .compass {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            right: 40px;
+            bottom: 40px;
+        }
+        
+        .axis {
+            position: absolute;
+            background: rgba(255, 217, 61, 0.4);
+        }
+        
+        .axis.horizontal {
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                rgba(255, 217, 61, 0.1) 0%, 
+                rgba(255, 217, 61, 0.6) 50%, 
+                rgba(255, 217, 61, 0.1) 100%);
+        }
+        
+        .axis.vertical {
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, 
+                rgba(255, 217, 61, 0.1) 0%, 
+                rgba(255, 217, 61, 0.6) 50%, 
+                rgba(255, 217, 61, 0.1) 100%);
+        }
+        
+        .axis-label {
+            position: absolute;
+            font-size: 0.9rem;
+            color: var(--color-text);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--color-bg-darker);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 217, 61, 0.3);
+        }
+        
+        .axis-label-top { 
+            top: 5px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+        }
+        
+        .axis-label-bottom { 
+            bottom: 5px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+        }
+        
+        .axis-label-left { 
+            left: 5px; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            flex-direction: column;
+            writing-mode: horizontal-tb;
+        }
+        
+        .axis-label-right { 
+            right: 5px; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            flex-direction: column;
+            writing-mode: horizontal-tb;
+        }
+        
+        .axis-icon {
+            font-size: 1.1rem;
+        }
+        
+        /* Party dots */
+        .party {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid rgba(255, 217, 61, 0.4);
+            box-shadow: 
+                0 3px 6px rgba(0,0,0,0.8),
+                0 0 0 0 currentColor;
+            z-index: 10;
+        }
+        
+        .party:hover,
+        .party.highlight {
+            transform: translate(-50%, -50%) scale(1.5);
+            z-index: 100;
+            border-color: var(--color-primary);
+            box-shadow: 
+                0 8px 24px rgba(0,0,0,0.9),
+                0 0 0 3px rgba(255, 217, 61, 0.3),
+                0 0 20px currentColor;
+        }
+        
+        .party-label {
+            position: absolute;
+            top: -45px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--color-bg-darker);
+            color: var(--color-text);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            border: 1px solid rgba(255, 217, 61, 0.4);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9);
+        }
+        
+        .party:hover .party-label,
+        .party.highlight .party-label {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-4px);
+        }
+        
+        /* Party colors */
+        .party.ano { background: #261060; }
+        .party.spolu { background: #004494; }
+        .party.stan { background: #5d5cae; }
+        .party.stacilo { background: #f44336; }
+        .party.pirati { background: #000000; }
+        .party.spd { background: #ea3838; }
+        .party.prisaha { background: #0033a0; }
+        .party.motoriste { background: #1f3a93; }
+        .party.socdem { background: #ff6600; }
+        .party.trikolora { background: #004bff; }
+        .party.svobodni { background: #009682; }
+        .party.zeleni { background: #00a651; }
+        .party.pro { background: #4caf50; }
+        .party.volt { background: #502379; }
+        .party.levice { background: #d50000; }
+        .party.koruna { background: #c9302c; }
+        .party.pravy_blok { background: #1976d2; }
+        .party.urza { background: #616161; }
+        .party.rovne_sance { background: #ff4500; }
+        .party.nekorupce { background: #4169e1; }
+        .party.budoucnost { background: #32cd32; }
+        .party.europa { background: #1e90ff; }
+        .party.csi { background: #dc143c; }
+        .party.prameny { background: #8b4513; }
+        .party.ne_eu { background: #8b0000; }
+        .party.konzervativni { background: #191970; }
+        .party.ceska_pravice { background: #000080; }
+        .party.jasan { background: #daa520; }
+        .party.tpk { background: #b22222; }
+        .party.voluntia { background: #ffeb3b; color: #333; }
+        .party.sms { background: #ff5722; }
+        .party.normalni { background: #4682B4; }
+        .party.kdu-csl { background: #FFD700; }
+        .party.ods { background: #0056A7; }
+        .party.top09 { background: #7C3590; }
+        .party.kscm { background: #8b0000; }
+        .party.cssd { background: #ff4500; }
+        .party.mzh { background: #8B4513; }
+        .party.kruh { background: #2E8B57; }
+        .party.generace { background: #4B0082; }
+        .party.rebelove { background: #FF4500; }
+        .party.vyzva2025 { background: #20B2AA; }
+        .party.gen2025 { background: #9370DB; }
+        .party.pravy-blok { background: #000080; }
+        
+        /* Legend */
+        .legend-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--color-bg-darker);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 217, 61, 0.2);
+        }
+        
+        .legend-title {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+        
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem 2rem;
+            align-items: start;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 0.5rem 0.3rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 4px;
+            min-height: 36px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .legend-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .legend-item:hover span {
+            color: var(--color-primary);
+        }
+        
+        .legend-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: static !important;
+            transform: none !important;
+        }
+        
+        .legend-item:hover .legend-dot {
+            transform: scale(1.3);
+            box-shadow: 
+                0 3px 6px rgba(0,0,0,0.7),
+                0 0 8px currentColor;
+        }
+        
+        .legend-item span {
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: var(--color-text);
+            line-height: 1.3;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            flex: 1;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .compass-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                max-width: 700px;
+            }
+            
+            .compass-wrapper {
+                height: 500px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .compass-container {
+                padding: 1rem;
+                min-height: 450px;
+            }
+            
+            .compass-wrapper {
+                height: 400px;
+            }
+            
+            .compass-header h2 {
+                font-size: 1.8rem;
+            }
+            
+            .legend-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 0.5rem 1.5rem;
+            }
+            
+            .legend-item {
+                padding: 0.4rem;
+                min-height: 32px;
+            }
+            
+            .legend-item span {
+                font-size: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .legend-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 0.4rem 1rem;
+            }
+            
+            .legend-item {
+                padding: 0.5rem;
+            }
+        }
+        
+        /* Center point */
+        .compass-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 6px;
+            height: 6px;
+            background: var(--color-primary);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+            opacity: 0.6;
+        }
+        
+        /* User position marker */
+        .user-position {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: var(--color-primary);
+            border: 3px solid #000;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 50;
+            box-shadow: 
+                0 0 0 2px var(--color-primary),
+                0 4px 12px rgba(0,0,0,0.8),
+                0 0 20px rgba(255, 217, 61, 0.8);
+            animation: pulse-user 2s ease-in-out infinite;
+        }
+        
+        .user-position::before {
+            content: 'TY';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10px;
+            font-weight: bold;
+            color: #000;
+        }
+        
+        @keyframes pulse-user {
+            0%, 100% { 
+                box-shadow: 
+                    0 0 0 2px var(--color-primary),
+                    0 4px 12px rgba(0,0,0,0.8),
+                    0 0 20px rgba(255, 217, 61, 0.8);
+            }
+            50% { 
+                box-shadow: 
+                    0 0 0 4px var(--color-primary),
+                    0 4px 16px rgba(0,0,0,0.9),
+                    0 0 30px rgba(255, 217, 61, 1.0);
+            }
+        }
+        
+        
+        /* Footer */
+        .footer {
+            padding: 3rem 0 2rem;
+            border-top: 1px solid var(--border);
+            margin-top: 5rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            gap: 3rem;
+        }
+        
+        .footer-main h4 {
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-content {
+            color: var(--color-text-muted);
+        }
+    </style>
+</head>
+<body class="theme-dark">
+    <!-- Header -->
+    <header class="header-sticky">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>A kdo by stavěl silnice?</h1>
+                </div>
+                <nav class="nav">
+                    <a href="/" class="nav-link">Kalkulačka</a>
+                    <a href="/compass" class="nav-link">Politický kompas</a>
+                    <a href="/#jak-to-funguje" class="nav-link">Jak to funguje</a>
+                    <a href="/#metodologie" class="nav-link">Metodologie</a>
+                    <a href="/#faq" class="nav-link">FAQ</a>
+                    <a href="https://kdobystavelsilnice.cz" class="nav-link" target="_blank">Blog</a>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Přepnout téma">
+                        <span class="theme-toggle-icon"></span>
+                    </button>
+                </nav>
+                <button class="mobile-menu-button" aria-label="Menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Compass Section -->
+    <section class="compass-hero">
+        <div class="container">
+            <div class="compass-header">
+                <h2>3D Politický kompas českých stran</h2>
+                <p>Vizualizace pozic českých stran na třech politických osách</p>
+            </div>
+            
+            <div class="compass-grid">
+                <!-- Main compass: Economic vs Social -->
+                <div class="compass-container">
+                    <h3 class="compass-title">Ekonomická × Sociální</h3>
+                    <div class="compass-wrapper">
+                        <div class="compass" id="compass-main">
+                            <div class="axis horizontal"></div>
+                            <div class="axis vertical"></div>
+                        </div>
+                        <div class="axis-label axis-label-top">
+                            <span class="axis-icon">🏳️‍🌈</span>
+                            <span>Progres</span>
+                        </div>
+                        <div class="axis-label axis-label-bottom">
+                            <span class="axis-icon">⛪</span>
+                            <span>Tradice</span>
+                        </div>
+                        <div class="axis-label axis-label-left">
+                            <span class="axis-icon">🏛️</span>
+                            <span>Stát</span>
+                        </div>
+                        <div class="axis-label axis-label-right">
+                            <span class="axis-icon">💰</span>
+                            <span>Trh</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Secondary compass: Economic vs Sovereignty -->
+                <div class="compass-container">
+                    <h3 class="compass-title">Ekonomická × Suverenitní</h3>
+                    <div class="compass-wrapper">
+                        <div class="compass" id="compass-sovereignty">
+                            <div class="axis horizontal"></div>
+                            <div class="axis vertical"></div>
+                        </div>
+                        <div class="axis-label axis-label-top">
+                            <span class="axis-icon">🇪🇺</span>
+                            <span>Evropská</span>
+                        </div>
+                        <div class="axis-label axis-label-bottom">
+                            <span class="axis-icon">🇨🇿</span>
+                            <span>Národní</span>
+                        </div>
+                        <div class="axis-label axis-label-left">
+                            <span class="axis-icon">🏛️</span>
+                            <span>Stát</span>
+                        </div>
+                        <div class="axis-label axis-label-right">
+                            <span class="axis-icon">💰</span>
+                            <span>Trh</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="legend-section">
+                <h3 class="legend-title">Politické strany</h3>
+                <div class="legend-grid" id="legend"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <h4>A kdo by stavěl silnice?</h4>
+                    <p>3D Politický kompas 2025</p>
+                </div>
+                <div class="footer-disclaimer">
+                    <p><small>
+                        Pozice stran vycházejí z analýzy volebních programů a veřejných postojů.
+                        Vizualizace je orientační a zjednodušuje komplexní politické reality.
+                    </small></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mark current page as active in navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const compassLink = document.querySelector('.nav-link[href="/compass"]');
+            if (compassLink) {
+                compassLink.classList.add('active');
+            }
+        });
+        
+        // Load party positions from API
+        fetch('/.netlify/functions/api-parties')
+            .then(response => response.json())
+            .then(data => {
+                const parties = {};
+                data.forEach(party => {
+                    parties[party.code] = {
+                        ...party.compass_position,
+                        name: party.name
+                    };
+                });
+                
+                // Place parties on compasses (3D system uses EKO, SOC, SUV)
+                placeParties('compass-main', 'EKO', 'SOC', parties);
+                placeParties('compass-sovereignty', 'EKO', 'SUV', parties);
+                
+                // Try to load and display user position from localStorage
+                loadUserPosition();
+                
+                // Create legend
+                createLegend(parties);
+                
+                // Setup hover interactions
+                setupInteractions();
+            })
+            .catch(error => {
+                console.error('Error loading party data:', error);
+            });
+        
+        function placeParties(compassId, xDimension, yDimension, parties) {
+            const compass = document.getElementById(compassId);
+            const compassRect = compass.getBoundingClientRect();
+            const compassWidth = compassRect.width;
+            const compassHeight = compassRect.height;
+            const centerX = compassWidth / 2;
+            const centerY = compassHeight / 2;
+            
+            // Improved scaling with better space utilization
+            const scaleX = (compassWidth * 0.42); // Use 84% of width for better spacing
+            const scaleY = (compassHeight * 0.42); // Use 84% of height for better spacing
+            
+            // Track positioned parties to handle overlapping
+            const positionedParties = [];
+            
+            Object.entries(parties).forEach(([code, data]) => {
+                let x = centerX + (data[xDimension] * scaleX / 2);
+                let y = centerY - (data[yDimension] * scaleY / 2); // Invert Y axis
+                
+                // Anti-collision: slightly adjust position if too close to existing parties
+                const minDistance = 20;
+                let attempts = 0;
+                let adjusted = false;
+                
+                while (attempts < 12) {
+                    const collision = positionedParties.find(pos => {
+                        const distance = Math.sqrt(Math.pow(x - pos.x, 2) + Math.pow(y - pos.y, 2));
+                        return distance < minDistance;
+                    });
+                    
+                    if (!collision) break;
+                    
+                    // Spiral outward from original position with better distribution
+                    const angle = (attempts * 30) * (Math.PI / 180);
+                    const offset = 8 + (attempts * 2);
+                    x = centerX + (data[xDimension] * scaleX / 2) + Math.cos(angle) * offset;
+                    y = centerY - (data[yDimension] * scaleY / 2) + Math.sin(angle) * offset;
+                    attempts++;
+                    adjusted = true;
+                }
+                
+                positionedParties.push({ x, y, code });
+                
+                const party = document.createElement('div');
+                const cssClass = code.toLowerCase().replace(/_/g, '-');
+                party.className = `party ${cssClass}`;
+                party.setAttribute('data-party-code', code);
+                party.style.left = `${x}px`;
+                party.style.top = `${y}px`;
+                party.style.transform = 'translate(-50%, -50%)';
+                
+                // Add slight random rotation for visual interest
+                if (adjusted) {
+                    party.style.animationDelay = `${Math.random() * 0.5}s`;
+                }
+                
+                const label = document.createElement('div');
+                label.className = 'party-label';
+                label.textContent = data.name;
+                party.appendChild(label);
+                
+                compass.appendChild(party);
+            });
+        }
+        
+        function createLegend(parties) {
+            const legend = document.getElementById('legend');
+            
+            // Sort parties alphabetically
+            const sortedParties = Object.entries(parties).sort((a, b) => 
+                a[1].name.localeCompare(b[1].name, 'cs')
+            );
+            
+            sortedParties.forEach(([code, data]) => {
+                const item = document.createElement('div');
+                item.className = 'legend-item';
+                item.setAttribute('data-party-code', code);
+                
+                const dot = document.createElement('div');
+                const cssClass = code.toLowerCase().replace(/_/g, '-');
+                dot.className = `legend-dot party ${cssClass}`;
+                
+                const name = document.createElement('span');
+                name.textContent = data.name;
+                
+                item.appendChild(dot);
+                item.appendChild(name);
+                legend.appendChild(item);
+            });
+        }
+        
+        function setupInteractions() {
+            // Hover effects for legend items
+            document.querySelectorAll('.legend-item').forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    const code = this.getAttribute('data-party-code');
+                    document.querySelectorAll(`.party[data-party-code="${code}"]`).forEach(party => {
+                        party.classList.add('highlight');
+                    });
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    const code = this.getAttribute('data-party-code');
+                    document.querySelectorAll(`.party[data-party-code="${code}"]`).forEach(party => {
+                        party.classList.remove('highlight');
+                    });
+                });
+            });
+        }
+        
+        function loadUserPosition() {
+            // Check if we have user compass data from calculator
+            const userCompass = localStorage.getItem('userCompassPosition');
+            if (userCompass) {
+                try {
+                    const position = JSON.parse(userCompass);
+                    console.log('Loading user position:', position);
+                    
+                    // Place user position on both compasses
+                    placeUserPosition('compass-main', 'EKO', 'SOC', position);
+                    placeUserPosition('compass-sovereignty', 'EKO', 'SUV', position);
+                } catch (e) {
+                    console.error('Error loading user position:', e);
+                }
+            }
+        }
+        
+        function placeUserPosition(compassId, xDimension, yDimension, position) {
+            const compass = document.getElementById(compassId);
+            const compassRect = compass.getBoundingClientRect();
+            const compassWidth = compassRect.width;
+            const compassHeight = compassRect.height;
+            const centerX = compassWidth / 2;
+            const centerY = compassHeight / 2;
+            
+            // Use same scaling as parties
+            const scaleX = (compassWidth * 0.42);
+            const scaleY = (compassHeight * 0.42);
+            
+            const x = centerX + (position[xDimension] * scaleX / 2);
+            const y = centerY - (position[yDimension] * scaleY / 2);
+            
+            // Remove existing user position
+            const existingUser = compass.querySelector('.user-position');
+            if (existingUser) {
+                existingUser.remove();
+            }
+            
+            // Create user position marker
+            const userMarker = document.createElement('div');
+            userMarker.className = 'user-position';
+            userMarker.style.left = `${x}px`;
+            userMarker.style.top = `${y}px`;
+            
+            // Add tooltip showing exact position
+            const tooltip = document.createElement('div');
+            tooltip.className = 'party-label';
+            tooltip.textContent = `Vaše pozice: EKO:${position.EKO.toFixed(2)} ${yDimension}:${position[yDimension].toFixed(2)}`;
+            tooltip.style.opacity = '0';
+            userMarker.appendChild(tooltip);
+            
+            userMarker.addEventListener('mouseenter', function() {
+                tooltip.style.opacity = '1';
+                tooltip.style.transform = 'translateX(-50%) translateY(-4px)';
+            });
+            
+            userMarker.addEventListener('mouseleave', function() {
+                tooltip.style.opacity = '0';
+                tooltip.style.transform = 'translateX(-50%)';
+            });
+            
+            compass.appendChild(userMarker);
+        }
+        
+        // Theme switching functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        
+        // Check for saved theme preference or default to 'dark'
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        body.className = `theme-${currentTheme}`;
+        
+        themeToggle?.addEventListener('click', function() {
+            const currentTheme = body.classList.contains('theme-dark') ? 'dark' : 'light';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            body.className = `theme-${newTheme}`;
+            localStorage.setItem('theme', newTheme);
+            
+            // Update CSS variables for light theme - using same system as main page
+            if (newTheme === 'light') {
+                document.documentElement.style.setProperty('--color-bg-dark', '#ffffff');
+                document.documentElement.style.setProperty('--color-bg-darker', '#f5f5f5');
+                document.documentElement.style.setProperty('--color-text', '#1a1a1a');
+                document.documentElement.style.setProperty('--color-text-muted', '#4a4a4a');
+                document.documentElement.style.setProperty('--color-primary', '#e6b800');
+            } else {
+                document.documentElement.style.setProperty('--color-bg-dark', '#0a0a0a');
+                document.documentElement.style.setProperty('--color-bg-darker', '#000000');
+                document.documentElement.style.setProperty('--color-text', '#ffffff');
+                document.documentElement.style.setProperty('--color-text-muted', '#cccccc');
+                document.documentElement.style.setProperty('--color-primary', '#ffd93d');
+            }
+        });
+        
+        // Check for user position updates from parent window (if opened from calculator)
+        window.addEventListener('message', function(event) {
+            if (event.data && event.data.type === 'userCompassPosition') {
+                console.log('Received user position from calculator:', event.data.position);
+                localStorage.setItem('userCompassPosition', JSON.stringify(event.data.position));
+                
+                // Place user position immediately
+                placeUserPosition('compass-main', 'EKO', 'SOC', event.data.position);
+                placeUserPosition('compass-sovereignty', 'EKO', 'SUV', event.data.position);
+            }
+        });
+    </script>
+</body>
+</html>

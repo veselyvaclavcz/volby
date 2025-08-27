@@ -1,0 +1,12 @@
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/"
+  to = "/index-ankap.html"
+  status = 200
+
+[[redirects]]
+  from = "/compass"
+  to = "/compass.html"
+  status = 200

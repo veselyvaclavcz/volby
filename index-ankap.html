@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volební kalkulačka 2025 | A kdo by stavěl silnice?</title>
+    <meta name="description" content="Objektivní volební kalkulačka založená na vědecké metodologii. Zjistěte, která strana vám sedí podle programu.">
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/static/css/style-ankap.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="theme-dark">
+    <!-- Sticky Header -->
+    <header class="header-sticky">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>A kdo by stavěl silnice?</h1>
+                </div>
+                <nav class="nav">
+                    <a href="#kalkulacka" class="nav-link">Kalkulačka</a>
+                    <a href="/compass" class="nav-link">Politický kompas</a>
+                    <a href="#jak-to-funguje" class="nav-link">Jak to funguje</a>
+                    <a href="#metodologie" class="nav-link">Metodologie</a>
+                    <a href="#faq" class="nav-link">FAQ</a>
+                    <a href="https://kdobystavelsilnice.cz" class="nav-link" target="_blank">Blog</a>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Přepnout téma">
+                        <span class="theme-toggle-icon"></span>
+                    </button>
+                </nav>
+                <button class="mobile-menu-button" aria-label="Menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Spočítej si, koho (ne)volit</h1>
+                <p class="hero-subtitle">Objektivní kalkulačka založená na skutečných programech stran. <br>Žádné kecy, jen data a matematika.</p>
+                <div class="hero-actions">
+                    <a href="#kalkulacka" class="btn btn-primary">Začít kalkulačku</a>
+                    <a href="#jak-to-funguje" class="btn btn-secondary">Jak to funguje</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">26</span>
+                        <span class="stat-label">oficiálních stran</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">33</span>
+                        <span class="stat-label">konkrétních otázek</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">3D</span>
+                        <span class="stat-label">politický kompas</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="jak-to-funguje" class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">Jak na to</h2>
+            <div class="steps-grid">
+                <div class="step">
+                    <div class="step-number">01</div>
+                    <h3>Odpovíš na otázky</h3>
+                    <p>33 konkrétních otázek z aktuálních témat voleb 2025. Založeno na reálných programech stran.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">02</div>
+                    <h3>Zpracujeme data</h3>
+                    <p>3D politický kompas vypočítá tvoji pozici a porovná ji s 26 oficiálními stranami.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">03</div>
+                    <h3>Dostaneš výsledky</h3>
+                    <p>Shoda v procentech. Transparentně, bez manipulace, založeno na skutečných programech.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">04</div>
+                    <h3>Rozhodneš se sám</h3>
+                    <p>Nebo nerozhodneš. Nevolit je také legitimní volba v demokracii.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">05</div>
+                    <h3>Ověř si informace</h3>
+                    <p>Výsledky jsou orientační. Prostuduj si programy stran a udělej si vlastní úsudek.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">06</div>
+                    <h3>Jdi volit (nebo ne)</h3>
+                    <p>Informované rozhodnutí je to nejlepší, co můžeš pro demokracii udělat.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section id="kalkulacka" class="calculator-section">
+        <div class="container">
+            <div class="calculator-header">
+                <h2>Volební kalkulačka</h2>
+                <p>Začni odpovídat a zjisti, které straně jsou tvoje názory nejblíž.</p>
+            </div>
+
+            <!-- Welcome Screen -->
+            <div class="section active" id="welcome">
+                <div class="welcome-content">
+                    <h3>Připraven/a začít?</h3>
+                    <p>Čeká tě 24 neutrálních otázek pokrývajících 4 politické dimenze. Otázky jsou formulovány tak, aby nebylo jasné, která odpověď je "správná".</p>
+                    <div class="welcome-info">
+                        <div class="info-item">
+                            <span class="info-icon">●</span>
+                            <span>Zabere to 5-10 minut</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">●</span>
+                            <span>Neukládáme žádné osobní údaje</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">●</span>
+                            <span>Založeno na vědecké metodologii</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-large" onclick="startCalculator()">
+                        Začít kalkulačku
+                    </button>
+                </div>
+            </div>
+
+            <!-- Calculator Screen -->
+            <div class="section" id="calculator">
+                <div id="questionContainer">
+                    <!-- Progress Bar -->
+                    <div class="progress-container" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="33">
+                        <div class="progress-info">
+                            <span id="progressText">Otázka 1 z 33</span>
+                            <span id="progressPercentage">4%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-bar-fill" id="progressBar"></div>
+                        </div>
+                    </div>
+
+                    <!-- Question Card -->
+                    <div class="question-card">
+                        <div class="question-category" id="questionCategory">Ekonomika</div>
+                        <h3 class="question-text" id="questionText">Načítání otázky...</h3>
+                        
+                        <div class="answers-grid">
+                            <button class="answer-btn" onclick="selectAnswer(1)" aria-pressed="false">
+                                <span class="answer-label">Rozhodně souhlasím</span>
+                            </button>
+                            <button class="answer-btn" onclick="selectAnswer(2)" aria-pressed="false">
+                                <span class="answer-label">Spíše souhlasím</span>
+                            </button>
+                            <button class="answer-btn" onclick="selectAnswer(3)" aria-pressed="false">
+                                <span class="answer-label">Neutrální</span>
+                            </button>
+                            <button class="answer-btn" onclick="selectAnswer(4)" aria-pressed="false">
+                                <span class="answer-label">Spíše nesouhlasím</span>
+                            </button>
+                            <button class="answer-btn" onclick="selectAnswer(5)" aria-pressed="false">
+                                <span class="answer-label">Rozhodně nesouhlasím</span>
+                            </button>
+                        </div>
+
+                        <div class="importance-section">
+                            <label class="importance-checkbox">
+                                <input type="checkbox" id="importantCheckbox">
+                                <span class="checkbox-custom"></span>
+                                <span class="checkbox-label">Tato otázka je pro mě důležitá</span>
+                            </label>
+                        </div>
+
+                        <div class="question-actions">
+                            <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled>
+                                Zpět
+                            </button>
+                            <button class="btn btn-ghost" onclick="skipQuestion()">
+                                Přeskočit
+                            </button>
+                            <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>
+                                Další
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Container -->
+                <div id="resultsContainer" style="display: none;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="video-section">
+        <div class="container">
+            <div class="video-content">
+                <h2>Nevolit je taky volba</h2>
+                <p>Někdy je nejlepší volbou nevolit vůbec. Pokud ti nevyhovuje žádná strana, nemusíš volit jen proto, že "se to má".</p>
+                <div class="video-embed">
+                    <iframe 
+                        width="100%" 
+                        height="100%" 
+                        src="https://www.youtube.com/embed/-GDzPvSWCBE" 
+                        title="Nevolit je taky volba" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="video-description">
+                    <p>Abstence od voleb není nezodpovědnost. Je to legitimní politický postoj v demokratické společnosti.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Methodology -->
+    <section id="metodologie" class="methodology">
+        <div class="container">
+            <h2 class="section-title">Metodologie</h2>
+            <div class="methodology-content">
+                <div class="method-description">
+                    <h3>3D Politický kompas</h3>
+                    <p>Naše metodologie je založená na třech klíčových dimenzích:</p>
+                    <ul>
+                        <li><strong>Ekonomická (EKO)</strong> - Státní kontrola vs. volný trh</li>
+                        <li><strong>Sociální (SOC)</strong> - Tradiční hodnoty vs. progresivní změny</li>
+                        <li><strong>Suverenitní (SUV)</strong> - Národní suverenita vs. evropská integrace</li>
+                    </ul>
+                    <p>Používáme <strong>Euklidovskou vzdálenost</strong> v 3D prostoru pro přesné určení vaší pozice a shody se stranami.</p>
+                </div>
+                <div class="methodology-references">
+                    <h4>Data a zdroje</h4>
+                    <ul>
+                        <li>Oficiální programy 26 stran pro volby 2025</li>
+                        <li>33 konkrétních otázek vycházejících z aktuálních témat</li>
+                        <li>Pozice stran určeny na základě veřejných prohlášení a programů</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2 class="section-title">Často kladené otázky</h2>
+            <div class="faq-list">
+                <details class="faq-item">
+                    <summary>Jak můžu věřit výsledkům?</summary>
+                    <div class="faq-answer">
+                        <p>Používáme 3D politický kompas, který mapuje pozice na třech osách: ekonomická (stát vs. trh), sociální (tradice vs. progres) a suverenita (národní vs. evropská). Otázky vycházejí z konkrétních témat voleb 2025. Strany jsou umístěny podle analýzy jejich oficiálních programů.</p>
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>Proč nejsou všechny strany?</summary>
+                    <div class="faq-answer">
+                        <p>Máme všech 26 oficiálně registrovaných stran pro volby 2025 podle seznamu Státní volební komise, včetně nových subjektů jako Voluntia, Výzva2025, Kruh a dalších.</p>
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>Kdo za tím stojí?</summary>
+                    <div class="faq-answer">
+                        <p>Nezávislý projekt založený na otevřených datech. Žádné stranické financování, žádné skryté agendy. Jen matematika a data.</p>
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>Ukládáte moje odpovědi?</summary>
+                    <div class="faq-answer">
+                        <p>Ne. Vše běží lokálně ve vašem prohlížeči. Žádné tracking, žádné cookies, žádné databáze.</p>
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>A co když nechci volit nikoho?</summary>
+                    <div class="faq-answer">
+                        <p>To je legitimní volba. Abstence je také politický postoj. Demokratická společnost nenutí občany volit, pokud jim nevyhovuje žádná z nabízených možností.</p>
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>Jak přesné jsou výsledky?</summary>
+                    <div class="faq-answer">
+                        <p>3D politický kompas počítá euklidovskou vzdálenost mezi vaší pozicí a pozicí každé strany v třídimenzionálním prostoru. Výsledek ukazuje, jak blízko jsou vaše hodnoty hodnotám strany. Není to předpověď, ale matematické porovnání ideologických pozic založené na 33 konkrétních otázkách.</p>
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>Co je 3D politický kompas?</summary>
+                    <div class="faq-answer">
+                        <p>Tradiční pravolevé spektrum je příliš jednoduché. Náš model používá 3 dimenze: 1) Ekonomická (stát vs. trh), 2) Sociální (tradice vs. progres), 3) Suverenita (národní vs. evropská). To umožňuje přesnější zachycení složitosti politických postojů než jednoduché levo-pravé dělení.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <h4>A kdo by stavěl silnice?</h4>
+                    <p>Volební kalkulačka 2025</p>
+                </div>
+                <div class="footer-disclaimer">
+                    <p><small>
+                        Výsledky jsou orientační a vycházejí z programových priorit stran k datu vytvoření. 
+                        Kalkulačka nenahrazuje vlastní úsudek a studium volebních programů. 
+                        Nezávislý projekt, bez stranické podpory.
+                    </small></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/js/app-ankap.js"></script>
+</body>
+</html>
