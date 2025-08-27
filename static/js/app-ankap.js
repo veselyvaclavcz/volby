@@ -135,11 +135,11 @@ function displayQuestion() {
     // Check if question was already answered
     if (answers[question.id]) {
         const answer = answers[question.id];
-        if (answer.position > 0) {
-            const selectedBtn = document.querySelectorAll('.answer-btn')[answer.position - 1];
+        if (answer.value !== null) {
+            const selectedBtn = document.querySelectorAll('.answer-btn')[answer.value - 1];
             selectedBtn.classList.add('selected');
             selectedBtn.setAttribute('aria-pressed', 'true');
-            document.getElementById('importantCheckbox').checked = answer.importance === 2;
+            document.getElementById('importantCheckbox').checked = answer.important;
             document.getElementById('nextBtn').disabled = false;
         }
     } else {
@@ -166,10 +166,10 @@ function selectAnswer(position) {
     });
     
     // Save answer
-    const importance = document.getElementById('importantCheckbox').checked ? 2 : 1;
+    const isImportant = document.getElementById('importantCheckbox').checked;
     answers[question.id] = {
-        position: position,
-        importance: importance
+        value: position,
+        important: isImportant
     };
     
     // Enable next button
@@ -181,8 +181,8 @@ function selectAnswer(position) {
 function skipQuestion() {
     const question = questions[currentQuestion];
     answers[question.id] = {
-        position: 0,
-        importance: 1
+        value: null,
+        important: false
     };
     
     // Add skip animation
