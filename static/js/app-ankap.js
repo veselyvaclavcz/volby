@@ -299,7 +299,7 @@ function displayResults(results, userCompass, compassDescription) {
                 <div class="result-item" style="animation-delay: ${index * 100}ms">
                     <div class="result-rank ${index < 3 ? 'top-three' : ''}">${index + 1}</div>
                     <div class="result-content">
-                        <div class="result-party">${result.party_name}</div>
+                        <div class="result-party">${result.party}</div>
                         <div class="result-match-container">
                             <div class="result-bar">
                                 <div class="result-bar-fill" style="width: 0%; transition-delay: ${500 + index * 100}ms" data-width="${result.match}"></div>
@@ -319,7 +319,7 @@ function displayResults(results, userCompass, compassDescription) {
                 ${results.slice(10).map((result, index) => `
                     <div class="result-item compact" style="padding: 0.5rem 1rem; font-size: 14px;">
                         <span class="result-rank" style="width: 30px; height: 30px; font-size: 12px;">${index + 11}</span>
-                        <span class="result-party" style="flex: 1;">${result.party_name}</span>
+                        <span class="result-party" style="flex: 1;">${result.party}</span>
                         <span class="result-percentage">${result.match}%</span>
                     </div>
                 `).join('')}
@@ -328,7 +328,7 @@ function displayResults(results, userCompass, compassDescription) {
         
         <div class="results-info" style="margin-top: 2rem; text-align: center; color: var(--color-text-muted);">
             <h3>Metodologie</h3>
-            <p>Hybridní model: 40% Manhattan + 40% Euklidovská + 20% Kosinová vzdálenost</p>
+            <p>3D politický kompas: Euklidovská vzdálenost v prostoru EKO × SOC × SUV</p>
             <p class="disclaimer" style="font-size: 0.9em; margin-top: 1rem;">
                 Výsledky jsou orientační a vycházejí z programových priorit stran.
             </p>
