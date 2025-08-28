@@ -798,8 +798,8 @@
             const centerY = compassHeight / 2;
             
             // Improved scaling with better space utilization
-            const scaleX = (compassWidth * 0.42); // Use 84% of width for better spacing
-            const scaleY = (compassHeight * 0.42); // Use 84% of height for better spacing
+            const scaleX = (compassWidth * 0.85); // Use 85% of width for optimal display
+            const scaleY = (compassHeight * 0.85); // Use 85% of height for optimal display
             
             // Track positioned parties to handle overlapping
             const positionedParties = [];
@@ -925,8 +925,8 @@
             const centerY = compassHeight / 2;
             
             // Use same scaling as parties
-            const scaleX = (compassWidth * 0.42);
-            const scaleY = (compassHeight * 0.42);
+            const scaleX = (compassWidth * 0.85);
+            const scaleY = (compassHeight * 0.85);
             
             const x = centerX + (position[xDimension] * scaleX / 2);
             const y = centerY + (position[yDimension] * scaleY / 2);
