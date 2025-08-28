@@ -825,6 +825,7 @@ p {
     background: rgba(255, 217, 61, 0.05);
     border-radius: 8px;
     text-align: center;
+    position: relative;
 }
 
 .support-text {
@@ -848,11 +849,43 @@ p {
     transition: all 0.3s ease;
     cursor: pointer;
     position: relative;
+    display: inline-flex;
+    align-items: center;
 }
 
 .support-icon:hover {
     opacity: 1;
     transform: translateY(-2px) scale(1.2);
+}
+
+/* Social icons with SVG */
+.social-icon {
+    color: var(--text-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+}
+
+.social-icon svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+/* Crypto icons */
+.crypto-icon {
+    cursor: pointer;
+    user-select: none;
+}
+
+.crypto-icon:hover {
+    color: var(--color-primary);
+}
+
+.crypto-icon:active {
+    transform: scale(0.9);
 }
 
 .separator {
@@ -861,28 +894,21 @@ p {
     font-size: 1.2rem;
 }
 
-/* Bitcoin and Lightning tooltips */
-.bitcoin-icon:hover::after,
-.lightning-icon:hover::after {
-    content: attr(title);
+/* Copy feedback */
+.copy-feedback {
     position: absolute;
-    bottom: -30px;
+    top: -30px;
     left: 50%;
     transform: translateX(-50%);
-    background: var(--bg-secondary);
-    color: var(--color-primary);
-    padding: 0.5rem;
+    background: var(--color-primary);
+    color: var(--bg-primary);
+    padding: 0.5rem 1rem;
     border-radius: 4px;
-    font-size: 0.7rem;
-    white-space: nowrap;
-    z-index: 100;
-    border: 1px solid rgba(255, 217, 61, 0.3);
-}
-
-/* Click to copy for crypto addresses */
-.bitcoin-icon:active,
-.lightning-icon:active {
-    transform: scale(0.9);
+    font-size: 0.9rem;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
 @media (max-width: 768px) {
@@ -896,6 +922,16 @@ p {
     
     .support-icon {
         font-size: 1.3rem;
+    }
+    
+    .social-icon {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .social-icon svg {
+        width: 16px;
+        height: 16px;
     }
 }
 
