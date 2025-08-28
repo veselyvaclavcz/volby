@@ -818,127 +818,84 @@ p {
   margin-bottom: 0;
 }
 
-/* Support and Links Sections */
-.support-links {
-    margin-top: 3rem;
-    padding-top: 3rem;
-    border-top: 1px solid rgba(255, 217, 61, 0.2);
-}
-
-.support-section, .links-section {
-    margin-bottom: 2.5rem;
-}
-
-.support-links h3 {
-    font-size: 1.3rem;
-    color: var(--color-primary);
-    margin-bottom: 1.5rem;
-    font-weight: 600;
-}
-
-.support-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-.support-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.8rem 1.5rem;
-    background: rgba(255, 217, 61, 0.1);
-    border: 1px solid rgba(255, 217, 61, 0.3);
-    border-radius: 8px;
-    color: var(--text-primary);
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.support-link:hover {
-    background: rgba(255, 217, 61, 0.2);
-    border-color: var(--color-primary);
-    transform: translateY(-2px);
-}
-
-.support-link .icon {
-    font-size: 1.3rem;
-}
-
-.crypto-support {
-    width: 100%;
-    margin-top: 1rem;
-}
-
-.crypto-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 1rem;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 8px;
-    margin-bottom: 1rem;
-}
-
-.crypto-item .icon {
-    font-size: 1.5rem;
-    flex-shrink: 0;
-}
-
-.crypto-item code {
-    display: block;
-    margin-top: 0.3rem;
-    padding: 0.5rem;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 4px;
-    font-family: monospace;
-    font-size: 0.85rem;
-    color: var(--color-primary);
-    word-break: break-all;
-}
-
-.links-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1rem;
-}
-
-.link-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.8rem 1rem;
+/* Compact Support Section */
+.support-links-compact {
+    margin-top: 2rem;
+    padding: 1.5rem;
     background: rgba(255, 217, 61, 0.05);
-    border: 1px solid rgba(255, 217, 61, 0.2);
     border-radius: 8px;
-    color: var(--text-primary);
+    text-align: center;
+}
+
+.support-text {
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.support-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+}
+
+.support-icon {
+    font-size: 1.5rem;
     text-decoration: none;
+    opacity: 0.7;
     transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
 }
 
-.link-item:hover {
-    background: rgba(255, 217, 61, 0.15);
-    border-color: var(--color-primary);
-    color: var(--color-primary);
+.support-icon:hover {
+    opacity: 1;
+    transform: translateY(-2px) scale(1.2);
 }
 
-.link-item .icon {
+.separator {
+    color: var(--text-secondary);
+    opacity: 0.3;
     font-size: 1.2rem;
 }
 
+/* Bitcoin and Lightning tooltips */
+.bitcoin-icon:hover::after,
+.lightning-icon:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-secondary);
+    color: var(--color-primary);
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    z-index: 100;
+    border: 1px solid rgba(255, 217, 61, 0.3);
+}
+
+/* Click to copy for crypto addresses */
+.bitcoin-icon:active,
+.lightning-icon:active {
+    transform: scale(0.9);
+}
+
 @media (max-width: 768px) {
-    .links-grid {
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    .support-links-compact {
+        padding: 1rem;
     }
     
-    .support-link {
-        padding: 0.6rem 1rem;
-        font-size: 0.9rem;
+    .support-icons {
+        gap: 0.8rem;
     }
     
-    .crypto-item code {
-        font-size: 0.75rem;
+    .support-icon {
+        font-size: 1.3rem;
     }
 }
 
