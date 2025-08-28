@@ -806,7 +806,7 @@
             
             Object.entries(parties).forEach(([code, data]) => {
                 let x = centerX + (data[xDimension] * scaleX / 2);
-                let y = centerY - (data[yDimension] * scaleY / 2); // Invert Y axis
+                let y = centerY + (data[yDimension] * scaleY / 2); // Y axis now correctly oriented
                 
                 // Anti-collision: slightly adjust position if too close to existing parties
                 const minDistance = 20;
@@ -825,7 +825,7 @@
                     const angle = (attempts * 30) * (Math.PI / 180);
                     const offset = 8 + (attempts * 2);
                     x = centerX + (data[xDimension] * scaleX / 2) + Math.cos(angle) * offset;
-                    y = centerY - (data[yDimension] * scaleY / 2) + Math.sin(angle) * offset;
+                    y = centerY + (data[yDimension] * scaleY / 2) + Math.sin(angle) * offset;
                     attempts++;
                     adjusted = true;
                 }
@@ -929,7 +929,7 @@
             const scaleY = (compassHeight * 0.42);
             
             const x = centerX + (position[xDimension] * scaleX / 2);
-            const y = centerY - (position[yDimension] * scaleY / 2);
+            const y = centerY + (position[yDimension] * scaleY / 2);
             
             // Remove existing user position
             const existingUser = compass.querySelector('.user-position');
