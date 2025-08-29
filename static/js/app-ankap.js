@@ -370,7 +370,7 @@ function displayResults(results, userCompass, compassDescription, freedomScore) 
             ${userCompass ? `
                 <div class="compass-position-info" style="background: rgba(255,217,61,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0; text-align: center;">
                     <h4 style="margin: 0 0 0.5rem 0; color: var(--color-primary);">Vaše politická pozice</h4>
-                    <p style="margin: 0; font-size: 0.9em;">${compassDescription || 'Pozice vypočítana z vašich odpovědí'}</p>
+                    <p style="margin: 0; font-size: 0.9em;">${compassDescription || 'Pozice vypočítaná z vašich odpovědí'}</p>
                     <p style="margin: 0.5rem 0 0 0; font-size: 0.8em; color: var(--color-text-muted);">
                         EKO: ${userCompass.EKO?.toFixed(2) || '0.00'} | SOC: ${userCompass.SOC?.toFixed(2) || '0.00'} | SUV: ${userCompass.SUV?.toFixed(2) || '0.00'}
                     </p>
