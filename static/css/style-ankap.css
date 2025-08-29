@@ -265,7 +265,6 @@ p {
 .nav-link.active {
   color: var(--color-primary);
   border-bottom-color: var(--color-primary);
-  text-shadow: 0 0 4px var(--color-primary);
 }
 
 /* Theme Toggle */

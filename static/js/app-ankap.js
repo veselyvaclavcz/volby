@@ -406,7 +406,7 @@ function displayResults(results, userCompass, compassDescription, freedomScore) 
         </div>
         
         <div class="results-actions" style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap;">
-            <a href="/compass" class="btn btn-primary" style="text-decoration: none; display: inline-block;">
+            <a href="compass.html" class="btn btn-primary" style="text-decoration: none; display: inline-block;">
                 📍 Zobrazit na kompasu
             </a>
             <button class="btn btn-secondary" onclick="resetCalculator()">
