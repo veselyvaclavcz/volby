@@ -61,6 +61,27 @@
   --shadow-lg: 0 8px 32px rgba(230, 184, 0, 0.25);
 }
 
+/* Subtle Animations */
+@keyframes subtle-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gentle-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
 /* Reset and Base Styles */
 * {
   box-sizing: border-box;
@@ -116,6 +137,27 @@ p {
   transition: var(--transition);
   min-height: 44px; /* Touch target */
   gap: var(--space-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease-out, height 0.6s ease-out;
+  pointer-events: none;
+}
+
+.btn:hover::before {
+  width: 300%;
+  height: 300%;
 }
 
 .btn:disabled {
@@ -223,6 +265,7 @@ p {
 .nav-link.active {
   color: var(--color-primary);
   border-bottom-color: var(--color-primary);
+  text-shadow: 0 0 4px var(--color-primary);
 }
 
 /* Theme Toggle */
@@ -294,6 +337,18 @@ p {
   font-weight: 700;
   margin-bottom: var(--space-lg);
   color: var(--color-text);
+  transition: var(--transition);
+  animation: subtle-fade-in 1.5s ease-out;
+}
+
+/* Two-color accent for main heading */
+.hero-title .accent {
+  color: var(--color-primary);
+  transition: var(--transition);
+}
+
+.hero-title:hover .accent {
+  text-shadow: 0 0 8px var(--color-primary);
 }
 
 .hero-subtitle {
@@ -365,12 +420,22 @@ p {
   border-radius: var(--border-radius);
   background: transparent;
   transition: var(--transition);
+  animation: subtle-fade-in 1s ease-out;
+}
+
+.step:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.step:nth-child(3) {
+  animation-delay: 0.4s;
 }
 
 .step:hover {
   border-color: rgba(255, 217, 61, 0.4);
   background: rgba(255, 217, 61, 0.1);
   transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
 }
 
 .step-number {
