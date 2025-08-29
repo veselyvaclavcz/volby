@@ -1076,7 +1076,7 @@ p {
   .question-text {
     font-size: var(--font-size-lg);
     line-height: 1.3;
-    margin-bottom: var(--space-md);
+    margin-bottom: var(--space-lg);
   }
   
   /* Keep vertical layout but reduce spacing */
@@ -1157,7 +1157,7 @@ p {
   
   .question-text {
     font-size: var(--font-size-base);
-    margin-bottom: var(--space-sm);
+    margin-bottom: var(--space-md);
   }
   
   /* Keep vertical layout with tighter spacing */
@@ -1230,8 +1230,9 @@ p {
   
   .question-text {
     font-size: 15px;
-    line-height: 1.2;
-    margin-bottom: 8px;
+    line-height: 1.3;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
   }
   
   /* Keep vertical layout with minimal spacing */
