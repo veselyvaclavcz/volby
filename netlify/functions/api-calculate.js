@@ -12,17 +12,17 @@ exports.handler = async (event, context) => {
     
     // Questions data
     const questions = [
-      {id: 1, dimension: "EKO", polarity: -1},
-      {id: 2, dimension: "EKO", polarity: -1},
-      {id: 3, dimension: "EKO", polarity: 1},
-      {id: 4, dimension: "EKO", polarity: -1},
-      {id: 5, dimension: "EKO", polarity: 1},
-      {id: 6, dimension: "EKO", polarity: -1},
-      {id: 7, dimension: "EKO", polarity: 1},
-      {id: 8, dimension: "EKO", polarity: 1},
-      {id: 9, dimension: "EKO", polarity: -1},
-      {id: 10, dimension: "EKO", polarity: -1},
-      {id: 11, dimension: "EKO", polarity: 1},
+      {id: 1, dimension: "EKO", polarity: -1},  // Daně nejnižší - agree(1)→right needs -1
+      {id: 2, dimension: "EKO", polarity: 1},   // Stát podporovat - agree(1)→left needs +1
+      {id: 3, dimension: "EKO", polarity: -1},  // Soukromé efektivnější - agree(1)→right needs -1
+      {id: 4, dimension: "EKO", polarity: 1},   // Min. mzda prospěšná - agree(1)→left needs +1
+      {id: 5, dimension: "EKO", polarity: -1},  // Stejné % daní - agree(1)→right needs -1
+      {id: 6, dimension: "EKO", polarity: -1},  // Soc. podpora závislost - agree(1)→right needs -1
+      {id: 7, dimension: "EKO", polarity: -1},  // Zrušení superhrubé - agree(1)→right needs -1
+      {id: 8, dimension: "EKO", polarity: -1},  // Podnikání důležitější - agree(1)→right needs -1
+      {id: 9, dimension: "EKO", polarity: 1},   // Státní důchody udržitelné - agree(1)→left needs +1
+      {id: 10, dimension: "EKO", polarity: 1},  // Zdravotnictví veřejné - agree(1)→left needs +1
+      {id: 11, dimension: "EKO", polarity: -1},
       {id: 12, dimension: "SOC", polarity: 1},
       {id: 13, dimension: "SOC", polarity: 1},
       {id: 14, dimension: "SOC", polarity: -1},
