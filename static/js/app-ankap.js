@@ -988,29 +988,24 @@ function addUserDotToCompass(compassId, position, dimX, dimY) {
     const x = (position[dimX] || 0) * scale + centerX;
     const y = (position[dimY] || 0) * scale + centerY;
     
-    // Create user position marker
+    // Create user position marker - larger than regular dots
     const userDot = document.createElement('div');
     userDot.className = 'party user-position';
-    userDot.style.left = `${x - 12}px`;
-    userDot.style.top = `${y - 12}px`;
-    userDot.style.width = '24px';
-    userDot.style.height = '24px';
-    userDot.style.background = 'var(--color-primary)';
-    userDot.style.border = '3px solid white';
-    userDot.style.boxShadow = '0 0 10px rgba(255, 217, 61, 0.8)';
+    userDot.style.left = `${x - 16}px`;
+    userDot.style.top = `${y - 16}px`;
+    userDot.style.width = '32px';
+    userDot.style.height = '32px';
+    userDot.style.background = '#FFD700';
+    userDot.style.border = '3px solid black';
+    userDot.style.borderRadius = '50%';
     userDot.style.zIndex = '100';
-    
-    // Add "TY" label
-    const label = document.createElement('div');
-    label.className = 'party-tooltip';
-    label.textContent = 'TY';
-    label.style.background = 'var(--color-primary)';
-    label.style.color = 'black';
-    label.style.fontWeight = 'bold';
-    label.style.visibility = 'visible';
-    label.style.opacity = '1';
-    label.style.transform = 'translateX(-50%) translateY(-120%)';
-    userDot.appendChild(label);
+    userDot.style.display = 'flex';
+    userDot.style.alignItems = 'center';
+    userDot.style.justifyContent = 'center';
+    userDot.style.fontSize = '14px';
+    userDot.style.fontWeight = 'bold';
+    userDot.style.color = 'black';
+    userDot.textContent = 'TY';
     
     compass.appendChild(userDot);
 }
