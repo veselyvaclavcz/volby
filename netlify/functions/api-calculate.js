@@ -23,28 +23,28 @@ exports.handler = async (event, context) => {
       {id: 9, dimension: "EKO", polarity: 1},   // Státní důchody udržitelné - agree(1)→left needs +1
       {id: 10, dimension: "EKO", polarity: 1},  // Zdravotnictví veřejné - agree(1)→left needs +1
       {id: 11, dimension: "EKO", polarity: -1},
-      {id: 12, dimension: "SOC", polarity: 1},
-      {id: 13, dimension: "SOC", polarity: 1},
-      {id: 14, dimension: "SOC", polarity: -1},
-      {id: 15, dimension: "SOC", polarity: 1},
-      {id: 16, dimension: "SOC", polarity: 1},
-      {id: 17, dimension: "SOC", polarity: -1},
-      {id: 18, dimension: "SOC", polarity: 1},
-      {id: 19, dimension: "SOC", polarity: -1},
-      {id: 20, dimension: "SOC", polarity: 1},
-      {id: 21, dimension: "SOC", polarity: -1},
-      {id: 22, dimension: "SOC", polarity: 1},
-      {id: 23, dimension: "SUV", polarity: 1},
-      {id: 24, dimension: "SUV", polarity: 1},
-      {id: 25, dimension: "SUV", polarity: -1},
-      {id: 26, dimension: "SUV", polarity: 1},
-      {id: 27, dimension: "SUV", polarity: -1},
-      {id: 28, dimension: "SUV", polarity: 1},
-      {id: 29, dimension: "SUV", polarity: 1},
-      {id: 30, dimension: "SUV", polarity: -1},
-      {id: 31, dimension: "SUV", polarity: 1},
-      {id: 32, dimension: "SUV", polarity: -1},
-      {id: 33, dimension: "SUV", polarity: 1}
+      {id: 12, dimension: "SOC", polarity: -1},  // LGBT adopce - agree(1)→liberal needs -1
+      {id: 13, dimension: "SOC", polarity: -1},  // Konopí - agree(1)→liberal needs -1
+      {id: 14, dimension: "SOC", polarity: 1},   // Tradiční rodina - agree(1)→conserv needs +1
+      {id: 15, dimension: "SOC", polarity: -1},  // Právo žen - agree(1)→liberal needs -1
+      {id: 16, dimension: "SOC", polarity: -1},  // Multikulti - agree(1)→liberal needs -1
+      {id: 17, dimension: "SOC", polarity: 1},   // Národní identita - agree(1)→conserv needs +1
+      {id: 18, dimension: "SOC", polarity: -1},  // Manželství všem - agree(1)→liberal needs -1
+      {id: 19, dimension: "SOC", polarity: 1},   // Gender normy - agree(1)→conserv needs +1
+      {id: 20, dimension: "SOC", polarity: -1},  // Oddělení církve - agree(1)→liberal needs -1
+      {id: 21, dimension: "SOC", polarity: 1},   // Integrace úsilí - agree(1)→conserv needs +1
+      {id: 22, dimension: "SOC", polarity: -1},  // Sex výchova - agree(1)→liberal needs -1
+      {id: 23, dimension: "SUV", polarity: -1},  // Euro - agree(1)→pro-EU needs -1
+      {id: 24, dimension: "SUV", polarity: -1},  // Green Deal - agree(1)→pro-EU needs -1
+      {id: 25, dimension: "SUV", polarity: 1},   // Státy kontrola - agree(1)→anti-EU needs +1
+      {id: 26, dimension: "SUV", polarity: -1},  // Migrační pakt - agree(1)→pro-EU needs -1
+      {id: 27, dimension: "SUV", polarity: 1},   // Vystoupení - agree(1)→anti-EU needs +1
+      {id: 28, dimension: "SUV", polarity: -1},  // Kvóty - agree(1)→pro-EU needs -1
+      {id: 29, dimension: "SUV", polarity: -1},  // NATO - agree(1)→pro-West needs -1
+      {id: 30, dimension: "SUV", polarity: 1},   // Sankce škodí - agree(1)→anti-West needs +1
+      {id: 31, dimension: "SUV", polarity: -1},  // USE - agree(1)→pro-EU needs -1
+      {id: 32, dimension: "SUV", polarity: 1},   // V4 důležitější - agree(1)→anti-EU needs +1
+      {id: 33, dimension: "SUV", polarity: -1}
     ];
 
     // Parties data  
