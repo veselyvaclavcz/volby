@@ -1098,7 +1098,7 @@ async function toggleAgreementDetails(partyName, index) {
     
     if (detailsElement.style.display === 'none') {
         // Show details
-        if (!questionsData.length) {
+        if (!questionsData || questionsData.length === 0) {
             await loadQuestionsData();
         }
         
@@ -1121,20 +1121,17 @@ async function toggleAgreementDetails(partyName, index) {
 
 // Load questions data from API
 async function loadQuestionsData() {
-    if (questionsData.length > 0) return;
+    if (questionsData && questionsData.length > 0) return;
     
     try {
         const response = await fetch('/netlify/functions/api-questions');
         const data = await response.json();
-        questionsData = data; // The API returns array directly, not nested in 'questions'
+        questionsData = data; // The API returns array directly
+        console.log('Loaded questions:', questionsData.length);
     } catch (error) {
         console.error('Error loading questions:', error);
         // Fallback data - all 33 questions
-        questionsData = [
-            {id: 1, text: "Výše daní by měla odpovídat rozsahu státních služeb", dimension: "EKO"},
-            {id: 2, text: "Domácí firmy potřebují státní podporu pro konkurenceschopnost", dimension: "EKO"},
-            // Add more as needed...
-        ];
+        questionsData = [];
     }
 }
 
@@ -1143,6 +1140,10 @@ async function generateAgreementDetails(partyName) {
     // Find party in global parties data
     const party = partiesData.find(p => p.name === partyName) || 
                   {code: partyName.toUpperCase(), name: partyName, compass_position: {EKO: 0, SOC: 0, SUV: 0}};
+    
+    console.log('Generating details for:', partyName);
+    console.log('Total questions available:', questionsData.length);
+    console.log('Total answers:', Object.keys(answers).length);
     
     // Calculate agreement for ALL questions (all 33)
     const agreementData = [];
@@ -1193,6 +1194,8 @@ async function generateAgreementDetails(partyName) {
         const dimOrder = {EKO: 1, SOC: 2, SUV: 3};
         return dimOrder[a.dimension] - dimOrder[b.dimension];
     });
+    
+    console.log('Processed questions:', agreementData.length);
     
     // Generate HTML - Ultra simple compact list
     const fullCount = agreementData.filter(a => a.agreementLevel === 'Plná shoda').length;
