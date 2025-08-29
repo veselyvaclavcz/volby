@@ -1257,12 +1257,18 @@ async function generateAgreementDetails(partyName) {
 function estimatePartyAnswer(party, question) {
     const position = party.compass_position[question.dimension] || 0;
     
-    // Convert compass position (-1 to +1) to answer scale (1 to 5)
-    // More negative = more agreement with "leftist" positions (lower numbers)
-    // More positive = more agreement with "rightist" positions (higher numbers)
+    // The question polarity determines how compass position translates to agreement
+    // If polarity is 1: positive position = agree with question
+    // If polarity is -1: positive position = disagree with question
     
-    // Inverse mapping: -1 maps to 1, +1 maps to 5, 0 maps to 3
-    const answer = 3 + (position * 2);
+    // Apply polarity to position
+    const adjustedPosition = position * question.polarity;
+    
+    // Convert to answer scale (1 to 5)
+    // -1 = strongly disagree (5), +1 = strongly agree (1), 0 = neutral (3)
+    // We need to INVERT because 1 = agree, 5 = disagree
+    const answer = 3 - (adjustedPosition * 2);
+    
     return Math.max(1, Math.min(5, Math.round(answer)));
 }
 
