@@ -1124,7 +1124,7 @@ async function loadQuestionsData() {
     if (questionsData && questionsData.length > 0) return;
     
     try {
-        const response = await fetch('/netlify/functions/api-questions');
+        const response = await fetch('/.netlify/functions/api-questions');
         const data = await response.json();
         questionsData = data; // The API returns array directly
         console.log('Loaded questions:', questionsData.length);
