@@ -1,1 +1,1 @@
-# Volební kalkulačka 2025
+# Volební kompas 2025

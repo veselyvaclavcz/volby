@@ -2,7 +2,7 @@
 exports.handler = async (event, context) => {
   const questions = [
     // Začínáme ekonomikou
-    {id: 1, text: "Výše daní by měla odpovídat rozsahu státních služeb", dimension: "EKO", polarity: 1},
+    {id: 1, text: "Daně by měly být co nejnižší", dimension: "EKO", polarity: 1},
     
     // Pak sociální téma
     {id: 12, text: "Stejnopohlavní páry by měly mít právo na adopce", dimension: "SOC", polarity: 1},
@@ -11,7 +11,7 @@ exports.handler = async (event, context) => {
     {id: 23, text: "Česko by mělo přijmout euro", dimension: "SUV", polarity: 1},
     
     // Zpět k ekonomice
-    {id: 2, text: "Domácí firmy potřebují státní podporu pro konkurenceschopnost", dimension: "EKO", polarity: -1},
+    {id: 2, text: "Stát by měl podporovat domácí firmy", dimension: "EKO", polarity: -1},
     
     // Sociální
     {id: 14, text: "Společnost funguje nejlépe s tradičním rodinným modelem", dimension: "SOC", polarity: -1},
@@ -38,7 +38,7 @@ exports.handler = async (event, context) => {
     {id: 24, text: "EU Green Deal je správná cesta", dimension: "SUV", polarity: 1},
     
     // Ekonomika
-    {id: 4, text: "Minimální mzda by měla zaručit důstojný život", dimension: "EKO", polarity: -1},
+    {id: 4, text: "Minimální mzda je prospěšná pro zaměstnance", dimension: "EKO", polarity: -1},
     
     // Sociální
     {id: 15, text: "Ženy by měly mít právo rozhodovat o svém těle", dimension: "SOC", polarity: 1},
@@ -56,7 +56,7 @@ exports.handler = async (event, context) => {
     {id: 26, text: "EU migrační pakt je pro Česko přijatelný", dimension: "SUV", polarity: 1},
     
     // Ekonomika
-    {id: 6, text: "Sociální dávky jsou často zneužívány", dimension: "EKO", polarity: 1},
+    {id: 6, text: "Sociální podpora vytváří závislost", dimension: "EKO", polarity: 1},
     
     // Sociální
     {id: 17, text: "Národní identita je důležitější než evropská", dimension: "SOC", polarity: -1},
@@ -65,7 +65,7 @@ exports.handler = async (event, context) => {
     {id: 33, text: "Podpora Ukrajiny by měla pokračovat", dimension: "SUV", polarity: 1},
     
     // Ekonomika
-    {id: 9, text: "Důchodový věk by neměl dále růst", dimension: "EKO", polarity: -1},
+    {id: 9, text: "Státní důchody jsou udržitelný systém", dimension: "EKO", polarity: -1},
     
     // Sociální
     {id: 19, text: "Nové pojetí pohlaví narušuje osvědčené společenské normy", dimension: "SOC", polarity: -1},
