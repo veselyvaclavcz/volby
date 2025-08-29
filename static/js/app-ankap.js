@@ -1126,10 +1126,10 @@ async function loadQuestionsData() {
     try {
         const response = await fetch('/netlify/functions/api-questions');
         const data = await response.json();
-        questionsData = data.questions;
+        questionsData = data; // The API returns array directly, not nested in 'questions'
     } catch (error) {
         console.error('Error loading questions:', error);
-        // Fallback data
+        // Fallback data - all 33 questions
         questionsData = [
             {id: 1, text: "Výše daní by měla odpovídat rozsahu státních služeb", dimension: "EKO"},
             {id: 2, text: "Domácí firmy potřebují státní podporu pro konkurenceschopnost", dimension: "EKO"},
@@ -1144,14 +1144,15 @@ async function generateAgreementDetails(partyName) {
     const party = partiesData.find(p => p.name === partyName) || 
                   {code: partyName.toUpperCase(), name: partyName, compass_position: {EKO: 0, SOC: 0, SUV: 0}};
     
-    // Calculate agreement for each answered question
+    // Calculate agreement for ALL questions (all 33)
     const agreementData = [];
     
-    for (const [questionId, answer] of Object.entries(answers)) {
-        if (answer.value === null) continue;
+    // Go through ALL questions from questionsData
+    for (const question of questionsData) {
+        const answer = answers[question.id];
         
-        const question = questionsData.find(q => q.id === parseInt(questionId));
-        if (!question) continue;
+        // Skip if user hasn't answered this question
+        if (!answer || answer.value === null) continue;
         
         // Estimate party answer based on compass position and question dimension
         const partyScore = estimatePartyAnswer(party, question);
