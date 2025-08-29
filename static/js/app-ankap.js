@@ -83,6 +83,31 @@ async function loadParties() {
     }
 }
 
+// Go to home - show all normal sections, hide special ones
+function goHome() {
+    // Hide special sections (compass, calculator if it's in separate mode)
+    const compassSection = document.getElementById('compass');
+    if (compassSection) {
+        compassSection.style.display = 'none';
+    }
+    
+    // Show all normal sections
+    document.querySelectorAll('section:not(#compass)').forEach(section => {
+        section.style.display = '';
+    });
+    
+    // Clear any active navigation
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+    });
+    
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // Clear hash
+    history.pushState('', document.title, window.location.pathname + window.location.search);
+}
+
 // Navigation with smooth transitions
 function showSection(sectionId) {
     // Update navigation active state
