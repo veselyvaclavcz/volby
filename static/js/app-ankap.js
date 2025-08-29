@@ -50,13 +50,34 @@ async function loadParties() {
         parties = await response.json();
     } catch (error) {
         console.error('Error loading parties:', error);
-        // Fallback pro lokální testování
+        // Fallback pro lokální testování - všech 26 stran
         parties = [
-            {id: 1, name: "ANO 2011", shortName: "ANO", EKO: -0.5, SOC: 0.0, SUV: -0.3},
-            {id: 2, name: "SPOLU (ODS+KDU-ČSL+TOP 09)", shortName: "SPOLU", EKO: 0.7, SOC: -0.4, SUV: 0.6},
-            {id: 3, name: "Piráti", shortName: "PIRÁTI", EKO: -0.2, SOC: 0.8, SUV: 0.3},
-            {id: 4, name: "SPD", shortName: "SPD", EKO: -0.6, SOC: -0.7, SUV: -0.8},
-            {id: 5, name: "KSČM", shortName: "KSČM", EKO: -0.9, SOC: -0.3, SUV: -0.5}
+            {code: "ANO", name: "ANO", compass_position: {EKO: -0.36, SOC: 0.23, SUV: 0.41}},
+            {code: "SPOLU", name: "SPOLU", compass_position: {EKO: 0.64, SOC: -0.05, SUV: -0.64}},
+            {code: "SPD", name: "SPD", compass_position: {EKO: -0.41, SOC: 0.86, SUV: 0.82}},
+            {code: "PIRATI", name: "Piráti", compass_position: {EKO: -0.32, SOC: -0.95, SUV: -0.68}},
+            {code: "STAN", name: "STAN", compass_position: {EKO: 0.14, SOC: -0.18, SUV: -0.73}},
+            {code: "KSČM", name: "KSČM", compass_position: {EKO: -0.95, SOC: 0.23, SUV: 0.73}},
+            {code: "TRIKOLORA", name: "Trikolóra", compass_position: {EKO: 0.77, SOC: 0.82, SUV: 0.68}},
+            {code: "PRISAHA", name: "Přísaha", compass_position: {EKO: 0.23, SOC: 0.27, SUV: 0.09}},
+            {code: "SOCDEM", name: "SOCDEM", compass_position: {EKO: -0.68, SOC: -0.55, SUV: -0.36}},
+            {code: "ZELENI", name: "Zelení", compass_position: {EKO: -0.50, SOC: -1.00, SUV: -1.00}},
+            {code: "SVOBODNI", name: "Svobodní", compass_position: {EKO: 0.95, SOC: -0.45, SUV: 0.36}},
+            {code: "MOTORISTE", name: "Motoristé", compass_position: {EKO: 0.55, SOC: 0.32, SUV: 0.50}},
+            {code: "PRO", name: "PRO", compass_position: {EKO: 0.32, SOC: 0.41, SUV: 0.64}},
+            {code: "REPUBLIKA", name: "REPUBLIKA", compass_position: {EKO: 0.27, SOC: 0.82, SUV: 0.68}},
+            {code: "STACILO", name: "Stačilo!", compass_position: {EKO: -0.95, SOC: -0.45, SUV: 0.41}},
+            {code: "VYZVA2025", name: "Výzva2025", compass_position: {EKO: 0.00, SOC: 0.14, SUV: 0.14}},
+            {code: "KRUH", name: "KRUH", compass_position: {EKO: 0.00, SOC: -0.45, SUV: -0.18}},
+            {code: "VOLUNTIA", name: "VOLUNTIA", compass_position: {EKO: 1.00, SOC: -0.73, SUV: -0.09}},
+            {code: "BUDOUCNOST", name: "Budoucnost", compass_position: {EKO: -0.32, SOC: -0.50, SUV: -0.64}},
+            {code: "JASAN", name: "JASAN", compass_position: {EKO: 0.55, SOC: 0.36, SUV: 0.23}},
+            {code: "LEVY_BLOK", name: "Levý blok", compass_position: {EKO: -1.00, SOC: -0.91, SUV: 0.09}},
+            {code: "NARODNI_DEMOKRACIE", name: "Národní demokracie", compass_position: {EKO: 0.27, SOC: 0.86, SUV: 0.77}},
+            {code: "PRAVO_RESPEKT", name: "Právo Respekt", compass_position: {EKO: 0.00, SOC: 0.00, SUV: 0.00}},
+            {code: "ALIANCE_STABILITA", name: "Aliance pro stabilitu", compass_position: {EKO: -0.18, SOC: 0.23, SUV: 0.09}},
+            {code: "CESKA_SUVERENITA", name: "Česká suverenita", compass_position: {EKO: 0.27, SOC: 0.59, SUV: 0.73}},
+            {code: "VOLT", name: "Volt", compass_position: {EKO: -0.05, SOC: -0.86, SUV: -1.00}}
         ];
         console.log('Using fallback parties for local testing');
     }
@@ -406,9 +427,9 @@ function displayResults(results, userCompass, compassDescription, freedomScore) 
         </div>
         
         <div class="results-actions" style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap;">
-            <a href="compass.html" class="btn btn-primary" style="text-decoration: none; display: inline-block;">
+            <button class="btn btn-primary" onclick="showCompass()">
                 📍 Zobrazit na kompasu
-            </a>
+            </button>
             <button class="btn btn-secondary" onclick="resetCalculator()">
                 Spustit znovu
             </button>
@@ -746,3 +767,196 @@ function initializeAnimations() {
 
 // Call after DOM is loaded
 document.addEventListener('DOMContentLoaded', initializeAnimations);
+
+// Compass functionality
+function showCompass() {
+    // Hide all sections
+    document.querySelectorAll('section').forEach(section => {
+        if (section.id !== 'compass') {
+            section.style.display = 'none';
+        }
+    });
+    
+    // Show compass section
+    const compassSection = document.getElementById('compass');
+    if (compassSection) {
+        compassSection.style.display = 'block';
+        window.scrollTo(0, 0);
+        
+        // Initialize compass if not already done
+        if (!compassSection.hasAttribute('data-initialized')) {
+            initializeCompass();
+            compassSection.setAttribute('data-initialized', 'true');
+        }
+        
+        // Update active navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.remove('active');
+        });
+        document.querySelector('.nav-link[href="#compass"]')?.classList.add('active');
+    }
+}
+
+// Initialize compass visualization
+async function initializeCompass() {
+    // Load parties if not already loaded
+    if (parties.length === 0) {
+        await loadParties();
+    }
+    
+    // Render compasses
+    renderCompass('compass-eco-soc', 'EKO', 'SOC');
+    renderCompass('compass-eco-suv', 'EKO', 'SUV');
+    
+    // Render legend
+    renderLegend();
+}
+
+// Render a single compass
+function renderCompass(compassId, dimX, dimY) {
+    const compass = document.getElementById(compassId);
+    if (!compass) return;
+    
+    // Clear existing content (except axes)
+    compass.querySelectorAll('.party').forEach(p => p.remove());
+    
+    // Wait for layout to be ready
+    setTimeout(() => {
+        const compassWidth = compass.offsetWidth || 420;
+        const compassHeight = compass.offsetHeight || 420;
+        const centerX = compassWidth / 2;
+        const centerY = compassHeight / 2;
+        const scale = Math.min(centerX, centerY) * 0.85;
+        
+        parties.forEach(party => {
+            const x = party.compass_position[dimX] * scale + centerX;
+            const y = party.compass_position[dimY] * scale + centerY;
+            
+            const dot = document.createElement('div');
+            dot.className = `party party-${party.code.toLowerCase()}`;
+            dot.style.left = `${x - 8}px`;
+            dot.style.top = `${y - 8}px`;
+            dot.style.background = getPartyColor(party.code);
+            dot.setAttribute('data-party', party.code);
+            
+            // Add tooltip
+            const tooltip = document.createElement('div');
+            tooltip.className = 'party-tooltip';
+            tooltip.textContent = party.name;
+            dot.appendChild(tooltip);
+            
+            // Add hover interaction with legend
+            dot.addEventListener('mouseenter', () => highlightParty(party.code));
+            dot.addEventListener('mouseleave', () => unhighlightParty(party.code));
+            
+            compass.appendChild(dot);
+        });
+    }, 100);
+}
+
+// Render legend
+function renderLegend() {
+    const legend = document.getElementById('legend');
+    if (!legend) return;
+    
+    legend.innerHTML = '';
+    
+    parties.forEach(party => {
+        const item = document.createElement('div');
+        item.className = 'legend-item';
+        item.setAttribute('data-party', party.code);
+        
+        const color = document.createElement('div');
+        color.className = 'legend-color';
+        color.style.background = getPartyColor(party.code);
+        
+        const name = document.createElement('div');
+        name.className = 'legend-name';
+        name.textContent = party.name;
+        
+        item.appendChild(color);
+        item.appendChild(name);
+        
+        // Add hover interaction
+        item.addEventListener('mouseenter', () => highlightParty(party.code));
+        item.addEventListener('mouseleave', () => unhighlightParty(party.code));
+        
+        legend.appendChild(item);
+    });
+}
+
+// Get party color
+function getPartyColor(code) {
+    const colors = {
+        'ANO': '#261060',
+        'SPOLU': '#0056A7',
+        'SPD': '#E31E24',
+        'PIRATI': '#000000',
+        'STAN': '#5D9C59',
+        'KSČM': '#8B0000',
+        'TRIKOLORA': '#0D47A1',
+        'PRISAHA': '#87CEEB',
+        'SOCDEM': '#FF4500',
+        'ZELENI': '#00C853',
+        'SVOBODNI': '#009C58',
+        'MOTORISTE': '#FF9800',
+        'PRO': '#1E88E5',
+        'REPUBLIKA': '#B22222',
+        'STACILO': '#DC143C',
+        'VYZVA2025': '#20B2AA',
+        'KRUH': '#2E8B57',
+        'VOLUNTIA': '#FFD700',
+        'BUDOUCNOST': '#32CD32',
+        'JASAN': '#DAA520',
+        'LEVY_BLOK': '#8B0000',
+        'NARODNI_DEMOKRACIE': '#4B0082',
+        'PRAVO_RESPEKT': '#696969',
+        'ALIANCE_STABILITA': '#483D8B',
+        'CESKA_SUVERENITA': '#8B4513',
+        'VOLT': '#502379'
+    };
+    return colors[code] || '#666666';
+}
+
+// Highlight party in both compass and legend
+function highlightParty(code) {
+    document.querySelectorAll(`[data-party="${code}"]`).forEach(el => {
+        el.classList.add('highlight');
+    });
+}
+
+// Remove highlight from party
+function unhighlightParty(code) {
+    document.querySelectorAll(`[data-party="${code}"]`).forEach(el => {
+        el.classList.remove('highlight');
+    });
+}
+
+// Update navigation to handle compass section
+document.addEventListener('DOMContentLoaded', () => {
+    // Handle navigation clicks for non-compass sections
+    document.querySelectorAll('.nav-link[href^="#"]:not([href="#compass"])').forEach(link => {
+        link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+            if (href && href !== '#compass') {
+                // Hide compass if visible
+                const compassSection = document.getElementById('compass');
+                if (compassSection) {
+                    compassSection.style.display = 'none';
+                }
+                // Show all other sections
+                document.querySelectorAll('section:not(#compass)').forEach(section => {
+                    section.style.display = '';
+                });
+            }
+        });
+    });
+    
+    // Handle compass navigation click
+    document.querySelectorAll('a[href="#compass"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            showCompass();
+        });
+    });
+});

@@ -27,14 +27,16 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <h1>A kdo by stavěl silnice?</h1>
+                    <a href="index-ankap.html" style="text-decoration: none; color: inherit;">
+                        <h1>A kdo by stavěl silnice?</h1>
+                    </a>
                 </div>
                 <nav class="nav">
                     <a href="#jak-to-funguje" class="nav-link">Jak to funguje</a>
                     <a href="#kalkulacka" class="nav-link">Kalkulačka</a>
                     <a href="#metodologie" class="nav-link">Metodologie</a>
                     <a href="#faq" class="nav-link">FAQ</a>
-                    <a href="compass.html" class="nav-link">Politický kompas</a>
+                    <a href="#compass" class="nav-link">Politický kompas</a>
                     <a href="https://kdobystavelsilnice.cz" class="nav-link" target="_blank">Blog</a>
                     <button class="theme-toggle" id="themeToggle" aria-label="Přepnout téma">
                         <span class="theme-toggle-icon"></span>
@@ -403,6 +405,77 @@
                         <p>Celý proces proběhl ve třech fázích: <strong>1) Sběr dat</strong> - AI systém prošel oficiální webové stránky všech 26 stran a stáhl jejich volební programy a programová prohlášení pro volby 2025. <strong>2) Analýza pozic</strong> - AI analyzovala každý program a vytipovala postoje stran k 33 konkrétním otázkám rozdělených do tří dimenzí (ekonomická, sociální, suverenita). Každé straně byla přiřazena pozice od -1 do +1 na základě jejích deklarovaných postojů. <strong>3) Porovnání s uživatelem</strong> - Vaše odpovědi na stejné otázky jsou převedeny na pozici v 3D prostoru a matematicky porovnány s pozicemi stran pomocí výpočtu Euklidovské vzdálenosti. Čím menší vzdálenost, tím větší shoda.</p>
                     </div>
                 </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Compass Section -->
+    <section id="compass" class="compass-section" style="display: none;">
+        <div class="container">
+            <div class="compass-header">
+                <h2>3D Politický kompas českých stran</h2>
+                <p>Vizualizace pozic českých stran na třech politických osách</p>
+            </div>
+            
+            <div class="compass-grid">
+                <!-- Main compass: Economic vs Social -->
+                <div class="compass-container">
+                    <h3 class="compass-title">Ekonomická × Sociální</h3>
+                    <div class="compass-wrapper">
+                        <div class="compass" id="compass-eco-soc">
+                            <div class="axis horizontal"></div>
+                            <div class="axis vertical"></div>
+                        </div>
+                        <div class="axis-label axis-label-top">
+                            <span class="axis-icon">🏳️‍🌈</span>
+                            <span>Progres</span>
+                        </div>
+                        <div class="axis-label axis-label-bottom">
+                            <span class="axis-icon">⛪</span>
+                            <span>Tradice</span>
+                        </div>
+                        <div class="axis-label axis-label-left">
+                            <span class="axis-icon">🏛️</span>
+                            <span>Stát</span>
+                        </div>
+                        <div class="axis-label axis-label-right">
+                            <span class="axis-icon">💰</span>
+                            <span>Trh</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Secondary compass: Economic vs Sovereignty -->
+                <div class="compass-container">
+                    <h3 class="compass-title">Ekonomická × Suverenitní</h3>
+                    <div class="compass-wrapper">
+                        <div class="compass" id="compass-eco-suv">
+                            <div class="axis horizontal"></div>
+                            <div class="axis vertical"></div>
+                        </div>
+                        <div class="axis-label axis-label-top">
+                            <span class="axis-icon">🇪🇺</span>
+                            <span>Evropská</span>
+                        </div>
+                        <div class="axis-label axis-label-bottom">
+                            <span class="axis-icon">🇨🇿</span>
+                            <span>Národní</span>
+                        </div>
+                        <div class="axis-label axis-label-left">
+                            <span class="axis-icon">🏛️</span>
+                            <span>Stát</span>
+                        </div>
+                        <div class="axis-label axis-label-right">
+                            <span class="axis-icon">💰</span>
+                            <span>Trh</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="legend-section">
+                <h3 class="legend-title">Politické strany</h3>
+                <div class="legend-grid" id="legend"></div>
             </div>
         </div>
     </section>
