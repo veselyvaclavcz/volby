@@ -117,10 +117,6 @@ exports.handler = async (event, context) => {
       if (dimensionCounts[dim] > 0) {
         userPosition[dim] = userPosition[dim] / dimensionCounts[dim];
         userPosition[dim] = Math.max(-1, Math.min(1, userPosition[dim]));
-        // Invert EKO axis to match party positions
-        if (dim === 'EKO') {
-          userPosition[dim] = -userPosition[dim];
-        }
       }
     }
     
