@@ -1066,14 +1066,11 @@ p {
   
   .question-card {
     padding: var(--space-md);
-    border-radius: 0;
-    border-left: none;
-    border-right: none;
   }
   
   .question-category {
-    font-size: 11px;
-    margin-bottom: 4px;
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-xs);
   }
   
   .question-text {
@@ -1082,30 +1079,16 @@ p {
     margin-bottom: var(--space-md);
   }
   
-  /* Horizontal layout for answer buttons on mobile */
+  /* Keep vertical layout but reduce spacing */
   .answers-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
+    gap: var(--space-sm);
     margin-bottom: var(--space-md);
   }
   
-  .answers-grid .answer-btn:nth-child(1),
-  .answers-grid .answer-btn:nth-child(5) {
-    grid-column: span 3;
-  }
-  
   .answer-btn {
-    padding: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
     min-height: 44px;
-    border-width: 1px;
-    font-size: 13px;
-  }
-  
-  .answer-label {
-    display: block;
-    text-align: center;
-    line-height: 1.2;
+    font-size: var(--font-size-sm);
   }
   
   /* Compact importance section */
@@ -1115,10 +1098,10 @@ p {
   }
   
   .checkbox-label {
-    font-size: 12px;
+    font-size: var(--font-size-sm);
   }
   
-  /* Horizontal action buttons */
+  /* Keep horizontal action buttons */
   .question-actions {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -1169,35 +1152,30 @@ p {
   
   /* Even more compact for small phones */
   .question-card {
-    padding: 10px;
+    padding: var(--space-sm);
   }
   
   .question-text {
-    font-size: 16px;
-    margin-bottom: 12px;
+    font-size: var(--font-size-base);
+    margin-bottom: var(--space-sm);
   }
   
-  /* 2x2 grid with full width for extreme answers */
+  /* Keep vertical layout with tighter spacing */
   .answers-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 4px;
-  }
-  
-  .answers-grid .answer-btn:nth-child(1),
-  .answers-grid .answer-btn:nth-child(5) {
-    grid-column: span 2;
+    gap: 6px;
+    margin-bottom: var(--space-sm);
   }
   
   .answer-btn {
-    padding: 8px 4px;
+    padding: var(--space-sm) var(--space-sm);
     min-height: 40px;
-    font-size: 12px;
+    font-size: var(--font-size-sm);
   }
   
   /* Ultra compact for very small screens */
   .importance-section {
-    margin-bottom: 10px;
-    padding: 6px 0;
+    margin-bottom: var(--space-sm);
+    padding: 4px 0;
   }
   
   .question-actions {
@@ -1206,7 +1184,7 @@ p {
   
   .question-actions .btn {
     padding: 6px;
-    font-size: 13px;
+    font-size: 12px;
     min-height: 36px;
   }
   
@@ -1238,7 +1216,7 @@ p {
   }
   
   .progress-info {
-    font-size: 11px;
+    font-size: 12px;
   }
   
   .progress-bar {
@@ -1246,44 +1224,26 @@ p {
   }
   
   .question-category {
-    font-size: 10px;
+    font-size: 11px;
     margin-bottom: 2px;
   }
   
   .question-text {
     font-size: 15px;
     line-height: 1.2;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
   
-  /* Optimize answers for small screens */
+  /* Keep vertical layout with minimal spacing */
   .answers-grid {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 3px;
+    gap: 4px;
     margin-bottom: 8px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
   }
   
   .answer-btn {
-    flex: 0 0 auto;
-    min-width: 60px;
-    padding: 6px 4px;
-    min-height: 38px;
-    font-size: 11px;
-    white-space: nowrap;
-  }
-  
-  /* Make extreme answers more prominent */
-  .answers-grid .answer-btn:nth-child(1),
-  .answers-grid .answer-btn:nth-child(5) {
-    min-width: 80px;
-    font-weight: 600;
-  }
-  
-  .answer-label {
-    font-size: 11px;
+    padding: 8px 10px;
+    min-height: 36px;
+    font-size: 13px;
   }
   
   .importance-section {
@@ -1308,45 +1268,5 @@ p {
     padding: 5px;
     font-size: 12px;
     min-height: 34px;
-  }
-}
-
-/* Ultra compact for very small screens in portrait */
-@media (max-width: 375px) and (orientation: portrait) {
-  .answers-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 2px;
-  }
-  
-  .answer-btn {
-    padding: 5px 2px;
-    min-height: 36px;
-    font-size: 10px;
-  }
-  
-  .answer-label {
-    font-size: 10px;
-    word-break: break-word;
-  }
-  
-  /* Hide full text, show abbreviations */
-  .answer-btn:nth-child(1) .answer-label::after { content: "++"; }
-  .answer-btn:nth-child(2) .answer-label::after { content: "+"; }
-  .answer-btn:nth-child(3) .answer-label::after { content: "0"; }
-  .answer-btn:nth-child(4) .answer-label::after { content: "-"; }
-  .answer-btn:nth-child(5) .answer-label::after { content: "--"; }
-  
-  .answer-btn:nth-child(1) .answer-label,
-  .answer-btn:nth-child(2) .answer-label,
-  .answer-btn:nth-child(3) .answer-label,
-  .answer-btn:nth-child(4) .answer-label,
-  .answer-btn:nth-child(5) .answer-label {
-    font-size: 0;
-  }
-  
-  .answer-btn .answer-label::after {
-    font-size: 14px;
-    font-weight: bold;
   }
 }
