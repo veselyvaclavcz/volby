@@ -2,7 +2,7 @@
 exports.handler = async (event, context) => {
   const questions = [
     // Začínáme ekonomikou
-    {id: 1, text: "Daně by měly být co nejnižší", dimension: "EKO", polarity: 1},
+    {id: 1, text: "Daně by měly být co nejnižší", dimension: "EKO", polarity: -1},
     
     // Pak sociální téma
     {id: 12, text: "Stejnopohlavní páry by měly mít právo na adopce", dimension: "SOC", polarity: 1},
