@@ -12,12 +12,12 @@ exports.handler = async (event, context) => {
     
     // Questions data
     const questions = [
-      {id: 1, dimension: "EKO", polarity: 1},
+      {id: 1, dimension: "EKO", polarity: -1},
       {id: 2, dimension: "EKO", polarity: -1},
       {id: 3, dimension: "EKO", polarity: 1},
       {id: 4, dimension: "EKO", polarity: -1},
       {id: 5, dimension: "EKO", polarity: 1},
-      {id: 6, dimension: "EKO", polarity: 1},
+      {id: 6, dimension: "EKO", polarity: -1},
       {id: 7, dimension: "EKO", polarity: 1},
       {id: 8, dimension: "EKO", polarity: 1},
       {id: 9, dimension: "EKO", polarity: -1},
@@ -117,10 +117,6 @@ exports.handler = async (event, context) => {
       if (dimensionCounts[dim] > 0) {
         userPosition[dim] = userPosition[dim] / dimensionCounts[dim];
         userPosition[dim] = Math.max(-1, Math.min(1, userPosition[dim]));
-        // Invert EKO axis because question polarities are inverted
-        if (dim === 'EKO') {
-          userPosition[dim] = -userPosition[dim];
-        }
       }
     }
     

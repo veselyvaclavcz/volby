@@ -56,7 +56,7 @@ exports.handler = async (event, context) => {
     {id: 26, text: "EU migrační pakt je pro Česko přijatelný", dimension: "SUV", polarity: 1},
     
     // Ekonomika
-    {id: 6, text: "Sociální podpora vytváří závislost", dimension: "EKO", polarity: 1},
+    {id: 6, text: "Sociální podpora vytváří závislost", dimension: "EKO", polarity: -1},
     
     // Sociální
     {id: 17, text: "Národní identita je důležitější než evropská", dimension: "SOC", polarity: -1},
