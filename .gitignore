@@ -32,3 +32,6 @@ backup/
 
 # Logs
 *.log
+
+# Local Netlify folder
+.netlify

@@ -81,6 +81,10 @@ exports.handler = async (event, context) => {
     let userPosition = {EKO: 0, SOC: 0, SUV: 0};
     let dimensionCounts = {EKO: 0, SOC: 0, SUV: 0};
     
+    // Calculate freedom score
+    let freedomScore = 0;
+    let freedomCount = 0;
+    
     for (const [questionId, answer] of Object.entries(answers)) {
       const question = questions.find(q => q.id === parseInt(questionId));
       if (question && answer.value !== null) {
@@ -88,6 +92,23 @@ exports.handler = async (event, context) => {
         const weight = answer.important ? 2 : 1;
         userPosition[question.dimension] += score * weight;
         dimensionCounts[question.dimension] += weight;
+        
+        // Freedom score calculation
+        // Pro-freedom questions (less state control)
+        const proFreedom = [1, 3, 5, 11, 12, 13, 15, 20, 25, 27, 32];
+        // Pro-state questions (more state control)
+        const proState = [2, 4, 9, 10, 14, 17, 19, 21, 23, 24, 26, 28, 31];
+        
+        const qId = parseInt(questionId);
+        if (proFreedom.includes(qId)) {
+          // For pro-freedom questions: Agree (1) = +2, Disagree (5) = -2
+          freedomScore += (3 - answer.value) * weight;
+          freedomCount += weight;
+        } else if (proState.includes(qId)) {
+          // For pro-state questions: Agree (1) = -2, Disagree (5) = +2
+          freedomScore += (answer.value - 3) * weight;
+          freedomCount += weight;
+        }
       }
     }
     
@@ -122,6 +143,15 @@ exports.handler = async (event, context) => {
     
     results.sort((a, b) => b.match - a.match);
     
+    // Normalize freedom score to 0-100
+    // Using actual weights for proper normalization
+    // Max possible score is freedomCount * 2 (all extreme answers)
+    // Score range is -2*freedomCount to +2*freedomCount
+    // Normalize to 0-100 where 50 is neutral
+    const normalizedFreedom = freedomCount > 0 
+      ? Math.max(0, Math.min(100, 50 + (freedomScore / (freedomCount * 2)) * 50))
+      : 50;
+    
     return {
       statusCode: 200,
       headers: {
@@ -130,7 +160,8 @@ exports.handler = async (event, context) => {
       },
       body: JSON.stringify({
         results: results,
-        user_compass: userPosition
+        user_compass: userPosition,
+        freedom_score: Math.round(normalizedFreedom)
       })
     };
   } catch (error) {

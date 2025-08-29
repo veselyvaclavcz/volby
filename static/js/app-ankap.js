@@ -258,7 +258,7 @@ async function calculateResults() {
             
             // Add slight delay for better UX
             setTimeout(() => {
-                displayResults(data.results, data.user_compass, data.compass_description);
+                displayResults(data.results, data.user_compass, data.compass_description, data.freedom_score);
             }, 1000);
             
         } catch (error) {
@@ -275,7 +275,7 @@ async function calculateResults() {
 }
 
 // Display results with animations
-function displayResults(results, userCompass, compassDescription) {
+function displayResults(results, userCompass, compassDescription, freedomScore) {
     // Sort by match percentage
     results.sort((a, b) => b.match - a.match);
     
@@ -296,6 +296,39 @@ function displayResults(results, userCompass, compassDescription) {
                     <p style="margin: 0; font-size: 0.9em;">${compassDescription || 'Pozice vypočítana z vašich odpovědí'}</p>
                     <p style="margin: 0.5rem 0 0 0; font-size: 0.8em; color: var(--color-text-muted);">
                         EKO: ${userCompass.EKO?.toFixed(2) || '0.00'} | SOC: ${userCompass.SOC?.toFixed(2) || '0.00'} | SUV: ${userCompass.SUV?.toFixed(2) || '0.00'}
+                    </p>
+                </div>
+            ` : ''}
+            
+            ${freedomScore !== undefined ? `
+                <div class="freedom-meter" style="background: linear-gradient(135deg, #1a1a1a, #2a2a2a); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0; border: 2px solid var(--color-primary);">
+                    <h3 style="margin: 0 0 0.5rem 0; color: var(--color-primary); text-align: center;">
+                        🔥 SVOBODOMETR: ${freedomScore}%
+                    </h3>
+                    <p style="text-align: center; margin: 0 0 1rem 0; font-size: 0.85em; opacity: 0.9;">
+                        Měří vaši preferenci mezi osobní svobodou a státní kontrolou<br>
+                        <small style="opacity: 0.7;">Zahrnuje ekonomickou i osobní svobodu</small>
+                    </p>
+                    <div style="width: 100%; height: 40px; background: linear-gradient(90deg, #ff0000, #ff6666, #ffff66, #66ff66, #00ff00); border-radius: 20px; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 50%; left: ${freedomScore}%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: white; border: 3px solid #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; color: #000; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
+                            ${freedomScore}
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 0.5rem; font-size: 0.85em; opacity: 0.8;">
+                        <span>🔴 Státní kontrola</span>
+                        <span>⚪ Neutrální postoj</span>
+                        <span>🟢 Osobní svoboda</span>
+                    </div>
+                    <p style="text-align: center; margin: 1rem 0 0 0; font-size: 0.9em; line-height: 1.4;">
+                        ${freedomScore < 20 ? '⛓️ <strong>Silná preference státní kontroly.</strong> Důvěřuješ státu v řízení ekonomických i sociálních záležitostí.' :
+                          freedomScore < 40 ? '🔒 <strong>Mírná preference státní regulace.</strong> Podporuješ větší roli státu v klíčových oblastech.' :
+                          freedomScore === 50 ? '⚖️ <strong>Neutrální postoj.</strong> Nemáš vyhraněný názor nebo vyrovnaně kombinuješ oba přístupy.' :
+                          freedomScore < 60 ? '⚖️ <strong>Vyvážený přístup.</strong> Mírně preferuješ ' + (freedomScore > 50 ? 'svobodu před kontrolou' : 'kontrolu před svobodou') + '.' :
+                          freedomScore < 80 ? '🔓 <strong>Mírná preference osobní svobody.</strong> Důvěřuješ více jednotlivcům než státu.' :
+                          '🦅 <strong>Silná preference osobní svobody.</strong> Věříš v minimální stát a maximální osobní odpovědnost.'}
+                    </p>
+                    <p style="text-align: center; margin: 0.5rem 0 0 0; font-size: 0.8em; font-style: italic; opacity: 0.7;">
+                        "50% znamená neutrální postoj, ne průměrnou svobodu"
                     </p>
                 </div>
             ` : ''}
