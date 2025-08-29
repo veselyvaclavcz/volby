@@ -423,6 +423,26 @@ function displayResults(results, userCompass, compassDescription, freedomScore) 
                             </div>
                             <span class="result-percentage">${result.match}%</span>
                         </div>
+                        <button class="agreement-details-btn" onclick="toggleAgreementDetails('${result.party.replace(/'/g, "\\'")}', ${index})" style="
+                            background: transparent;
+                            border: 1px solid rgba(255,217,61,0.3);
+                            color: var(--color-text);
+                            padding: 0.4rem 0.8rem;
+                            border-radius: 4px;
+                            font-size: 0.8em;
+                            cursor: pointer;
+                            margin-top: 0.5rem;
+                            transition: all 0.2s ease;
+                            display: flex;
+                            align-items: center;
+                            gap: 0.3rem;
+                        " onmouseover="this.style.borderColor='rgba(255,217,61,0.6)'" onmouseout="this.style.borderColor='rgba(255,217,61,0.3)'">
+                            <span class="toggle-arrow" style="transition: transform 0.2s ease;">▶</span>
+                            Otázky
+                        </button>
+                        <div class="agreement-details" id="agreement-details-${index}" style="display: none; margin-top: 0.8rem; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 6px; border: 1px solid rgba(255,217,61,0.1);">
+                            <!-- Details will be populated here -->
+                        </div>
                     </div>
                 </div>
             `).join('')}
@@ -564,7 +584,14 @@ function initializeMobileMenu() {
     const nav = document.querySelector('.nav');
     
     if (menuButton && nav) {
-        menuButton.addEventListener('click', () => {
+        // Add cursor pointer for iOS Safari
+        menuButton.style.cursor = 'pointer';
+        
+        // Handler function for menu toggle
+        const toggleMenu = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
             const isOpen = nav.classList.contains('mobile-menu-open');
             
             if (isOpen) {
@@ -572,14 +599,34 @@ function initializeMobileMenu() {
             } else {
                 openMobileMenu();
             }
-        });
+            
+            // Force repaint for Safari
+            nav.style.display = nav.style.display;
+        };
         
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
+        // Detect iOS Safari
+        const isIOSSafari = /iP(ad|hone|od).+Version\/[\d\.]+.*Safari/i.test(navigator.userAgent);
+        
+        if (isIOSSafari) {
+            // For iOS Safari, use touchend instead of touchstart to avoid conflicts
+            menuButton.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                toggleMenu(e);
+            }, { passive: false });
+        } else {
+            // For other browsers, use click
+            menuButton.addEventListener('click', toggleMenu);
+        }
+        
+        // Close menu when clicking/touching outside
+        const closeOnOutside = (e) => {
             if (!menuButton.contains(e.target) && !nav.contains(e.target)) {
                 closeMobileMenu();
             }
-        });
+        };
+        
+        document.addEventListener('click', closeOnOutside);
+        document.addEventListener('touchend', closeOnOutside, { passive: true });
     }
 }
 
@@ -1037,4 +1084,232 @@ document.addEventListener('DOMContentLoaded', () => {
             showCompass();
         });
     });
+});
+
+// Store questions and parties data globally for agreement details
+let questionsData = [];
+let partiesData = [];
+
+// Toggle agreement details for a party
+async function toggleAgreementDetails(partyName, index) {
+    const detailsElement = document.getElementById(`agreement-details-${index}`);
+    const button = detailsElement.previousElementSibling;
+    const arrow = button.querySelector('.toggle-arrow');
+    
+    if (detailsElement.style.display === 'none') {
+        // Show details
+        if (!questionsData.length) {
+            await loadQuestionsData();
+        }
+        
+        const agreementHTML = await generateAgreementDetails(partyName);
+        detailsElement.innerHTML = agreementHTML;
+        detailsElement.style.display = 'block';
+        arrow.style.transform = 'rotate(90deg)';
+        
+        // Smooth animation
+        detailsElement.style.animation = 'slideInUp 0.3s ease forwards';
+    } else {
+        // Hide details
+        arrow.style.transform = 'rotate(0deg)';
+        detailsElement.style.animation = 'fadeOut 0.3s ease forwards';
+        setTimeout(() => {
+            detailsElement.style.display = 'none';
+        }, 300);
+    }
+}
+
+// Load questions data from API
+async function loadQuestionsData() {
+    if (questionsData.length > 0) return;
+    
+    try {
+        const response = await fetch('/netlify/functions/api-questions');
+        const data = await response.json();
+        questionsData = data.questions;
+    } catch (error) {
+        console.error('Error loading questions:', error);
+        // Fallback data
+        questionsData = [
+            {id: 1, text: "Výše daní by měla odpovídat rozsahu státních služeb", dimension: "EKO"},
+            {id: 2, text: "Domácí firmy potřebují státní podporu pro konkurenceschopnost", dimension: "EKO"},
+            // Add more as needed...
+        ];
+    }
+}
+
+// Generate agreement details HTML for a party
+async function generateAgreementDetails(partyName) {
+    // Find party in global parties data
+    const party = partiesData.find(p => p.name === partyName) || 
+                  {code: partyName.toUpperCase(), name: partyName, compass_position: {EKO: 0, SOC: 0, SUV: 0}};
+    
+    // Calculate agreement for each answered question
+    const agreementData = [];
+    
+    for (const [questionId, answer] of Object.entries(answers)) {
+        if (answer.value === null) continue;
+        
+        const question = questionsData.find(q => q.id === parseInt(questionId));
+        if (!question) continue;
+        
+        // Estimate party answer based on compass position and question dimension
+        const partyScore = estimatePartyAnswer(party, question);
+        const userScore = answer.value;
+        
+        // Calculate agreement (1-5 scale, lower difference = better agreement)
+        const difference = Math.abs(userScore - partyScore);
+        let agreementLevel, agreementColor, agreementIcon;
+        
+        if (difference <= 0.5) {
+            agreementLevel = 'Plná shoda';
+            agreementColor = '#4CAF50';
+            agreementIcon = '✅';
+        } else if (difference <= 1.5) {
+            agreementLevel = 'Částečná shoda';
+            agreementColor = '#FF9800';
+            agreementIcon = '🔶';
+        } else {
+            agreementLevel = 'Neshoda';
+            agreementColor = '#f44336';
+            agreementIcon = '❌';
+        }
+        
+        agreementData.push({
+            question: question.text,
+            dimension: question.dimension,
+            userAnswer: getUserAnswerText(userScore),
+            partyAnswer: getUserAnswerText(partyScore),
+            agreementLevel,
+            agreementColor,
+            agreementIcon,
+            important: answer.important
+        });
+    }
+    
+    // Sort by dimension for better readability
+    agreementData.sort((a, b) => {
+        const dimOrder = {EKO: 1, SOC: 2, SUV: 3};
+        return dimOrder[a.dimension] - dimOrder[b.dimension];
+    });
+    
+    // Generate HTML - Ultra simple compact list
+    const fullCount = agreementData.filter(a => a.agreementLevel === 'Plná shoda').length;
+    const partialCount = agreementData.filter(a => a.agreementLevel === 'Částečná shoda').length;
+    const noneCount = agreementData.filter(a => a.agreementLevel === 'Neshoda').length;
+    
+    let html = `
+        <div style="margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+            <div style="font-size: 0.9em; color: var(--color-text); margin-bottom: 0.3rem;">Shoda s stranou ${partyName}</div>
+            <div style="display: flex; gap: 1rem; font-size: 0.8em; align-items: center;">
+                <span style="display: flex; align-items: center; gap: 0.3rem;">
+                    <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #4CAF50;"></span>
+                    ${fullCount}
+                </span>
+                <span style="display: flex; align-items: center; gap: 0.3rem;">
+                    <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: linear-gradient(90deg, #FF9800 50%, transparent 50%); border: 1px solid #FF9800;"></span>
+                    ${partialCount}
+                </span>
+                <span style="display: flex; align-items: center; gap: 0.3rem;">
+                    <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; border: 1px solid #f44336;"></span>
+                    ${noneCount}
+                </span>
+            </div>
+        </div>
+        <div style="max-height: 320px; overflow-y: auto;">
+    `;
+    
+    // Ultra simple list - just question and agreement indicator on the right
+    agreementData.forEach((item, index) => {
+        // Use consistent circle symbols that render at same size
+        let agreementSymbol;
+        if (item.agreementLevel === 'Plná shoda') {
+            agreementSymbol = `<span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: ${item.agreementColor};"></span>`;
+        } else if (item.agreementLevel === 'Částečná shoda') {
+            agreementSymbol = `<span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: linear-gradient(90deg, ${item.agreementColor} 50%, transparent 50%); border: 1px solid ${item.agreementColor};"></span>`;
+        } else {
+            agreementSymbol = `<span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; border: 1px solid ${item.agreementColor};"></span>`;
+        }
+        
+        html += `
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 0.85em;">
+                <div style="flex: 1; line-height: 1.3; padding-right: 1rem;">
+                    <span style="color: var(--color-text);">${item.question}</span>
+                    ${item.important ? '<span style="color: var(--color-primary); font-size: 0.75em; margin-left: 0.4rem;">⭐</span>' : ''}
+                </div>
+                <div style="flex-shrink: 0; display: flex; align-items: center;">
+                    ${agreementSymbol}
+                </div>
+            </div>
+        `;
+    });
+    
+    html += '</div>';
+    
+    return html;
+}
+
+// Estimate party answer based on compass position
+function estimatePartyAnswer(party, question) {
+    const position = party.compass_position[question.dimension] || 0;
+    
+    // Convert compass position (-1 to +1) to answer scale (1 to 5)
+    // More negative = more agreement with "leftist" positions (lower numbers)
+    // More positive = more agreement with "rightist" positions (higher numbers)
+    
+    // Inverse mapping: -1 maps to 1, +1 maps to 5, 0 maps to 3
+    const answer = 3 + (position * 2);
+    return Math.max(1, Math.min(5, Math.round(answer)));
+}
+
+// Convert answer number to text
+function getUserAnswerText(answerValue) {
+    const texts = {
+        1: 'Silně souhlasím',
+        2: 'Spíše souhlasím', 
+        3: 'Neutrální',
+        4: 'Spíše nesouhlasím',
+        5: 'Silně nesouhlasím'
+    };
+    return texts[Math.round(answerValue)] || 'Neznámé';
+}
+
+// Load parties data when needed
+async function loadPartiesData() {
+    if (partiesData.length > 0) return;
+    
+    // Since parties are hardcoded in calculate function, replicate here
+    partiesData = [
+        {code: "ANO", name: "ANO", compass_position: {EKO: -0.36, SOC: 0.23, SUV: 0.41}},
+        {code: "SPOLU", name: "SPOLU", compass_position: {EKO: 0.64, SOC: -0.05, SUV: -0.64}},
+        {code: "SPD", name: "SPD", compass_position: {EKO: -0.41, SOC: 0.86, SUV: 0.82}},
+        {code: "PIRATI", name: "Piráti", compass_position: {EKO: -0.32, SOC: -0.95, SUV: -0.68}},
+        {code: "STAN", name: "STAN", compass_position: {EKO: 0.14, SOC: -0.18, SUV: -0.73}},
+        {code: "KSČM", name: "KSČM", compass_position: {EKO: -0.95, SOC: 0.23, SUV: 0.73}},
+        {code: "TRIKOLORA", name: "Trikolóra", compass_position: {EKO: 0.77, SOC: 0.82, SUV: 0.68}},
+        {code: "PRISAHA", name: "Přísaha", compass_position: {EKO: 0.23, SOC: 0.27, SUV: 0.09}},
+        {code: "SOCDEM", name: "SOCDEM", compass_position: {EKO: -0.68, SOC: -0.55, SUV: -0.36}},
+        {code: "ZELENI", name: "Zelení", compass_position: {EKO: -0.50, SOC: -1.00, SUV: -1.00}},
+        {code: "SVOBODNI", name: "Svobodní", compass_position: {EKO: 0.95, SOC: -0.45, SUV: 0.36}},
+        {code: "MOTORISTE", name: "Motoristé", compass_position: {EKO: 0.55, SOC: 0.32, SUV: 0.50}},
+        {code: "PRO", name: "PRO", compass_position: {EKO: 0.32, SOC: 0.41, SUV: 0.64}},
+        {code: "REPUBLIKA", name: "REPUBLIKA", compass_position: {EKO: 0.27, SOC: 0.82, SUV: 0.68}},
+        {code: "STACILO", name: "Stačilo!", compass_position: {EKO: -0.95, SOC: -0.45, SUV: 0.41}},
+        {code: "VYZVA2025", name: "Výzva2025", compass_position: {EKO: 0.00, SOC: 0.14, SUV: 0.14}},
+        {code: "KRUH", name: "KRUH", compass_position: {EKO: 0.00, SOC: -0.45, SUV: -0.18}},
+        {code: "VOLUNTIA", name: "VOLUNTIA", compass_position: {EKO: 1.00, SOC: -0.73, SUV: -0.09}},
+        {code: "BUDOUCNOST", name: "Budoucnost", compass_position: {EKO: -0.32, SOC: -0.50, SUV: -0.64}},
+        {code: "JASAN", name: "JASAN", compass_position: {EKO: 0.55, SOC: 0.36, SUV: 0.23}},
+        {code: "LEVY_BLOK", name: "Levý blok", compass_position: {EKO: -1.00, SOC: -0.91, SUV: 0.09}},
+        {code: "NARODNI_DEMOKRACIE", name: "Národní demokracie", compass_position: {EKO: 0.27, SOC: 0.86, SUV: 0.77}},
+        {code: "PRAVO_RESPEKT", name: "Právo Respekt", compass_position: {EKO: 0.00, SOC: 0.00, SUV: 0.00}},
+        {code: "ALIANCE_STABILITA", name: "Aliance pro stabilitu", compass_position: {EKO: -0.18, SOC: 0.23, SUV: 0.09}},
+        {code: "CESKA_SUVERENITA", name: "Česká suverenita", compass_position: {EKO: 0.27, SOC: 0.59, SUV: 0.73}},
+        {code: "VOLT", name: "Volt", compass_position: {EKO: -0.05, SOC: -0.86, SUV: -1.00}}
+    ];
+}
+
+// Initialize parties data on load
+document.addEventListener('DOMContentLoaded', () => {
+    loadPartiesData();
 });
