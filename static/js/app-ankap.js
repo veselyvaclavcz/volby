@@ -362,11 +362,35 @@ function displayResults(results, userCompass, compassDescription, freedomScore) 
         localStorage.setItem('userCompassDescription', compassDescription || '');
     }
     
+    // Detect anarchocapitalist position
+    const isAnarchoCapitalist = userCompass && 
+        userCompass.EKO > 0.8 && 
+        userCompass.SOC < -0.6 && 
+        freedomScore > 85;
+    
     // Create HTML for results with staggered animations
     const resultsHTML = `
         <div class="results-header">
             <h2>Vaše výsledky</h2>
             <p class="lead">Shoda s politickými stranami na základě vašich odpovědí</p>
+            ${isAnarchoCapitalist ? `
+                <div class="ancap-warning" style="background: linear-gradient(135deg, #FFD93D 50%, #1A1A1A 50%); padding: 1.5rem; border-radius: 8px; margin: 1rem 0; border: 2px solid #FFD93D;">
+                    <h3 style="margin: 0 0 0.5rem 0; color: #FFD93D; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">🏴 Anarchokapitalistická pozice detekována! 🏴</h3>
+                    <p style="margin: 0.5rem 0; color: #fff; font-size: 0.95em;">
+                        Gratulujeme! Podle vašich odpovědí jste anarchokapitalista. 
+                        Ironií je, že vám radíme, kterou stranu volit ve volbách, 
+                        které byste podle svého přesvědčení nejspíš bojkotoval(a).
+                    </p>
+                    <p style="margin: 0.5rem 0; color: #FFD93D; font-size: 0.85em; font-style: italic;">
+                        "Volby jsou pouze iluze výběru v systému, který neuznáváte. 
+                        Skutečná svoboda přichází s dobrovolnou spoluprací, ne s hlasovacím lístkem."
+                    </p>
+                    <p style="margin: 0.5rem 0 0 0; color: #fff; font-size: 0.8em;">
+                        💡 Tip: Pokud už musíte volit, vyberte stranu, která slibuje nejmenší stát... 
+                        nebo si založte vlastní mikronárod na moři!
+                    </p>
+                </div>
+            ` : ''}
             ${userCompass ? `
                 <div class="compass-position-info" style="background: rgba(255,217,61,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0; text-align: center;">
                     <h4 style="margin: 0 0 0.5rem 0; color: var(--color-primary);">Vaše politická pozice</h4>
