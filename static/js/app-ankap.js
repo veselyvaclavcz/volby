@@ -789,6 +789,13 @@ function showCompass() {
             compassSection.setAttribute('data-initialized', 'true');
         }
         
+        // Add user position if available
+        const userPosition = localStorage.getItem('userCompassPosition');
+        if (userPosition) {
+            const position = JSON.parse(userPosition);
+            addUserPositionToCompass(position);
+        }
+        
         // Update active navigation
         document.querySelectorAll('.nav-link').forEach(link => {
             link.classList.remove('active');
@@ -930,6 +937,57 @@ function unhighlightParty(code) {
     document.querySelectorAll(`[data-party="${code}"]`).forEach(el => {
         el.classList.remove('highlight');
     });
+}
+
+// Add user position to compass
+function addUserPositionToCompass(userPosition) {
+    // Remove any existing user position markers
+    document.querySelectorAll('.user-position').forEach(el => el.remove());
+    
+    // Add user position to both compasses
+    addUserDotToCompass('compass-eco-soc', userPosition, 'EKO', 'SOC');
+    addUserDotToCompass('compass-eco-suv', userPosition, 'EKO', 'SUV');
+}
+
+// Add user dot to a specific compass
+function addUserDotToCompass(compassId, position, dimX, dimY) {
+    const compass = document.getElementById(compassId);
+    if (!compass) return;
+    
+    const compassWidth = compass.offsetWidth || 420;
+    const compassHeight = compass.offsetHeight || 420;
+    const centerX = compassWidth / 2;
+    const centerY = compassHeight / 2;
+    const scale = Math.min(centerX, centerY) * 0.85;
+    
+    const x = (position[dimX] || 0) * scale + centerX;
+    const y = (position[dimY] || 0) * scale + centerY;
+    
+    // Create user position marker
+    const userDot = document.createElement('div');
+    userDot.className = 'party user-position';
+    userDot.style.left = `${x - 12}px`;
+    userDot.style.top = `${y - 12}px`;
+    userDot.style.width = '24px';
+    userDot.style.height = '24px';
+    userDot.style.background = 'var(--color-primary)';
+    userDot.style.border = '3px solid white';
+    userDot.style.boxShadow = '0 0 10px rgba(255, 217, 61, 0.8)';
+    userDot.style.zIndex = '100';
+    
+    // Add "TY" label
+    const label = document.createElement('div');
+    label.className = 'party-tooltip';
+    label.textContent = 'TY';
+    label.style.background = 'var(--color-primary)';
+    label.style.color = 'black';
+    label.style.fontWeight = 'bold';
+    label.style.visibility = 'visible';
+    label.style.opacity = '1';
+    label.style.transform = 'translateX(-50%) translateY(-120%)';
+    userDot.appendChild(label);
+    
+    compass.appendChild(userDot);
 }
 
 // Update navigation to handle compass section
