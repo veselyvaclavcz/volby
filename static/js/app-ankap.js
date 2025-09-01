@@ -117,12 +117,6 @@ async function loadQuestions() {
         
         // Keep questions in original format (answers as object)
         questions = rawQuestions;
-        
-            EKO: questions.filter(q => q.dimension === 'EKO').length,
-            STA: questions.filter(q => q.dimension === 'STA').length,
-            SOC: questions.filter(q => q.dimension === 'SOC').length,
-            SUV: questions.filter(q => q.dimension === 'SUV').length
-        });
     } catch (error) {
         console.error('Error loading questions:', error);
         // Fallback pro lokální testování
