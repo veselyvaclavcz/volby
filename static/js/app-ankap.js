@@ -290,12 +290,6 @@ function startCalculator() {
     const questionContainer = document.getElementById('questionContainer');
     const resultsContainer = document.getElementById('resultsContainer');
     
-        welcome: !!welcomeSection,
-        calculator: !!calculatorDiv,
-        questionContainer: !!questionContainer,
-        resultsContainer: !!resultsContainer
-    });
-    
     if (welcomeSection) welcomeSection.style.display = 'none';
     if (calculatorDiv) calculatorDiv.style.display = 'block';
     if (questionContainer) questionContainer.style.display = 'block';
