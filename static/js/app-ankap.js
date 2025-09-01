@@ -63,10 +63,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // Check URL hash and show appropriate section
     const hash = window.location.hash.slice(1);
-    console.log('Initial hash:', hash);
     
     if (hash && ['welcome', 'calculator', 'compass', 'jak-to-funguje', 'kalkulacka', 'metodologie', 'faq'].includes(hash)) {
-        console.log('Showing section:', hash);
         showSection(hash);
         // Special handling for compass on direct load
         if (hash === 'compass') {
@@ -120,10 +118,6 @@ async function loadQuestions() {
         // Keep questions in original format (answers as object)
         questions = rawQuestions;
         
-        console.log('Loaded questions:', questions.length, 'Format:', questions[0]?.answers ? 'object' : 'unknown');
-        console.log('DEBUG: First question:', questions[0]);
-        console.log('DEBUG: Last question:', questions[questions.length - 1]);
-        console.log('DEBUG: Questions by dimension:', {
             EKO: questions.filter(q => q.dimension === 'EKO').length,
             STA: questions.filter(q => q.dimension === 'STA').length,
             SOC: questions.filter(q => q.dimension === 'SOC').length,
@@ -139,7 +133,6 @@ async function loadQuestions() {
             {id: 2, text: "Domácí firmy potřebují státní podporu pro konkurenceschopnost", dimension: "EKO", polarity: -1},
             {id: 14, text: "Společnost funguje nejlépe s tradičním rodinným modelem", dimension: "SOC", polarity: -1}
         ];
-        console.log('Using fallback questions for local testing');
     }
 }
 
@@ -158,7 +151,6 @@ async function loadParties() {
         console.error('Error loading parties:', error);
         // Fallback for local testing - empty array since API should work
         parties = [];
-        console.log('API failed, using empty fallback');
     }
 }
 
@@ -170,7 +162,6 @@ function ensureCalculatorDisplay() {
     const welcomeSection = document.getElementById('welcome');
     const calculatorDiv = document.getElementById('calculator');
     
-    console.log('DEBUG: Ensuring calculator display. Has results?', !!savedResults);
     
     if (savedResults) {
         // We have completed test - show results
@@ -219,7 +210,6 @@ function goHome() {
 
 // Navigation with smooth transitions
 function showSection(sectionId) {
-    console.log('showSection called with:', sectionId);
     
     // Update navigation active state
     document.querySelectorAll('.nav-link').forEach(link => {
@@ -269,7 +259,6 @@ function showSection(sectionId) {
         } else if (sectionId !== 'compass') {
             // If explicitly switching to calculator, ensure display is correct first
             if (sectionId === 'calculator' || sectionId === 'kalkulacka') {
-                console.log('DEBUG: Explicitly navigating to calculator - ensuring correct display');
                 // The ensureCalculatorDisplay function already handles all the logic
                 ensureCalculatorDisplay();
             }
@@ -293,7 +282,6 @@ function showSection(sectionId) {
 
 // Start calculator
 function startCalculator() {
-    console.log('DEBUG: startCalculator called');
     currentQuestion = 0;
     answers = {};
     
@@ -308,7 +296,6 @@ function startCalculator() {
     const questionContainer = document.getElementById('questionContainer');
     const resultsContainer = document.getElementById('resultsContainer');
     
-    console.log('DEBUG: Elements found:', {
         welcome: !!welcomeSection,
         calculator: !!calculatorDiv,
         questionContainer: !!questionContainer,
@@ -320,7 +307,6 @@ function startCalculator() {
     if (questionContainer) questionContainer.style.display = 'block';
     if (resultsContainer) resultsContainer.style.display = 'none';
     
-    console.log('DEBUG: About to call displayQuestion. Questions loaded?', questions.length);
     
     // Display the first question
     displayQuestion();
@@ -339,7 +325,6 @@ function startCalculator() {
 
 // Display current question with smooth transition
 function displayQuestion() {
-    console.log('DEBUG: displayQuestion called, currentQuestion:', currentQuestion, 'questions.length:', questions.length);
     
     // Check if questions are loaded
     if (!questions || questions.length === 0) {
@@ -348,14 +333,11 @@ function displayQuestion() {
     }
     
     if (currentQuestion >= questions.length) {
-        console.log('DEBUG: Reached end of questions. Total questions:', questions.length, 'Current question:', currentQuestion);
-        console.log('DEBUG: Total answers collected:', Object.keys(answers).length);
         calculateResults();
         return;
     }
     
     const question = questions[currentQuestion];
-    console.log('DEBUG: Displaying question:', question);
     
     // Update progress with animation - show progress based on completed questions
     const completedQuestions = Object.keys(answers).length;
@@ -457,7 +439,6 @@ function displayQuestion() {
 // Select answer with visual feedback - V2 format
 function selectAnswer(value) {
     const question = questions[currentQuestion];
-    console.log(`DEBUG selectAnswer: Q${question.id}, value=${value}`);
     
     // Update UI with smooth transition
     document.querySelectorAll('.answer-btn').forEach((btn, index) => {
@@ -483,8 +464,6 @@ function selectAnswer(value) {
     localStorage.setItem('userAnswers', JSON.stringify(answers));
     localStorage.setItem('currentQuestion', currentQuestion.toString());
     
-    console.log(`DEBUG saved answer: Q${question.id} = ${value}, important=${isImportant}`);
-    console.log('DEBUG all answers so far:', answers);
     
     // Enable next button
     const nextBtn = document.getElementById('nextBtn');
@@ -555,8 +534,6 @@ async function calculateResults() {
         
         try {
             // Debug: Log what we're sending
-            console.log('DEBUG calculateResults: Total collected answers:', Object.keys(answers).length);
-            console.log('DEBUG calculateResults: Sending answers to API:', answers);
             
             // Send answers to API
             const response = await fetch('/.netlify/functions/api-calculate', {
@@ -571,7 +548,6 @@ async function calculateResults() {
             const data = await response.json();
             
             // Debug: Log what we received
-            console.log('Received from API:', data);
             console.log('User compass position:', data.user_compass);
             console.log('Svobodometr:', data.svobodometr);
             
@@ -594,16 +570,12 @@ async function calculateResults() {
             
             // Add slight delay for better UX
             setTimeout(() => {
-                console.log('DEBUG calculateResults: API response data:', data);
-                console.log('DEBUG calculateResults: user_compass:', data.user_compass);
-                console.log('DEBUG calculateResults: dimensions:', data.dimensions);
                 displayResults(data.results, data.user_compass, data.dimensions, data.svobodometr);
             }, 1000);
             
         } catch (error) {
             console.error('Error calculating results:', error);
             // Fallback pro lokální testování
-            console.log('Using fallback calculation for local testing');
             
             // Use party list if available, otherwise use hardcoded names
             const partyList = parties.length > 0 ? parties.map(p => p.name) : [
@@ -633,7 +605,6 @@ async function calculateResults() {
 
 // Display results with animations - V2 4D format
 function displayResults(results, userCompass, dimensions, svobodometr) {
-    console.log('DEBUG: displayResults called with:', { results, userCompass, dimensions, svobodometr });
     
     // Save results to localStorage for navigation persistence
     localStorage.setItem('testResults', JSON.stringify({
@@ -642,7 +613,6 @@ function displayResults(results, userCompass, dimensions, svobodometr) {
         dimensions: dimensions,
         svobodometr: svobodometr
     }));
-    console.log('DEBUG: Results saved to localStorage');
     
     // Hide the welcome and calculator header when showing results
     const welcomeSection = document.getElementById('welcome');
@@ -1195,7 +1165,6 @@ function initializeKeyboardNavigation() {
         
         // Number keys 1-5 for answers
         if (e.key >= '1' && e.key <= '5') {
-            console.log(`DEBUG keydown: pressed ${e.key}, calling selectAnswer(${parseInt(e.key)})`);
             selectAnswer(parseInt(e.key));
         }
         
@@ -1212,7 +1181,6 @@ function initializeKeyboardNavigation() {
         
         // Enter to continue to next question (if answer selected)
         if (e.key === 'Enter' && nextBtn && !nextBtn.disabled) {
-            console.log('DEBUG keydown: Enter pressed, calling nextQuestion()');
             e.preventDefault(); // Prevent form submission
             nextQuestion();
         }
@@ -1221,10 +1189,8 @@ function initializeKeyboardNavigation() {
         if (e.key === ' ' && e.target.tagName !== 'BUTTON') {
             e.preventDefault();
             if (nextBtn && !nextBtn.disabled) {
-                console.log('DEBUG keydown: Space pressed, calling nextQuestion()');
                 nextQuestion();
             } else {
-                console.log('DEBUG keydown: Space pressed, calling skipQuestion()');
                 skipQuestion();
             }
         }
@@ -1234,7 +1200,6 @@ function initializeKeyboardNavigation() {
 // Handle hash changes
 window.addEventListener('hashchange', () => {
     const hash = window.location.hash.slice(1);
-    console.log('DEBUG: Hash changed to:', hash);
     if (hash && ['welcome', 'calculator', 'compass', 'jak-to-funguje', 'kalkulacka', 'metodologie', 'faq'].includes(hash)) {
         if (hash === 'jak-to-funguje' || hash === 'metodologie' || hash === 'faq') {
             // These are sections on the main page, just scroll to them
@@ -1295,27 +1260,42 @@ function showCompass() {
 // Removed - both compasses are displayed side by side now
 
 async function initializeCompass() {
-    console.log('DEBUG initializeCompass: Starting compass initialization');
-    console.log('DEBUG initializeCompass: Current partyResults:', window.partyResults?.length || 0, 'parties');
+    
+    // Check if compass elements exist
+    const compass1 = document.getElementById('compass-eco-state');
+    const compass2 = document.getElementById('compass-soc-suv');
+    
+    if (!compass1 || !compass2) {
+        console.error('ERROR: Compass elements not found!', {
+            compass1: !!compass1,
+            compass2: !!compass2,
+            compassSection: !!document.getElementById('compass'),
+            allIds: Array.from(document.querySelectorAll('[id]')).map(el => el.id)
+        });
+        // Try to wait and retry once
+        if (!window.compassRetryAttempted) {
+            window.compassRetryAttempted = true;
+            setTimeout(() => {
+                initializeCompass();
+            }, 1000);
+        }
+        return;
+    }
+    
     
     // Load user position from localStorage if available
     const userPositionData = localStorage.getItem('userCompassPosition');
     if (userPositionData) {
         window.userCompassPosition = JSON.parse(userPositionData);
-        console.log('DEBUG initializeCompass: Loaded userCompassPosition from localStorage:', window.userCompassPosition);
     } else {
-        console.log('DEBUG initializeCompass: No userCompassPosition in localStorage');
     }
     
-    console.log('DEBUG initializeCompass: Current userCompassPosition:', window.userCompassPosition);
     
     // If we don't have party results, get default positions
     if (!window.partyResults || window.partyResults.length === 0) {
-        console.log('DEBUG initializeCompass: Loading default party positions');
         await loadDefaultPartyPositions();
     }
     
-    console.log('DEBUG initializeCompass: Final partyResults:', window.partyResults?.length || 0, 'parties');
     
     // Render both compasses with new axis combinations
     // Compass 1: Personal Freedom (Social) × Economic Freedom
@@ -1328,7 +1308,6 @@ async function initializeCompass() {
     
     // Add user position if available
     if (window.userCompassPosition) {
-        console.log('DEBUG initializeCompass: Adding user position to compass');
         setTimeout(() => {
             addUserPositionToCompass(window.userCompassPosition, null);
         }, 200);
@@ -1362,7 +1341,6 @@ async function loadDefaultPartyPositions() {
                     sovereignty: party.compass_position.SUV   // Sovereignty dimension (national-global)
                 }
             }));
-            console.log('Loaded', window.partyResults.length, 'party positions from API');
         }
     } catch (error) {
         console.error('Error loading default party positions:', error);
@@ -1412,10 +1390,8 @@ function getAxisLabels(dimX, dimY) {
 
 // Render a single compass
 function renderCompass(compassId, dimX, dimY) {
-    console.log(`DEBUG renderCompass: Rendering ${compassId} (${dimX} x ${dimY})`);
     const compass = document.getElementById(compassId);
     if (!compass) {
-        console.log(`DEBUG renderCompass: Element ${compassId} not found!`);
         return;
     }
     
@@ -1425,7 +1401,6 @@ function renderCompass(compassId, dimX, dimY) {
     
     // Use party results from calculation or fallback to loaded parties
     const partiesToRender = window.partyResults || parties;
-    console.log(`DEBUG renderCompass: Rendering ${partiesToRender?.length || 0} parties`);
     
     // Wait for layout to be ready
     setTimeout(() => {
@@ -1558,7 +1533,6 @@ function renderLegend() {
     
     // Use party results or fallback
     const partiesToRender = window.partyResults || parties;
-    console.log('Rendering legend with parties:', partiesToRender);
     
     // Separate coalition and main parties based on type from API
     const mainParties = [];
@@ -1580,7 +1554,6 @@ function renderLegend() {
     });
     
     // Create coalition section if there are coalition parties
-    console.log('Coalition parties found:', coalitionPartiesList.length, coalitionPartiesList);
     if (coalitionPartiesList.length > 0) {
         // Create coalition section container
         const coalitionSection = document.createElement('div');
@@ -1990,7 +1963,6 @@ async function toggleAgreementDetails(partyName, index) {
 // Load questions data from API
 async function loadQuestionsData() {
     if (questionsData && questionsData.length > 0) {
-        console.log('DEBUG: questionsData already loaded:', questionsData.length);
         return;
     }
     
@@ -1998,8 +1970,6 @@ async function loadQuestionsData() {
         const response = await fetch('/.netlify/functions/api-questions');
         const data = await response.json();
         questionsData = data; // The API returns array directly
-        console.log('Loaded questionsData:', questionsData.length);
-        console.log('DEBUG: questionsData dimensions:', {
             EKO: questionsData.filter(q => q.dimension === 'EKO').length,
             STA: questionsData.filter(q => q.dimension === 'STA').length,
             SOC: questionsData.filter(q => q.dimension === 'SOC').length,
@@ -2021,8 +1991,6 @@ async function generateAgreementDetails(partyName) {
     console.log('Generating details for:', partyName);
     console.log('Total questions available:', questionsData.length);
     console.log('Total answers:', Object.keys(answers).length);
-    console.log('DEBUG: answers object:', answers);
-    console.log('DEBUG: questionsData IDs:', questionsData.map(q => q.id));
     
     // Calculate agreement for ALL questions (all 33)
     const agreementData = [];
@@ -2036,7 +2004,6 @@ async function generateAgreementDetails(partyName) {
         
         // Skip if user hasn't answered this question
         if (!answer || answer.value === null) {
-            console.log('DEBUG: Skipping question', question.id, 'because answer is', answer);
             continue;
         }
         

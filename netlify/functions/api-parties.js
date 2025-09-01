@@ -1,13 +1,8 @@
-// Netlify Function for parties API - loads from JSON data
-const fs = require('fs');
-const path = require('path');
+// Netlify Function for parties API - embedded data
+const partiesData = require('./data/parties-unified.json');
 
 exports.handler = async (event, context) => {
   try {
-    // Load parties data from unified JSON file (single source of truth)
-    const dataPath = path.join(__dirname, 'data', 'parties-unified.json');
-    const rawData = fs.readFileSync(dataPath, 'utf8');
-    const data = JSON.parse(rawData);
     
     // Return the full data structure with both mainParties and coalitionParties
     return {
@@ -17,8 +12,8 @@ exports.handler = async (event, context) => {
         'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify({
-        mainParties: data.mainParties,
-        coalitionParties: data.coalitionParties
+        mainParties: partiesData.mainParties,
+        coalitionParties: partiesData.coalitionParties
       })
     };
   } catch (error) {

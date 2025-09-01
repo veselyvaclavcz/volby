@@ -1,6 +1,4 @@
-// Netlify Function for calculate API - loads from JSON data
-const fs = require('fs');
-const path = require('path');
+// Netlify Function for calculate API - embedded data
 
 exports.handler = async (event, context) => {
   if (event.httpMethod !== 'POST') {
@@ -18,15 +16,9 @@ exports.handler = async (event, context) => {
     const answers = requestBody.answers || requestBody;
     console.log('DEBUG: Extracted answers:', JSON.stringify(answers));
     
-    // Load data from unified JSON file (single source of truth)
-    const partiesPath = path.join(__dirname, 'data', 'parties-unified.json');
-    const partiesData = fs.readFileSync(partiesPath, 'utf8');
-    const parties = JSON.parse(partiesData);
-    
-    // Load questions data
-    const questionsPath = path.join(__dirname, 'data', 'questions-28.json');
-    const questionsData = fs.readFileSync(questionsPath, 'utf8');
-    const questions = JSON.parse(questionsData);
+    // Load embedded data
+    const parties = require('./data/parties-unified.json');
+    const questions = require('./data/questions-28.json');
     console.log('DEBUG: Loaded', questions.length, 'questions');
     
     // Combine all parties with type flag
