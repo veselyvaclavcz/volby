@@ -114,10 +114,16 @@ exports.handler = async (event, context) => {
     // Each dimension ranges from -1 (max freedom) to +1 (max state control)
     // We calculate average and convert to 0-100 scale
     const avgPosition = (userPosition.EKO + userPosition.SOC + userPosition.STA + userPosition.SUV) / 4;
-    // Convert from [-1, +1] to [100, 0] - more negative = more freedom = higher score
-    const normalizedFreedom = Math.round((1 - avgPosition) * 50);
+    // Convert from [-1, +1] to [0, 100]
+    // -1 (max freedom) -> 100
+    // 0 (neutral) -> 50
+    // +1 (max control) -> 0
+    const normalizedFreedom = Math.round(((1 - avgPosition) / 2) * 100);
     
-    console.log('DEBUG: Freedom calculation - avg position:', avgPosition, '-> svobodometr:', normalizedFreedom);
+    console.log('DEBUG: Freedom calculation:');
+    console.log('  EKO:', userPosition.EKO, 'SOC:', userPosition.SOC, 'STA:', userPosition.STA, 'SUV:', userPosition.SUV);
+    console.log('  Average position:', avgPosition);
+    console.log('  Svobodometr:', normalizedFreedom, '%');
     
     return {
       statusCode: 200,

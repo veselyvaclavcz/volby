@@ -27,6 +27,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         try {
             answers = JSON.parse(savedAnswers);
             console.log('Restored answers from localStorage:', answers);
+            
+            // Check if saved answers are from old version (less than 28 questions)
+            const answeredCount = Object.keys(answers).length;
+            if (answeredCount < questions.length && answeredCount > 0) {
+                console.warn(`Incomplete test data detected: only ${answeredCount} answers out of ${questions.length} questions.`);
+                console.log('Missing questions:', questions.filter(q => !answers[q.id]).map(q => q.id));
+                
+                // Clear incomplete data and start fresh
+                console.log('Clearing incomplete test data to start fresh with all 28 questions.');
+                localStorage.removeItem('userAnswers');
+                localStorage.removeItem('currentQuestion');
+                localStorage.removeItem('testResults');
+                answers = {};
+                currentQuestion = 0;
+                window.incompleteTestWarning = false;
+            }
         } catch (e) {
             console.error('Error parsing saved answers:', e);
         }
@@ -37,11 +53,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log('Restored currentQuestion from localStorage:', currentQuestion);
     }
     
-    // Check if we have saved results and restore them
+    // Check if we have saved results and set up initial display
     const savedResults = localStorage.getItem('testResults');
     if (savedResults) {
-        console.log('Found saved test results on page load');
-        // Will be restored when showing calculator section
+        console.log('Found saved test results on page load - will restore when page is ready');
+        // Set flag to restore results after DOM is loaded
+        window.pendingResultsRestore = true;
     }
     
     // Check URL hash and show appropriate section
@@ -57,9 +74,23 @@ document.addEventListener('DOMContentLoaded', async () => {
                 initializeCompass();
             }, 800);
         }
+        // Ensure calculator display is correct for calculator/kalkulacka hash
+        if (hash === 'kalkulacka' || hash === 'calculator') {
+            setTimeout(() => {
+                ensureCalculatorDisplay();
+            }, 100);
+        }
     } else {
-        console.log('No valid hash, showing welcome');
-        showSection('welcome');
+        console.log('No valid hash, showing welcome or restoring state');
+        // If we have saved results, show calculator section with results
+        if (savedResults) {
+            showSection('kalkulacka');
+            setTimeout(() => {
+                ensureCalculatorDisplay();
+            }, 100);
+        } else {
+            showSection('welcome');
+        }
     }
     
     initializeMobileMenu();
@@ -90,6 +121,14 @@ async function loadQuestions() {
         questions = rawQuestions;
         
         console.log('Loaded questions:', questions.length, 'Format:', questions[0]?.answers ? 'object' : 'unknown');
+        console.log('DEBUG: First question:', questions[0]);
+        console.log('DEBUG: Last question:', questions[questions.length - 1]);
+        console.log('DEBUG: Questions by dimension:', {
+            EKO: questions.filter(q => q.dimension === 'EKO').length,
+            STA: questions.filter(q => q.dimension === 'STA').length,
+            SOC: questions.filter(q => q.dimension === 'SOC').length,
+            SUV: questions.filter(q => q.dimension === 'SUV').length
+        });
     } catch (error) {
         console.error('Error loading questions:', error);
         // Fallback pro lokální testování
@@ -120,6 +159,56 @@ async function loadParties() {
         // Fallback for local testing - empty array since API should work
         parties = [];
         console.log('API failed, using empty fallback');
+    }
+}
+
+// Function to ensure calculator display is correct
+function ensureCalculatorDisplay() {
+    const savedResults = localStorage.getItem('testResults');
+    const questionContainer = document.getElementById('questionContainer');
+    const resultsContainer = document.getElementById('resultsContainer');
+    const welcomeSection = document.getElementById('welcome');
+    const calculatorDiv = document.getElementById('calculator');
+    
+    console.log('DEBUG: Ensuring calculator display. Has results?', !!savedResults);
+    
+    if (savedResults) {
+        // We have completed test - show results
+        if (welcomeSection) welcomeSection.style.display = 'none';
+        if (calculatorDiv) calculatorDiv.style.display = 'block';
+        if (questionContainer) questionContainer.style.display = 'none';
+        if (resultsContainer) {
+            resultsContainer.style.display = 'block';
+            // Check if results need to be re-rendered
+            if (!resultsContainer.querySelector('.results-list')) {
+                try {
+                    const resultsData = JSON.parse(savedResults);
+                    displayResults(resultsData.results, resultsData.userCompass, resultsData.dimensions, resultsData.svobodometr);
+                } catch (e) {
+                    console.error('Error displaying results:', e);
+                }
+            }
+        }
+        return true; // Results displayed
+    } else if (Object.keys(answers).length > 0 && currentQuestion < questions.length) {
+        // Test in progress - show current question
+        if (welcomeSection) welcomeSection.style.display = 'none';
+        if (calculatorDiv) calculatorDiv.style.display = 'block';
+        if (resultsContainer) resultsContainer.style.display = 'none';
+        if (questionContainer) {
+            questionContainer.style.display = 'block';
+            if (questions.length > 0) {
+                displayQuestion();
+            }
+        }
+        return false; // Question displayed
+    } else {
+        // No test data - show welcome
+        // Don't hide calculator div as welcome is inside it
+        if (resultsContainer) resultsContainer.style.display = 'none';
+        if (questionContainer) questionContainer.style.display = 'none';
+        if (welcomeSection) welcomeSection.style.display = 'block';
+        return false; // Welcome displayed
     }
 }
 
@@ -170,125 +259,25 @@ function showSection(sectionId) {
             section.style.display = '';
         });
         
-        // Always check and restore calculator state when leaving compass
-        const savedResults = localStorage.getItem('testResults');
-        if (savedResults) {
-            console.log('DEBUG: Found saved results when leaving compass');
-            const questionContainer = document.getElementById('questionContainer');
-            const resultsContainer = document.getElementById('resultsContainer');
-            const welcomeSection = document.getElementById('welcome');
-            
-            if (questionContainer && resultsContainer) {
-                console.log('DEBUG: Setting up results display');
-                questionContainer.style.display = 'none';
-                resultsContainer.style.display = 'block';
-                if (welcomeSection) {
-                    welcomeSection.style.display = 'none';
-                }
-                
-                // Restore results if container is empty
-                if (!resultsContainer.querySelector('.results-list')) {
-                    console.log('DEBUG: Results container empty, restoring results');
-                    try {
-                        const resultsData = JSON.parse(savedResults);
-                        displayResults(resultsData.results, resultsData.userCompass, resultsData.dimensions, resultsData.svobodometr);
-                    } catch (e) {
-                        console.error('Error restoring results:', e);
-                    }
-                } else {
-                    console.log('DEBUG: Results already displayed');
-                }
-            }
-        } else {
-            console.log('DEBUG: No saved results found');
-        }
+        // ALWAYS ensure calculator state is correct when not showing compass
+        ensureCalculatorDisplay();
         
         // For specific sections, scroll to them
         if (sectionId === 'home' || sectionId === 'welcome') {
             // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         } else if (sectionId !== 'compass') {
+            // If explicitly switching to calculator, ensure display is correct first
+            if (sectionId === 'calculator' || sectionId === 'kalkulacka') {
+                console.log('DEBUG: Explicitly navigating to calculator - ensuring correct display');
+                // The ensureCalculatorDisplay function already handles all the logic
+                ensureCalculatorDisplay();
+            }
+            
             const targetSection = document.getElementById(sectionId);
             if (targetSection) {
                 // Smooth scroll to section
                 targetSection.scrollIntoView({ behavior: 'smooth' });
-            }
-            
-            // If explicitly switching to calculator, ensure proper setup
-            if (sectionId === 'calculator' || sectionId === 'kalkulacka') {
-                console.log('DEBUG: Explicitly switching to calculator section');
-                const questionContainer = document.getElementById('questionContainer');
-                const resultsContainer = document.getElementById('resultsContainer');
-                const welcomeSection = document.getElementById('welcome');
-                
-                // Re-check saved results (might have been set above, but we need to be sure)
-                const savedResultsCheck = localStorage.getItem('testResults');
-                const hasResults = savedResultsCheck !== null;
-                
-                console.log('DEBUG: Has saved results?', hasResults);
-                console.log('DEBUG: Current answers count:', Object.keys(answers).length);
-                console.log('DEBUG: Questions loaded:', questions.length);
-                
-                if (hasResults) {
-                    console.log('DEBUG: Restoring test results view from explicit calculator navigation');
-                    // Show results if test is completed
-                    if (questionContainer && resultsContainer) {
-                        questionContainer.style.display = 'none';
-                        resultsContainer.style.display = 'block';
-                        console.log('DEBUG: Results container display:', resultsContainer.style.display);
-                    }
-                    // Keep welcome section hidden when showing results
-                    if (welcomeSection) {
-                        welcomeSection.style.display = 'none';
-                        console.log('DEBUG: Welcome section hidden');
-                    }
-                    
-                    // Restore results from localStorage
-                    try {
-                        const resultsData = JSON.parse(savedResultsCheck);
-                        console.log('Restoring results from localStorage:', resultsData);
-                        // Always refresh results when explicitly navigating to calculator
-                        if (resultsContainer) {
-                            // Clear existing results first
-                            const existingResults = resultsContainer.querySelector('.results-list');
-                            if (existingResults) {
-                                existingResults.remove();
-                            }
-                            displayResults(resultsData.results, resultsData.userCompass, resultsData.dimensions, resultsData.svobodometr);
-                        }
-                    } catch (e) {
-                        console.error('Error parsing saved results:', e);
-                    }
-                } else {
-                    console.log('DEBUG: No saved results, checking test state');
-                    // Check if we have answers in progress
-                    const savedAnswers = localStorage.getItem('userAnswers');
-                    if (savedAnswers && Object.keys(JSON.parse(savedAnswers)).length > 0) {
-                        console.log('DEBUG: Test in progress, showing current question');
-                        // Show calculator interface for incomplete test
-                        if (questionContainer && resultsContainer) {
-                            questionContainer.style.display = 'block';
-                            resultsContainer.style.display = 'none';
-                        }
-                        if (welcomeSection) {
-                            welcomeSection.style.display = 'none';
-                        }
-                        // Display current question
-                        if (questions.length > 0) {
-                            displayQuestion();
-                        }
-                    } else {
-                        console.log('DEBUG: No test in progress, showing welcome');
-                        // Show welcome section for new test
-                        if (questionContainer && resultsContainer) {
-                            questionContainer.style.display = 'none';
-                            resultsContainer.style.display = 'none';
-                        }
-                        if (welcomeSection) {
-                            welcomeSection.style.display = 'block';
-                        }
-                    }
-                }
             }
         }
     }
@@ -304,6 +293,7 @@ function showSection(sectionId) {
 
 // Start calculator
 function startCalculator() {
+    console.log('DEBUG: startCalculator called');
     currentQuestion = 0;
     answers = {};
     
@@ -312,12 +302,45 @@ function startCalculator() {
     localStorage.removeItem('currentQuestion');
     localStorage.removeItem('testResults');
     
-    showSection('calculator');
+    // Show calculator section and hide welcome FIRST
+    const welcomeSection = document.getElementById('welcome');
+    const calculatorDiv = document.getElementById('calculator');
+    const questionContainer = document.getElementById('questionContainer');
+    const resultsContainer = document.getElementById('resultsContainer');
+    
+    console.log('DEBUG: Elements found:', {
+        welcome: !!welcomeSection,
+        calculator: !!calculatorDiv,
+        questionContainer: !!questionContainer,
+        resultsContainer: !!resultsContainer
+    });
+    
+    if (welcomeSection) welcomeSection.style.display = 'none';
+    if (calculatorDiv) calculatorDiv.style.display = 'block';
+    if (questionContainer) questionContainer.style.display = 'block';
+    if (resultsContainer) resultsContainer.style.display = 'none';
+    
+    console.log('DEBUG: About to call displayQuestion. Questions loaded?', questions.length);
+    
+    // Display the first question
     displayQuestion();
+    
+    // Then navigate to the section (this will scroll to it)
+    const targetSection = document.getElementById('kalkulacka');
+    if (targetSection) {
+        targetSection.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    // Update URL hash
+    if (window.location.hash !== '#kalkulacka') {
+        window.location.hash = 'kalkulacka';
+    }
 }
 
 // Display current question with smooth transition
 function displayQuestion() {
+    console.log('DEBUG: displayQuestion called, currentQuestion:', currentQuestion, 'questions.length:', questions.length);
+    
     // Check if questions are loaded
     if (!questions || questions.length === 0) {
         console.error('Questions not loaded yet!');
@@ -325,11 +348,14 @@ function displayQuestion() {
     }
     
     if (currentQuestion >= questions.length) {
+        console.log('DEBUG: Reached end of questions. Total questions:', questions.length, 'Current question:', currentQuestion);
+        console.log('DEBUG: Total answers collected:', Object.keys(answers).length);
         calculateResults();
         return;
     }
     
     const question = questions[currentQuestion];
+    console.log('DEBUG: Displaying question:', question);
     
     // Update progress with animation - show progress based on completed questions
     const completedQuestions = Object.keys(answers).length;
@@ -338,9 +364,9 @@ function displayQuestion() {
     const progressText = document.getElementById('progressText');
     const progressPercentage = document.getElementById('progressPercentage');
     
-    progressBar.style.width = `${progress}%`;
-    progressText.textContent = `Otázka ${currentQuestion + 1} z ${questions.length}`;
-    progressPercentage.textContent = `${Math.round(progress)}%`;
+    if (progressBar) progressBar.style.width = `${progress}%`;
+    if (progressText) progressText.textContent = `Otázka ${currentQuestion + 1} z ${questions.length}`;
+    if (progressPercentage) progressPercentage.textContent = `${Math.round(progress)}%`;
     
     // Update progress bar aria attributes
     const progressContainer = document.querySelector('.progress-container');
@@ -350,17 +376,31 @@ function displayQuestion() {
     
     // Fade transition for question
     const questionCard = document.querySelector('.question-card');
-    questionCard.style.animation = 'slideInUp 0.4s ease';
+    if (questionCard) {
+        questionCard.style.animation = 'slideInUp 0.4s ease';
+    }
     
     // Update question content for v2 format
     const categoryMap = {
         'economy': 'Ekonomika',
         'state': 'Role státu',
         'society': 'Společnost',
-        'sovereignty': 'Suverenita'
+        'sovereignty': 'Suverenita',
+        'EKO': 'Ekonomika',
+        'STA': 'Role státu',
+        'SOC': 'Společnost',
+        'SUV': 'Suverenita'
     };
-    document.getElementById('questionCategory').textContent = categoryMap[question.dimension] || question.dimension || question.category;
-    document.getElementById('questionText').textContent = question.text;
+    
+    const categoryEl = document.getElementById('questionCategory');
+    const textEl = document.getElementById('questionText');
+    
+    if (categoryEl) {
+        categoryEl.textContent = categoryMap[question.dimension] || question.dimension || question.category;
+    }
+    if (textEl) {
+        textEl.textContent = question.text;
+    }
     
     // Update answer buttons with v2 format
     const answerButtons = document.querySelectorAll('.answer-btn');
@@ -432,7 +472,8 @@ function selectAnswer(value) {
     });
     
     // Save answer
-    const isImportant = document.getElementById('importantCheckbox').checked;
+    const importantCheckbox = document.getElementById('importantCheckbox');
+    const isImportant = importantCheckbox ? importantCheckbox.checked : false;
     answers[question.id] = {
         value: value,
         important: isImportant
@@ -447,7 +488,11 @@ function selectAnswer(value) {
     
     // Enable next button
     const nextBtn = document.getElementById('nextBtn');
-    nextBtn.disabled = false;
+    if (nextBtn) {
+        nextBtn.disabled = false;
+    }
+    
+    // Do NOT auto-advance - user must click Next or press Enter
 }
 
 // Skip question with animation
@@ -666,6 +711,14 @@ function displayResults(results, userCompass, dimensions, svobodometr) {
         <div class="results-header">
             <h2>Vaše výsledky</h2>
             <p class="lead">Shoda s politickými stranami na základě vašich odpovědí</p>
+            ${window.incompleteTestWarning ? `
+                <div style="background: rgba(255, 152, 0, 0.1); border: 1px solid var(--color-warning); border-radius: 8px; padding: 1rem; margin: 1rem 0;">
+                    <p style="color: var(--color-warning); margin: 0; font-size: 0.9em;">
+                        ⚠️ <strong>Neúplný test:</strong> Zodpověděli jste pouze ${Object.keys(answers).length} z ${questions.length} otázek. 
+                        Pro přesnější výsledky doporučujeme <a href="#" onclick="startCalculator(); return false;" style="color: var(--color-primary); text-decoration: underline;">zodpovědět všechny otázky</a>.
+                    </p>
+                </div>
+            ` : ''}
             ${isAnarchoCapitalist ? `
                 <div class="ancap-warning" style="background: linear-gradient(135deg, #FFD93D 50%, #1A1A1A 50%); padding: 1.5rem; border-radius: 8px; margin: 1rem 0; border: 2px solid #FFD93D;">
                     <h3 style="margin: 0 0 0.5rem 0; color: #FFD93D; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">🏴 Anarchokapitalistická pozice detekována! 🏴</h3>
@@ -694,7 +747,7 @@ function displayResults(results, userCompass, dimensions, svobodometr) {
                 </div>
             ` : ''}
             
-            ${svobodometr !== undefined ? `
+            ${svobodometr !== undefined && svobodometr !== null && !isNaN(svobodometr) ? `
                 <div class="freedom-meter" style="background: linear-gradient(135deg, #1a1a1a, #2a2a2a); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0; border: 2px solid var(--color-primary);">
                     <h3 style="margin: 0 0 0.5rem 0; color: var(--color-primary); text-align: center;">
                         🔥 SVOBODOMETR: ${svobodometr}%
@@ -714,11 +767,11 @@ function displayResults(results, userCompass, dimensions, svobodometr) {
                         <span>🟢 Osobní svoboda</span>
                     </div>
                     <p style="text-align: center; margin: 1rem 0 0 0; font-size: 0.9em; line-height: 1.4;">
-                        ${freedomScore < 20 ? '⛓️ <strong>Silná preference státní kontroly.</strong> Důvěřuješ státu v řízení ekonomických i sociálních záležitostí.' :
-                          freedomScore < 40 ? '🔒 <strong>Mírná preference státní regulace.</strong> Podporuješ větší roli státu v klíčových oblastech.' :
-                          freedomScore === 50 ? '⚖️ <strong>Neutrální postoj.</strong> Nemáš vyhraněný názor nebo vyrovnaně kombinuješ oba přístupy.' :
-                          freedomScore < 60 ? '⚖️ <strong>Vyvážený přístup.</strong> Mírně preferuješ ' + (freedomScore > 50 ? 'svobodu před kontrolou' : 'kontrolu před svobodou') + '.' :
-                          freedomScore < 80 ? '🔓 <strong>Mírná preference osobní svobody.</strong> Důvěřuješ více jednotlivcům než státu.' :
+                        ${svobodometr < 20 ? '⛓️ <strong>Silná preference státní kontroly.</strong> Důvěřuješ státu v řízení ekonomických i sociálních záležitostí.' :
+                          svobodometr < 40 ? '🔒 <strong>Mírná preference státní regulace.</strong> Podporuješ větší roli státu v klíčových oblastech.' :
+                          svobodometr === 50 ? '⚖️ <strong>Neutrální postoj.</strong> Nemáš vyhraněný názor nebo vyrovnaně kombinuješ oba přístupy.' :
+                          svobodometr < 60 ? '⚖️ <strong>Vyvážený přístup.</strong> Mírně preferuješ ' + (svobodometr > 50 ? 'svobodu před kontrolou' : 'kontrolu před svobodou') + '.' :
+                          svobodometr < 80 ? '🔓 <strong>Mírná preference osobní svobody.</strong> Důvěřuješ více jednotlivcům než státu.' :
                           '🦅 <strong>Silná preference osobní svobody.</strong> Věříš v minimální stát a maximální osobní odpovědnost.'}
                     </p>
                     <p style="text-align: center; margin: 0.5rem 0 0 0; font-size: 0.8em; font-style: italic; opacity: 0.7;">
@@ -1129,8 +1182,16 @@ function updateActiveNavigation(sectionId) {
 // Initialize keyboard navigation
 function initializeKeyboardNavigation() {
     document.addEventListener('keydown', (e) => {
-        // Only in calculator section
-        if (!document.getElementById('calculator').classList.contains('active')) return;
+        // Check if we're in calculator section (either showing questions or results)
+        const calculatorDiv = document.getElementById('calculator');
+        const questionContainer = document.getElementById('questionContainer');
+        const resultsContainer = document.getElementById('resultsContainer');
+        
+        // Only work if calculator is visible and we're showing questions
+        const isCalculatorVisible = calculatorDiv && calculatorDiv.style.display !== 'none';
+        const isQuestionVisible = questionContainer && questionContainer.style.display !== 'none';
+        
+        if (!isCalculatorVisible || !isQuestionVisible) return;
         
         // Number keys 1-5 for answers
         if (e.key >= '1' && e.key <= '5') {
@@ -1139,23 +1200,27 @@ function initializeKeyboardNavigation() {
         }
         
         // Arrow keys for navigation
-        if (e.key === 'ArrowLeft' && !document.getElementById('prevBtn').disabled) {
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        if (e.key === 'ArrowLeft' && prevBtn && !prevBtn.disabled) {
             previousQuestion();
         }
-        if (e.key === 'ArrowRight' && !document.getElementById('nextBtn').disabled) {
+        if (e.key === 'ArrowRight' && nextBtn && !nextBtn.disabled) {
             nextQuestion();
         }
         
         // Enter to continue to next question (if answer selected)
-        if (e.key === 'Enter' && !document.getElementById('nextBtn').disabled) {
+        if (e.key === 'Enter' && nextBtn && !nextBtn.disabled) {
             console.log('DEBUG keydown: Enter pressed, calling nextQuestion()');
+            e.preventDefault(); // Prevent form submission
             nextQuestion();
         }
         
         // Space for skip or continue
         if (e.key === ' ' && e.target.tagName !== 'BUTTON') {
             e.preventDefault();
-            if (!document.getElementById('nextBtn').disabled) {
+            if (nextBtn && !nextBtn.disabled) {
                 console.log('DEBUG keydown: Space pressed, calling nextQuestion()');
                 nextQuestion();
             } else {
@@ -1434,8 +1499,8 @@ function renderCompass(compassId, dimX, dimY) {
             const tooltip = document.createElement('div');
             tooltip.className = 'party-tooltip';
             tooltip.id = `tooltip-${compassId}-${partyCode}`;
-            const tooltipText = `${partyName}${party.match ? ` (${party.match}%)` : ''}`;
-            tooltip.textContent = tooltipText;
+            // Only show party name in tooltip, no percentage (percentage is in results)
+            tooltip.textContent = partyName;
             tooltip.style.cssText = `
                 position: absolute;
                 bottom: ${compass.offsetHeight - y + 25}px;
@@ -1895,6 +1960,16 @@ async function toggleAgreementDetails(partyName, index) {
             await loadQuestionsData();
         }
         
+        // Also ensure parties data is loaded
+        if (!partiesData || partiesData.length === 0) {
+            await loadPartiesData();
+        }
+        
+        // Load party answers if not already loaded
+        if (!window.partyAnswersData || Object.keys(window.partyAnswersData).length === 0) {
+            await loadPartyAnswers();
+        }
+        
         const agreementHTML = await generateAgreementDetails(partyName);
         detailsElement.innerHTML = agreementHTML;
         detailsElement.style.display = 'block';
@@ -1914,13 +1989,22 @@ async function toggleAgreementDetails(partyName, index) {
 
 // Load questions data from API
 async function loadQuestionsData() {
-    if (questionsData && questionsData.length > 0) return;
+    if (questionsData && questionsData.length > 0) {
+        console.log('DEBUG: questionsData already loaded:', questionsData.length);
+        return;
+    }
     
     try {
         const response = await fetch('/.netlify/functions/api-questions');
         const data = await response.json();
         questionsData = data; // The API returns array directly
-        console.log('Loaded questions:', questionsData.length);
+        console.log('Loaded questionsData:', questionsData.length);
+        console.log('DEBUG: questionsData dimensions:', {
+            EKO: questionsData.filter(q => q.dimension === 'EKO').length,
+            STA: questionsData.filter(q => q.dimension === 'STA').length,
+            SOC: questionsData.filter(q => q.dimension === 'SOC').length,
+            SUV: questionsData.filter(q => q.dimension === 'SUV').length
+        });
     } catch (error) {
         console.error('Error loading questions:', error);
         // Fallback data - all 33 questions
@@ -1937,6 +2021,8 @@ async function generateAgreementDetails(partyName) {
     console.log('Generating details for:', partyName);
     console.log('Total questions available:', questionsData.length);
     console.log('Total answers:', Object.keys(answers).length);
+    console.log('DEBUG: answers object:', answers);
+    console.log('DEBUG: questionsData IDs:', questionsData.map(q => q.id));
     
     // Calculate agreement for ALL questions (all 33)
     const agreementData = [];
@@ -1949,20 +2035,23 @@ async function generateAgreementDetails(partyName) {
         const answer = answers[question.id];
         
         // Skip if user hasn't answered this question
-        if (!answer || answer.value === null) continue;
+        if (!answer || answer.value === null) {
+            console.log('DEBUG: Skipping question', question.id, 'because answer is', answer);
+            continue;
+        }
         
         // Get actual party answer or estimate if not available
         let partyScore;
         if (partyAnswers && partyAnswers[question.id]) {
-            // Convert from 1-5 scale to -2 to +2
-            partyScore = partyAnswers[question.id] - 3;
+            // Party answers are already in 1-5 scale
+            partyScore = partyAnswers[question.id];
         } else {
             // Fallback to estimation if no data
             partyScore = estimatePartyAnswer(party, question);
         }
         const userScore = answer.value;
         
-        // Calculate agreement (1-5 scale, lower difference = better agreement)
+        // Calculate agreement (both are in 1-5 scale, lower difference = better agreement)
         const difference = Math.abs(userScore - partyScore);
         let agreementLevel, agreementColor, agreementIcon;
         
@@ -1994,7 +2083,7 @@ async function generateAgreementDetails(partyName) {
     
     // Sort by dimension for better readability
     agreementData.sort((a, b) => {
-        const dimOrder = {EKO: 1, SOC: 2, SUV: 3};
+        const dimOrder = {EKO: 1, STA: 2, SOC: 3, SUV: 4};
         return dimOrder[a.dimension] - dimOrder[b.dimension];
     });
     
@@ -2004,10 +2093,15 @@ async function generateAgreementDetails(partyName) {
     const fullCount = agreementData.filter(a => a.agreementLevel === 'Plná shoda').length;
     const partialCount = agreementData.filter(a => a.agreementLevel === 'Částečná shoda').length;
     const noneCount = agreementData.filter(a => a.agreementLevel === 'Neshoda').length;
+    const answeredCount = agreementData.length;
+    const totalQuestions = questionsData.length;
     
     let html = `
         <div style="margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
-            <div style="font-size: 0.9em; color: var(--color-text); margin-bottom: 0.3rem;">Shoda s stranou ${partyName}</div>
+            <div style="font-size: 0.9em; color: var(--color-text); margin-bottom: 0.3rem;">
+                Shoda s stranou ${partyName}
+                ${answeredCount < totalQuestions ? `<span style="color: var(--color-warning); font-size: 0.8em; margin-left: 0.5rem;">(${answeredCount}/${totalQuestions} otázek zodpovězeno)</span>` : ''}
+            </div>
             <div style="display: flex; gap: 1rem; font-size: 0.8em; align-items: center;">
                 <span style="display: flex; align-items: center; gap: 0.3rem;">
                     <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #4CAF50;"></span>
@@ -2058,6 +2152,11 @@ async function generateAgreementDetails(partyName) {
 
 // Estimate party answer based on compass position
 function estimatePartyAnswer(party, question) {
+    // Check if party has compass_position
+    if (!party.compass_position) {
+        return 3; // Neutral if no position data
+    }
+    
     const position = party.compass_position[question.dimension] || 0;
     
     // The question polarity determines how compass position translates to agreement
@@ -2068,8 +2167,8 @@ function estimatePartyAnswer(party, question) {
     const adjustedPosition = position * question.polarity;
     
     // Convert to answer scale (1 to 5)
-    // -1 = strongly disagree (5), +1 = strongly agree (1), 0 = neutral (3)
-    // We need to INVERT because 1 = agree, 5 = disagree
+    // +1 = strongly agree (1), 0 = neutral (3), -1 = strongly disagree (5)
+    // Position ranges from -1 to +1, answer ranges from 1 to 5
     const answer = 3 - (adjustedPosition * 2);
     
     return Math.max(1, Math.min(5, Math.round(answer)));
@@ -2105,6 +2204,22 @@ async function loadPartiesData() {
     } catch (error) {
         console.error('Error loading parties data:', error);
         partiesData = [];
+    }
+}
+
+// Load party answers data when needed
+async function loadPartyAnswers() {
+    if (window.partyAnswersData && Object.keys(window.partyAnswersData).length > 0) return;
+    
+    try {
+        const response = await fetch('/.netlify/functions/api-party-answers');
+        if (!response.ok) throw new Error('Failed to load party answers');
+        
+        window.partyAnswersData = await response.json();
+        console.log('Party answers loaded:', Object.keys(window.partyAnswersData).length, 'parties');
+    } catch (error) {
+        console.error('Error loading party answers:', error);
+        window.partyAnswersData = {};
     }
 }
 
