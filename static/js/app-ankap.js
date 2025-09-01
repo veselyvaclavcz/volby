@@ -135,31 +135,7 @@ function showSection(sectionId) {
         activeLink.classList.add('active');
     }
     
-    // Special handling for home page
-    if (sectionId === 'home' || sectionId === 'welcome') {
-        // Hide compass and calculator
-        const compassSection = document.getElementById('compass');
-        if (compassSection) {
-            compassSection.style.display = 'none';
-        }
-        const calculatorSection = document.getElementById('kalkulacka');
-        if (calculatorSection) {
-            calculatorSection.style.display = 'none';
-        }
-        // Show all other sections
-        document.querySelectorAll('section:not(#compass):not(#kalkulacka)').forEach(section => {
-            section.style.display = 'block';
-        });
-        // Clear localStorage for fresh start
-        localStorage.removeItem('testResults');
-        localStorage.removeItem('userAnswers');
-        localStorage.removeItem('currentQuestion');
-        // Reset state
-        currentQuestion = 0;
-        answers = {};
-        return;
-    }
-    
+    // Only compass is a separate section, everything else scrolls
     if (sectionId === 'compass') {
         // Hide main content and show compass
         document.querySelectorAll('section:not(#compass)').forEach(section => {
@@ -175,26 +151,28 @@ function showSection(sectionId) {
             }, 100);
         }
     } else {
-        // Hide compass
+        // Hide compass and show all other sections (they're on one scrollable page)
         const compassSection = document.getElementById('compass');
         if (compassSection) {
             compassSection.style.display = 'none';
             compassSection.classList.remove('active');
-            console.log('Compass hidden, display:', compassSection.style.display);
         }
         
-        // Hide all sections first
-        document.querySelectorAll('section').forEach(section => {
-            section.style.display = 'none';
-            section.classList.remove('active');
+        // Show all sections except compass (restore normal page view)
+        document.querySelectorAll('section:not(#compass)').forEach(section => {
+            section.style.display = '';
         });
         
-        // Show only the target section
-        const newSection = document.getElementById(sectionId);
-        if (newSection && newSection.id !== 'compass') {
-            newSection.style.display = 'block';
-            newSection.classList.add('active');
-            console.log('DEBUG: Showing section:', sectionId, 'display:', newSection.style.display);
+        // For specific sections, scroll to them
+        if (sectionId === 'home' || sectionId === 'welcome') {
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (sectionId !== 'compass') {
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                // Smooth scroll to section
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            }
             
             // If switching to calculator, ensure it's properly initialized
             if (sectionId === 'calculator' || sectionId === 'kalkulacka') {
