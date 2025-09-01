@@ -173,25 +173,34 @@ function showSection(sectionId) {
         // Always check and restore calculator state when leaving compass
         const savedResults = localStorage.getItem('testResults');
         if (savedResults) {
+            console.log('DEBUG: Found saved results when leaving compass');
             const questionContainer = document.getElementById('questionContainer');
             const resultsContainer = document.getElementById('resultsContainer');
             const welcomeSection = document.getElementById('welcome');
             
             if (questionContainer && resultsContainer) {
+                console.log('DEBUG: Setting up results display');
                 questionContainer.style.display = 'none';
                 resultsContainer.style.display = 'block';
-                welcomeSection.style.display = 'none';
+                if (welcomeSection) {
+                    welcomeSection.style.display = 'none';
+                }
                 
                 // Restore results if container is empty
                 if (!resultsContainer.querySelector('.results-list')) {
+                    console.log('DEBUG: Results container empty, restoring results');
                     try {
                         const resultsData = JSON.parse(savedResults);
                         displayResults(resultsData.results, resultsData.userCompass, resultsData.dimensions, resultsData.svobodometr);
                     } catch (e) {
                         console.error('Error restoring results:', e);
                     }
+                } else {
+                    console.log('DEBUG: Results already displayed');
                 }
             }
+        } else {
+            console.log('DEBUG: No saved results found');
         }
         
         // For specific sections, scroll to them

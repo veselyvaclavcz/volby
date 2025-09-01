@@ -42,9 +42,10 @@ exports.handler = async (event, context) => {
     for (const [questionId, answer] of Object.entries(answers)) {
       const question = questions.find(q => q.id === parseInt(questionId));
       if (question && answer.value !== null) {
-        // Fix polarity for EKO, STA, SOC, SUV dimensions (they are inverted in data)
+        // Fix polarity for EKO, STA, SOC dimensions (they are inverted in data)
+        // SUV has correct polarity, don't invert it!
         let correctedPolarity = question.polarity;
-        if (question.dimension === 'EKO' || question.dimension === 'STA' || question.dimension === 'SOC' || question.dimension === 'SUV') {
+        if (question.dimension === 'EKO' || question.dimension === 'STA' || question.dimension === 'SOC') {
           correctedPolarity = -question.polarity;
         }
         const score = ((answer.value - 3) / 2) * correctedPolarity;
