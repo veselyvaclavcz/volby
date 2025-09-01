@@ -205,23 +205,23 @@ function showSection(sectionId) {
                 targetSection.scrollIntoView({ behavior: 'smooth' });
             }
             
-            // If explicitly switching to calculator, do additional setup
+            // If explicitly switching to calculator, ensure proper setup
             if (sectionId === 'calculator' || sectionId === 'kalkulacka') {
-                console.log('DEBUG: Switching to calculator section');
+                console.log('DEBUG: Explicitly switching to calculator section');
                 const questionContainer = document.getElementById('questionContainer');
                 const resultsContainer = document.getElementById('resultsContainer');
                 const welcomeSection = document.getElementById('welcome');
                 
-                // Check if we have saved results (more reliable than checking answer count)
-                const savedResults = localStorage.getItem('testResults');
-                const hasResults = savedResults !== null;
+                // Re-check saved results (might have been set above, but we need to be sure)
+                const savedResultsCheck = localStorage.getItem('testResults');
+                const hasResults = savedResultsCheck !== null;
                 
                 console.log('DEBUG: Has saved results?', hasResults);
                 console.log('DEBUG: Current answers count:', Object.keys(answers).length);
                 console.log('DEBUG: Questions loaded:', questions.length);
                 
                 if (hasResults) {
-                    console.log('DEBUG: Restoring test results view');
+                    console.log('DEBUG: Restoring test results view from explicit calculator navigation');
                     // Show results if test is completed
                     if (questionContainer && resultsContainer) {
                         questionContainer.style.display = 'none';
@@ -236,10 +236,15 @@ function showSection(sectionId) {
                     
                     // Restore results from localStorage
                     try {
-                        const resultsData = JSON.parse(savedResults);
+                        const resultsData = JSON.parse(savedResultsCheck);
                         console.log('Restoring results from localStorage:', resultsData);
-                        // Only call displayResults if results container is empty
-                        if (resultsContainer && !resultsContainer.querySelector('.results-list')) {
+                        // Always refresh results when explicitly navigating to calculator
+                        if (resultsContainer) {
+                            // Clear existing results first
+                            const existingResults = resultsContainer.querySelector('.results-list');
+                            if (existingResults) {
+                                existingResults.remove();
+                            }
                             displayResults(resultsData.results, resultsData.userCompass, resultsData.dimensions, resultsData.svobodometr);
                         }
                     } catch (e) {
