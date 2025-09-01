@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test scénářů - Volební kalkulačka</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .scenario {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .scenario h2 {
+            color: #333;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .dimensions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .dimension {
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        .dimension-name {
+            font-weight: bold;
+            color: #555;
+        }
+        .dimension-value {
+            font-size: 1.2em;
+            color: #2196F3;
+        }
+        .expected-position {
+            background: #e8f5e9;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test scénářů politického kompasu</h1>
+    
+    <div class="scenario">
+        <h2>🔥 Scénář 1: Libertarián</h2>
+        <p><strong>Popis:</strong> Maximální osobní i ekonomická svoboda, minimální stát, proti regulacím</p>
+        <div class="dimensions">
+            <div class="dimension">
+                <span class="dimension-name">Ekonomika:</span>
+                <span class="dimension-value">-1.5 (volný trh)</span>
+            </div>
+            <div class="dimension">
+                <span class="dimension-name">Role státu:</span>
+                <span class="dimension-value">-1.5 (minimální)</span>
+            </div>
+            <div class="dimension">
+                <span class="dimension-name">Společnost:</span>
+                <span class="dimension-value">-1.0 (liberální)</span>
+            </div>
+            <div class="dimension">
+                <span class="dimension-name">Suverenita:</span>
+                <span class="dimension-value">0.0 (neutrální)</span>
+            </div>
+        </div>
+        <div class="expected-position">
+            <strong>Očekávaná pozice:</strong><br>
+            • Kvadrant 1 (Eko×Stát): Levý horní roh (volný trh + minimální stát)<br>
+            • Kvadrant 2 (Společnost×Suverenita): Levý střed (liberální + neutrální)<br>
+            • Kvadrant 3 (Eko×Společnost): Levý horní roh (volný trh + liberální)<br>
+            • Kvadrant 4 (Stát×Suverenita): Levý střed (minimální stát + neutrální)
+        </div>
+        <button onclick="testScenario('libertarian')">Otestovat libertariána</button>
+    </div>
+
+    <div class="scenario">
+        <h2>🇨🇿 Scénář 2: Národní konzervativec (typ SPD)</h2>
+        <p><strong>Popis:</strong> Silný stát, národní suverenita, tradiční hodnoty, sociální politika</p>
+        <div class="dimensions">
+            <div class="dimension">
+                <span class="dimension-name">Ekonomika:</span>
+                <span class="dimension-value">0.6 (mírně státní)</span>
+            </div>
+            <div class="dimension">
+                <span class="dimension-name">Role státu:</span>
+                <span class="dimension-value">1.1 (silný)</span>
+            </div>
+            <div class="dimension">
+                <span class="dimension-name">Společnost:</span>
+                <span class="dimension-value">1.2 (konzervativní)</span>
+            </div>
+            <div class="dimension">
+                <span class="dimension-name">Suverenita:</span>
+                <span class="dimension-value">2.0 (národní)</span>
+            </div>
+        </div>
+        <div class="expected-position">
+            <strong>Očekávaná pozice:</strong><br>
+            • Kvadrant 1 (Eko×Stát): Pravý dolní kvadrant (státní kontrola + silný stát)<br>
+            • Kvadrant 2 (Společnost×Suverenita): Pravý dolní roh (konzervativní + národní)<br>
+            • Kvadrant 3 (Eko×Společnost): Pravý dolní kvadrant (státní + konzervativní)<br>
+            • Kvadrant 4 (Stát×Suverenita): Pravý dolní kvadrant (silný stát + národní)
+        </div>
+        <button onclick="testScenario('conservative')">Otestovat konzervativce</button>
+    </div>
+
+    <div class="scenario">
+        <h2>⚖️ Scénář 3: Levicový centrista</h2>
+        <p><strong>Popis:</strong> Sociální stát, umírněné hodnoty, pro-evropský</p>
+        <div class="dimensions">
+            <div class="dimension">
+                <span class="dimension-name">Ekonomika:</span>
+                <span class="dimension-value">0.8 (sociální tržní)</span>
+            </div>
+            <div class="dimension">
+                <span class="dimension-name">Role státu:</span>
+                <span class="dimension-value">0.5 (aktivní)</span>
+            </div>
+            <div class="dimension">
+                <span class="dimension-name">Společnost:</span>
+                <span class="dimension-value">-0.2 (mírně liberální)</span>
+            </div>
+            <div class="dimension">
+                <span class="dimension-name">Suverenita:</span>
+                <span class="dimension-value">-0.5 (pro-EU)</span>
+            </div>
+        </div>
+        <div class="expected-position">
+            <strong>Očekávaná pozice:</strong><br>
+            • Kvadrant 1 (Eko×Stát): Pravý střed (státní ekonomika + aktivní stát)<br>
+            • Kvadrant 2 (Společnost×Suverenita): Levý horní kvadrant (liberální + globální)<br>
+            • Kvadrant 3 (Eko×Společnost): Pravá horní část (státní + liberální)<br>
+            • Kvadrant 4 (Stát×Suverenita): Střed-pravý horní (aktivní stát + pro-EU)
+        </div>
+        <button onclick="testScenario('leftcentrist')">Otestovat levicového centristu</button>
+    </div>
+
+    <div class="scenario">
+        <h2>Ⓐ Scénář 4: Levicový anarchista</h2>
+        <p><strong>Popis:</strong> Proti kapitalismu i státu, maximální osobní svobody, komunitní organizace</p>
+        <div class="dimensions">
+            <div class="dimension">
+                <span class="dimension-name">Ekonomika:</span>
+                <span class="dimension-value">1.5 (antikapitalismus)</span>
+            </div>
+            <div class="dimension">
+                <span class="dimension-name">Role státu:</span>
+                <span class="dimension-value">-1.8 (bez státu)</span>
+            </div>
+            <div class="dimension">
+                <span class="dimension-name">Společnost:</span>
+                <span class="dimension-value">-1.5 (radikálně liberální)</span>
+            </div>
+            <div class="dimension">
+                <span class="dimension-name">Suverenita:</span>
+                <span class="dimension-value">-1.0 (internacionální)</span>
+            </div>
+        </div>
+        <div class="expected-position">
+            <strong>Očekávaná pozice:</strong><br>
+            • Kvadrant 1 (Eko×Stát): Pravý horní roh (antikapitalismus + bez státu)<br>
+            • Kvadrant 2 (Společnost×Suverenita): Levý horní roh (radikálně liberální + globální)<br>
+            • Kvadrant 3 (Eko×Společnost): Pravý horní roh (antikapitalismus + liberální)<br>
+            • Kvadrant 4 (Stát×Suverenita): Levý horní kvadrant (bez státu + internacionální)
+        </div>
+        <button onclick="testScenario('anarchist')">Otestovat anarchistu</button>
+    </div>
+
+    <div class="results" id="results">
+        <h3>Výsledky testu</h3>
+        <div id="results-content"></div>
+    </div>
+
+    <script>
+        const scenarios = {
+            libertarian: {
+                name: "Libertarián",
+                economy: -1.5,
+                state: -1.5,
+                society: -1.0,
+                sovereignty: 0.0
+            },
+            conservative: {
+                name: "Národní konzervativec",
+                economy: 0.6,
+                state: 1.1,
+                society: 1.2,
+                sovereignty: 2.0
+            },
+            leftcentrist: {
+                name: "Levicový centrista",
+                economy: 0.8,
+                state: 0.5,
+                society: -0.2,
+                sovereignty: -0.5
+            },
+            anarchist: {
+                name: "Levicový anarchista",
+                economy: 1.5,
+                state: -1.8,
+                society: -1.5,
+                sovereignty: -1.0
+            }
+        };
+
+        async function testScenario(scenarioKey) {
+            const scenario = scenarios[scenarioKey];
+            const resultsDiv = document.getElementById('results');
+            const resultsContent = document.getElementById('results-content');
+            
+            resultsDiv.style.display = 'block';
+            resultsContent.innerHTML = `<p>Testování scénáře: <strong>${scenario.name}</strong></p>`;
+            
+            // Simulace odpovědí na otázky
+            const answers = simulateAnswers(scenario);
+            
+            // Odeslání na API
+            try {
+                const response = await fetch('http://localhost:8888/.netlify/functions/api-calculate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ answers })
+                });
+                
+                const result = await response.json();
+                
+                resultsContent.innerHTML += `
+                    <h4>Vypočtené pozice:</h4>
+                    <ul>
+                        <li>Ekonomika: ${result.userPosition.economy.toFixed(2)} (očekáváno: ${scenario.economy})</li>
+                        <li>Role státu: ${result.userPosition.state.toFixed(2)} (očekáváno: ${scenario.state})</li>
+                        <li>Společnost: ${result.userPosition.society.toFixed(2)} (očekáváno: ${scenario.society})</li>
+                        <li>Suverenita: ${result.userPosition.sovereignty.toFixed(2)} (očekáváno: ${scenario.sovereignty})</li>
+                    </ul>
+                    <h4>Top 3 nejbližší strany:</h4>
+                    <ol>
+                        ${result.matches.slice(0, 3).map(m => 
+                            `<li>${m.party}: ${m.match.toFixed(1)}%</li>`
+                        ).join('')}
+                    </ol>
+                `;
+                
+                // Otevření výsledků v hlavní aplikaci
+                localStorage.setItem('testScenario', JSON.stringify({
+                    name: scenario.name,
+                    position: result.userPosition
+                }));
+                
+                resultsContent.innerHTML += `
+                    <p><strong>✅ Test dokončen!</strong> 
+                    <a href="http://localhost:8888/#vysledky" target="_blank">Zobrazit v kompasu →</a></p>
+                `;
+                
+            } catch (error) {
+                resultsContent.innerHTML += `<p style="color: red;">Chyba: ${error.message}</p>`;
+            }
+        }
+
+        function simulateAnswers(scenario) {
+            // Simulace odpovědí na základě pozic
+            const answers = {};
+            
+            // Mapování ID otázek podle dimenzí z api-questions.js
+            const questionsByDimension = {
+                economy: [1, 2, 3, 4, 5, 6, 7],
+                state: [8, 9, 10, 11, 12, 13, 14],
+                society: [15, 16, 17, 18, 19, 20, 21],
+                sovereignty: [22, 23, 24, 25, 26, 27, 28]
+            };
+            
+            // Generování odpovědí pro každou dimenzi
+            // Používáme přímo hodnoty scénáře jako odpovědi (-2 až +2)
+            questionsByDimension.economy.forEach(id => {
+                answers[id] = scenario.economy;
+            });
+            
+            questionsByDimension.state.forEach(id => {
+                answers[id] = scenario.state;
+            });
+            
+            questionsByDimension.society.forEach(id => {
+                answers[id] = scenario.society;
+            });
+            
+            questionsByDimension.sovereignty.forEach(id => {
+                answers[id] = scenario.sovereignty;
+            });
+            
+            return answers;
+        }
+    </script>
+</body>
+</html>

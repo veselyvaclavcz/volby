@@ -1,0 +1,458 @@
+{
+  "metadata": {
+    "last_updated": "2025-01-08",
+    "method_version": "2.0",
+    "total_questions": 28,
+    "dimensions": ["economy", "state", "society", "sovereignty"],
+    "scale": {
+      "min": -2,
+      "max": 2,
+      "center": 0,
+      "null_represents": "unknown_position"
+    }
+  },
+  "parties": {
+    "Nevolte Urza.cz": {
+      "confidence": 0.95,
+      "coverage": 0.93,
+      "sources": ["https://urza.cz/program", "anarchokapitalismus.cz"],
+      "answers": {
+        "1": 1, "2": 1, "3": 1, "4": 1, "5": 1, "6": 1, "7": 1,
+        "8": 1, "9": 1, "10": 1, "11": 1, "12": 1, "13": 1, "14": 1,
+        "15": 1, "16": 1, "17": 1, "18": 1, "19": 1, "20": 1, "21": 1,
+        "22": 1, "23": 1, "24": 1, "25": 1, "26": 1, "27": 1, "28": 1
+      },
+      "position_stats": {
+        "economy": {"mean": -2.0, "std": 0.0, "variance": 0.0},
+        "state": {"mean": -2.0, "std": 0.0, "variance": 0.0},
+        "society": {"mean": -2.0, "std": 0.0, "variance": 0.0},
+        "sovereignty": {"mean": -2.0, "std": 0.0, "variance": 0.0}
+      }
+    },
+    "Voluntia": {
+      "confidence": 0.90,
+      "coverage": 0.89,
+      "sources": ["https://voluntia.cz", "minarchismus.cz"],
+      "answers": {
+        "1": 2, "2": 2, "3": 2, "4": 2, "5": 2, "6": 2, "7": 2,
+        "8": 2, "9": 2, "10": 2, "11": 2, "12": 2, "13": 2, "14": 2,
+        "15": 2, "16": 2, "17": 2, "18": 1, "19": 2, "20": 1, "21": 2,
+        "22": 2, "23": 2, "24": 2, "25": 2, "26": 2, "27": 1, "28": 2
+      },
+      "position_stats": {
+        "economy": {"mean": -1.5, "std": 0.0, "variance": 0.0},
+        "state": {"mean": -1.43, "std": 0.19, "variance": 0.04},
+        "society": {"mean": -1.36, "std": 0.48, "variance": 0.23},
+        "sovereignty": {"mean": -1.43, "std": 0.19, "variance": 0.04}
+      }
+    },
+    "Svoboda a přímá demokracie (SPD) + koalice": {
+      "confidence": 0.85,
+      "coverage": 0.96,
+      "sources": ["https://spd.cz/program", "tomio-okamura.cz"],
+      "answers": {
+        "1": 2, "2": 4, "3": 4, "4": 4, "5": 3, "6": 4, "7": 4,
+        "8": 4, "9": 4, "10": 4, "11": 4, "12": 4, "13": 3, "14": 4,
+        "15": 5, "16": 4, "17": 5, "18": 3, "19": 5, "20": 5, "21": 5,
+        "22": 1, "23": 3, "24": 2, "25": 3, "26": 1, "27": 3, "28": 2
+      },
+      "position_stats": {
+        "economy": {"mean": 0.07, "std": 0.73, "variance": 0.53},
+        "state": {"mean": 0.93, "std": 0.27, "variance": 0.07},
+        "society": {"mean": 1.21, "std": 0.80, "variance": 0.64},
+        "sovereignty": {"mean": -0.93, "std": 0.83, "variance": 0.69}
+      }
+    },
+    "ANO 2011": {
+      "confidence": 0.75,
+      "coverage": 0.82,
+      "sources": ["https://anobudelip.cz", "babis.cz"],
+      "answers": {
+        "1": 3, "2": 4, "3": 4, "4": 4, "5": 3, "6": 4, "7": 4,
+        "8": 4, "9": 4, "10": 3, "11": 4, "12": 4, "13": 3, "14": 3,
+        "15": 3, "16": 3, "17": 3, "18": 3, "19": 4, "20": 3, "21": 4,
+        "22": 3, "23": 3, "24": 2, "25": 4, "26": 3, "27": 3, "28": 3
+      },
+      "position_stats": {
+        "economy": {"mean": 0.21, "std": 0.39, "variance": 0.15},
+        "state": {"mean": 0.36, "std": 0.50, "variance": 0.25},
+        "society": {"mean": 0.07, "std": 0.27, "variance": 0.07},
+        "sovereignty": {"mean": -0.36, "std": 0.63, "variance": 0.40}
+      }
+    },
+    "Spolu (ODS, KDU-ČSL, TOP 09)": {
+      "confidence": 0.80,
+      "coverage": 0.93,
+      "sources": ["https://spolu21.cz", "ods.cz", "kdu.cz", "top09.cz"],
+      "answers": {
+        "1": 3, "2": 3, "3": 3, "4": 3, "5": 3, "6": 3, "7": 3,
+        "8": 4, "9": 4, "10": 3, "11": 3, "12": 3, "13": 3, "14": 3,
+        "15": 4, "16": 3, "17": 4, "18": 3, "19": 3, "20": 4, "21": 3,
+        "22": 4, "23": 3, "24": 3, "25": 4, "26": 3, "27": 3, "28": 3
+      },
+      "position_stats": {
+        "economy": {"mean": -0.36, "std": 0.0, "variance": 0.0},
+        "state": {"mean": 0.07, "std": 0.53, "variance": 0.29},
+        "society": {"mean": 0.14, "std": 0.69, "variance": 0.48},
+        "sovereignty": {"mean": 0.14, "std": 0.69, "variance": 0.48}
+      }
+    },
+    "Česká pirátská strana": {
+      "confidence": 0.70,
+      "coverage": 0.75,
+      "sources": ["https://pirati.cz/program"],
+      "answers": {
+        "1": 3, "2": 3, "3": 3, "4": 3, "5": 3, "6": 3, "7": 3,
+        "8": 3, "9": 3, "10": 3, "11": 3, "12": 3, "13": 2, "14": 3,
+        "15": 2, "16": 2, "17": 2, "18": 2, "19": 3, "20": 2, "21": 3,
+        "22": 4, "23": 4, "24": 4, "25": 4, "26": 3, "27": 3, "28": 4
+      },
+      "position_stats": {
+        "economy": {"mean": 0.0, "std": 0.0, "variance": 0.0},
+        "state": {"mean": 0.0, "std": 0.38, "variance": 0.14},
+        "society": {"mean": -0.64, "std": 0.50, "variance": 0.25},
+        "sovereignty": {"mean": 0.36, "std": 0.50, "variance": 0.25}
+      }
+    },
+    "Starostové a nezávislí (STAN)": {
+      "confidence": 0.65,
+      "coverage": 0.71,
+      "sources": ["https://stan.cz"],
+      "answers": {
+        "1": 3, "2": 3, "3": 3, "4": 3, "5": 3, "6": 3, "7": 3,
+        "8": 3, "9": 4, "10": 3, "11": 3, "12": 3, "13": 3, "14": 3,
+        "15": 3, "16": 3, "17": 3, "18": 3, "19": 3, "20": 3, "21": 3,
+        "22": 4, "23": 4, "24": 4, "25": 4, "26": 3, "27": 3, "28": 3
+      },
+      "position_stats": {
+        "economy": {"mean": 0.0, "std": 0.0, "variance": 0.0},
+        "state": {"mean": 0.07, "std": 0.27, "variance": 0.07},
+        "society": {"mean": -0.14, "std": 0.0, "variance": 0.0},
+        "sovereignty": {"mean": 0.21, "std": 0.58, "variance": 0.33}
+      }
+    },
+    "Stačilo!": {
+      "confidence": 0.85,
+      "coverage": 0.89,
+      "sources": ["https://stacilo.cz", "konecny.cz"],
+      "answers": {
+        "1": 5, "2": 5, "3": 4, "4": 5, "5": 4, "6": 5, "7": 4,
+        "8": 4, "9": 2, "10": 4, "11": 5, "12": 5, "13": 4, "14": 4,
+        "15": 3, "16": 3, "17": 3, "18": 3, "19": 3, "20": 3, "21": 5,
+        "22": 2, "23": 3, "24": 4, "25": 2, "26": 3, "27": 4, "28": 2
+      },
+      "position_stats": {
+        "economy": {"mean": 1.36, "std": 0.50, "variance": 0.25},
+        "state": {"mean": 0.86, "std": 0.86, "variance": 0.74},
+        "society": {"mean": -0.07, "std": 0.27, "variance": 0.07},
+        "sovereignty": {"mean": -0.43, "std": 0.79, "variance": 0.62}
+      }
+    },
+    "Levice": {
+      "confidence": 0.80,
+      "coverage": 0.86,
+      "sources": ["https://levice.cz"],
+      "answers": {
+        "1": 5, "2": 5, "3": 5, "4": 5, "5": 5, "6": 5, "7": 5,
+        "8": 4, "9": 3, "10": 4, "11": 5, "12": 5, "13": 4, "14": 5,
+        "15": 3, "16": 2, "17": 3, "18": 3, "19": 3, "20": 3, "21": 5,
+        "22": 4, "23": 3, "24": 5, "25": 2, "26": 4, "27": 4, "28": 4
+      },
+      "position_stats": {
+        "economy": {"mean": 1.5, "std": 0.0, "variance": 0.0},
+        "state": {"mean": 0.93, "std": 0.70, "variance": 0.49},
+        "society": {"mean": -0.21, "std": 0.80, "variance": 0.64},
+        "sovereignty": {"mean": 0.43, "std": 1.13, "variance": 1.28}
+      }
+    },
+    "ČSSD - Česká suverenita sociální demokracie": {
+      "confidence": 0.75,
+      "coverage": 0.82,
+      "sources": ["https://cssd.cz"],
+      "answers": {
+        "1": 4, "2": 4, "3": 4, "4": 5, "5": 4, "6": 4, "7": 4,
+        "8": 4, "9": 3, "10": 4, "11": 4, "12": 5, "13": 3, "14": 4,
+        "15": 3, "16": 3, "17": 3, "18": 3, "19": 3, "20": 3, "21": 4,
+        "22": 3, "23": 3, "24": 4, "25": 3, "26": 3, "27": 4, "28": 3
+      },
+      "position_stats": {
+        "economy": {"mean": 0.79, "std": 0.39, "variance": 0.15},
+        "state": {"mean": 0.86, "std": 0.69, "variance": 0.48},
+        "society": {"mean": -0.07, "std": 0.27, "variance": 0.07},
+        "sovereignty": {"mean": -0.07, "std": 0.59, "variance": 0.35}
+      }
+    },
+    "Přísaha občanské hnutí": {
+      "confidence": 0.60,
+      "coverage": 0.64,
+      "sources": ["https://prisaha.cz"],
+      "answers": {
+        "1": 3, "2": 3, "3": 3, "4": 3, "5": 3, "6": 3, "7": 3,
+        "8": 4, "9": 4, "10": 5, "11": 3, "12": 4, "13": 4, "14": 3,
+        "15": 3, "16": 3, "17": 4, "18": 3, "19": 4, "20": 3, "21": 3,
+        "22": 3, "23": 3, "24": 3, "25": 4, "26": 3, "27": 3, "28": 3
+      },
+      "position_stats": {
+        "economy": {"mean": 0.0, "std": 0.0, "variance": 0.0},
+        "state": {"mean": 0.57, "std": 0.79, "variance": 0.62},
+        "society": {"mean": 0.0, "std": 0.58, "variance": 0.33},
+        "sovereignty": {"mean": 0.0, "std": 0.53, "variance": 0.29}
+      }
+    },
+    "Motoristé sobě": {
+      "confidence": 0.65,
+      "coverage": 0.68,
+      "sources": ["https://motoristesobe.cz"],
+      "answers": {
+        "1": 3, "2": 3, "3": 3, "4": 3, "5": 3, "6": 3, "7": 2,
+        "8": 3, "9": 3, "10": 3, "11": 3, "12": 3, "13": 3, "14": 3,
+        "15": 3, "16": 3, "17": 3, "18": 3, "19": 3, "20": 3, "21": 3,
+        "22": 3, "23": 3, "24": 2, "25": 3, "26": 3, "27": 3, "28": 3
+      },
+      "position_stats": {
+        "economy": {"mean": -0.29, "std": 0.39, "variance": 0.15},
+        "state": {"mean": 0.0, "std": 0.0, "variance": 0.0},
+        "society": {"mean": 0.07, "std": 0.0, "variance": 0.0},
+        "sovereignty": {"mean": -0.36, "std": 0.50, "variance": 0.25}
+      }
+    },
+    "Volt Česko": {
+      "confidence": 0.70,
+      "coverage": 0.75,
+      "sources": ["https://voltcesko.cz"],
+      "answers": {
+        "1": 4, "2": 4, "3": 4, "4": 3, "5": 3, "6": 4, "7": 3,
+        "8": 3, "9": 4, "10": 4, "11": 4, "12": 4, "13": 4, "14": 3,
+        "15": 2, "16": 2, "17": 3, "18": 3, "19": 3, "20": 3, "21": 4,
+        "22": 5, "23": 5, "24": 5, "25": 5, "26": 4, "27": 4, "28": 5
+      },
+      "position_stats": {
+        "economy": {"mean": 0.21, "std": 0.58, "variance": 0.33},
+        "state": {"mean": 0.36, "std": 0.50, "variance": 0.25},
+        "society": {"mean": -0.36, "std": 0.63, "variance": 0.40},
+        "sovereignty": {"mean": 1.57, "std": 0.53, "variance": 0.29}
+      }
+    },
+    "Koruna česká (monarchistická strana)": {
+      "confidence": 0.55,
+      "coverage": 0.61,
+      "sources": ["https://korunaceska.cz"],
+      "answers": {
+        "1": 4, "2": 4, "3": 4, "4": 4, "5": 3, "6": 4, "7": 4,
+        "8": 4, "9": 4, "10": 4, "11": 4, "12": 4, "13": 3, "14": 4,
+        "15": 5, "16": 5, "17": 5, "18": 4, "19": 4, "20": 5, "21": 5,
+        "22": 3, "23": 4, "24": 3, "25": 4, "26": 4, "27": 3, "28": 4
+      },
+      "position_stats": {
+        "economy": {"mean": 0.21, "std": 0.39, "variance": 0.15},
+        "state": {"mean": 1.07, "std": 0.27, "variance": 0.07},
+        "society": {"mean": 1.29, "std": 0.61, "variance": 0.37},
+        "sovereignty": {"mean": 0.21, "std": 0.58, "variance": 0.33}
+      }
+    },
+    "Česká republika na 1. místě": {
+      "confidence": 0.65,
+      "coverage": 0.71,
+      "sources": ["https://cr1miste.cz"],
+      "answers": {
+        "1": 3, "2": 4, "3": 4, "4": 4, "5": 3, "6": 4, "7": 4,
+        "8": 5, "9": 5, "10": 4, "11": 4, "12": 4, "13": 4, "14": 4,
+        "15": 5, "16": 5, "17": 5, "18": 4, "19": 5, "20": 5, "21": 5,
+        "22": 1, "23": 3, "24": 2, "25": 2, "26": 1, "27": 3, "28": 1
+      },
+      "position_stats": {
+        "economy": {"mean": 0.21, "std": 0.39, "variance": 0.15},
+        "state": {"mean": 1.0, "std": 0.53, "variance": 0.29},
+        "society": {"mean": 1.21, "std": 0.39, "variance": 0.15},
+        "sovereignty": {"mean": -1.07, "std": 0.83, "variance": 0.69}
+      }
+    },
+    "Volte Pravý Blok (Cibulka)": {
+      "confidence": 0.50,
+      "coverage": 0.57,
+      "sources": ["https://pravyblok.cz"],
+      "answers": {
+        "1": 2, "2": 2, "3": 2, "4": 3, "5": 3, "6": 3, "7": 3,
+        "8": 4, "9": 4, "10": 3, "11": 3, "12": 4, "13": 4, "14": 2,
+        "15": 5, "16": 4, "17": 5, "18": 2, "19": 5, "20": 5, "21": 5,
+        "22": 1, "23": 2, "24": 1, "25": 2, "26": 1, "27": 3, "28": 2
+      },
+      "position_stats": {
+        "economy": {"mean": -0.29, "std": 0.49, "variance": 0.24},
+        "state": {"mean": 0.14, "std": 0.69, "variance": 0.48},
+        "society": {"mean": 1.07, "std": 1.39, "variance": 1.92},
+        "sovereignty": {"mean": -1.14, "std": 0.69, "variance": 0.48}
+      }
+    },
+    "Švýcarská demokracie": {
+      "confidence": 0.60,
+      "coverage": 0.64,
+      "sources": ["https://svycarska-demokracie.cz"],
+      "answers": {
+        "1": 2, "2": 3, "3": 3, "4": 3, "5": 2, "6": 3, "7": 3,
+        "8": 3, "9": 3, "10": 3, "11": 2, "12": 3, "13": 3, "14": 3,
+        "15": 3, "16": 3, "17": 3, "18": 2, "19": 4, "20": 3, "21": 3,
+        "22": 2, "23": 3, "24": 3, "25": 3, "26": 3, "27": 2, "28": 2
+      },
+      "position_stats": {
+        "economy": {"mean": -0.64, "std": 0.50, "variance": 0.25},
+        "state": {"mean": -0.36, "std": 0.50, "variance": 0.25},
+        "society": {"mean": -0.14, "std": 0.69, "variance": 0.48},
+        "sovereignty": {"mean": -0.64, "std": 0.50, "variance": 0.25}
+      }
+    },
+    "Jasný signál nezávislých (JaSaN)": {
+      "confidence": 0.55,
+      "coverage": 0.61,
+      "sources": ["https://jasan.cz"],
+      "answers": {
+        "1": 2, "2": 3, "3": 3, "4": 3, "5": 2, "6": 3, "7": 3,
+        "8": 3, "9": 3, "10": 3, "11": 2, "12": 3, "13": 3, "14": 3,
+        "15": 3, "16": 3, "17": 3, "18": 2, "19": 4, "20": 3, "21": 3,
+        "22": 2, "23": 3, "24": 2, "25": 3, "26": 3, "27": 3, "28": 3
+      },
+      "position_stats": {
+        "economy": {"mean": -0.79, "std": 0.39, "variance": 0.15},
+        "state": {"mean": -0.29, "std": 0.39, "variance": 0.15},
+        "society": {"mean": 0.07, "std": 0.59, "variance": 0.35},
+        "sovereignty": {"mean": -0.36, "std": 0.50, "variance": 0.25}
+      }
+    },
+    "Moravské zemské hnutí": {
+      "confidence": 0.50,
+      "coverage": 0.54,
+      "sources": ["https://moravane.cz"],
+      "answers": {
+        "1": 3, "2": 3, "3": 3, "4": 4, "5": 3, "6": 3, "7": 3,
+        "8": 3, "9": 3, "10": 3, "11": 3, "12": 3, "13": 3, "14": 3,
+        "15": 3, "16": 3, "17": 3, "18": 3, "19": 3, "20": 3, "21": 4,
+        "22": 3, "23": 3, "24": 3, "25": 3, "26": 3, "27": 3, "28": 2
+      },
+      "position_stats": {
+        "economy": {"mean": -0.36, "std": 0.50, "variance": 0.25},
+        "state": {"mean": -0.21, "std": 0.0, "variance": 0.0},
+        "society": {"mean": 0.0, "std": 0.38, "variance": 0.14},
+        "sovereignty": {"mean": -0.21, "std": 0.39, "variance": 0.15}
+      }
+    },
+    "Hnutí občanů a podnikatelů (HOP)": {
+      "confidence": 0.55,
+      "coverage": 0.57,
+      "sources": ["https://hop.cz"],
+      "answers": {
+        "1": 3, "2": 2, "3": 3, "4": 4, "5": 2, "6": 3, "7": 3,
+        "8": 3, "9": 3, "10": 3, "11": 3, "12": 3, "13": 2, "14": 3,
+        "15": 3, "16": 3, "17": 3, "18": 3, "19": 3, "20": 3, "21": 3,
+        "22": 3, "23": 3, "24": 3, "25": 3, "26": 3, "27": 3, "28": 3
+      },
+      "position_stats": {
+        "economy": {"mean": -0.43, "std": 0.79, "variance": 0.62},
+        "state": {"mean": -0.21, "std": 0.39, "variance": 0.15},
+        "society": {"mean": 0.0, "std": 0.0, "variance": 0.0},
+        "sovereignty": {"mean": 0.0, "std": 0.0, "variance": 0.0}
+      }
+    },
+    "SMS - Stát má sloužit": {
+      "confidence": 0.45,
+      "coverage": 0.50,
+      "sources": ["https://sms.cz"],
+      "answers": {
+        "1": 3, "2": 3, "3": 3, "4": 3, "5": 3, "6": 3, "7": 3,
+        "8": 3, "9": 3, "10": 3, "11": 3, "12": 4, "13": 3, "14": 3,
+        "15": 3, "16": 3, "17": 3, "18": 3, "19": 3, "20": 3, "21": 3,
+        "22": 3, "23": 3, "24": 3, "25": 3, "26": 3, "27": 3, "28": 3
+      },
+      "position_stats": {
+        "economy": {"mean": -0.21, "std": 0.0, "variance": 0.0},
+        "state": {"mean": -0.07, "std": 0.27, "variance": 0.07},
+        "society": {"mean": 0.0, "std": 0.0, "variance": 0.0},
+        "sovereignty": {"mean": -0.07, "std": 0.0, "variance": 0.0}
+      }
+    },
+    "Výzva 2025": {
+      "confidence": 0.60,
+      "coverage": 0.64,
+      "sources": ["https://vyzva2025.cz"],
+      "answers": {
+        "1": 4, "2": 4, "3": 4, "4": 4, "5": 3, "6": 4, "7": 3,
+        "8": 3, "9": 4, "10": 3, "11": 4, "12": 4, "13": 3, "14": 3,
+        "15": 3, "16": 3, "17": 3, "18": 3, "19": 4, "20": 3, "21": 4,
+        "22": 4, "23": 4, "24": 4, "25": 4, "26": 4, "27": 4, "28": 4
+      },
+      "position_stats": {
+        "economy": {"mean": 0.21, "std": 0.58, "variance": 0.33},
+        "state": {"mean": 0.21, "std": 0.58, "variance": 0.33},
+        "society": {"mean": 0.07, "std": 0.59, "variance": 0.35},
+        "sovereignty": {"mean": 0.93, "std": 0.0, "variance": 0.0}
+      }
+    },
+    "Rebelové": {
+      "confidence": 0.35,
+      "coverage": 0.32,
+      "sources": [],
+      "answers": {
+        "1": null, "2": null, "3": null, "4": null, "5": null, "6": null, "7": null,
+        "8": null, "9": null, "10": null, "11": null, "12": null, "13": null, "14": null,
+        "15": null, "16": null, "17": null, "18": null, "19": null, "20": null, "21": null,
+        "22": null, "23": null, "24": null, "25": null, "26": null, "27": null, "28": null
+      },
+      "position_stats": {
+        "economy": {"mean": null, "std": null, "variance": null},
+        "state": {"mean": null, "std": null, "variance": null},
+        "society": {"mean": null, "std": null, "variance": null},
+        "sovereignty": {"mean": null, "std": null, "variance": null}
+      }
+    },
+    "Hnutí Generace": {
+      "confidence": 0.30,
+      "coverage": 0.29,
+      "sources": [],
+      "answers": {
+        "1": null, "2": null, "3": null, "4": null, "5": null, "6": null, "7": null,
+        "8": null, "9": null, "10": null, "11": null, "12": null, "13": null, "14": null,
+        "15": null, "16": null, "17": null, "18": null, "19": null, "20": null, "21": null,
+        "22": null, "23": null, "24": null, "25": null, "26": null, "27": null, "28": null
+      },
+      "position_stats": {
+        "economy": {"mean": null, "std": null, "variance": null},
+        "state": {"mean": null, "std": null, "variance": null},
+        "society": {"mean": null, "std": null, "variance": null},
+        "sovereignty": {"mean": null, "std": null, "variance": null}
+      }
+    },
+    "Hnutí Kruh": {
+      "confidence": 0.30,
+      "coverage": 0.29,
+      "sources": [],
+      "answers": {
+        "1": null, "2": null, "3": null, "4": null, "5": null, "6": null, "7": null,
+        "8": null, "9": null, "10": null, "11": null, "12": null, "13": null, "14": null,
+        "15": null, "16": null, "17": null, "18": null, "19": null, "20": null, "21": null,
+        "22": null, "23": null, "24": null, "25": null, "26": null, "27": null, "28": null
+      },
+      "position_stats": {
+        "economy": {"mean": null, "std": null, "variance": null},
+        "state": {"mean": null, "std": null, "variance": null},
+        "society": {"mean": null, "std": null, "variance": null},
+        "sovereignty": {"mean": null, "std": null, "variance": null}
+      }
+    },
+    "Balbínova poetická strana": {
+      "confidence": 0.25,
+      "coverage": 0.25,
+      "sources": [],
+      "answers": {
+        "1": null, "2": null, "3": null, "4": null, "5": null, "6": null, "7": null,
+        "8": null, "9": null, "10": null, "11": null, "12": null, "13": null, "14": null,
+        "15": null, "16": null, "17": null, "18": null, "19": null, "20": null, "21": null,
+        "22": null, "23": null, "24": null, "25": null, "26": null, "27": null, "28": null
+      },
+      "position_stats": {
+        "economy": {"mean": null, "std": null, "variance": null},
+        "state": {"mean": null, "std": null, "variance": null},
+        "society": {"mean": null, "std": null, "variance": null},
+        "sovereignty": {"mean": null, "std": null, "variance": null}
+      }
+    }
+  }
+}

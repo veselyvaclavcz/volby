@@ -1,4 +1,7 @@
-// Netlify Function for calculate API
+// Netlify Function for calculate API - loads from JSON data
+const fs = require('fs');
+const path = require('path');
+
 exports.handler = async (event, context) => {
   if (event.httpMethod !== 'POST') {
     return {
@@ -8,145 +11,112 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const answers = JSON.parse(event.body);
+    const requestBody = JSON.parse(event.body);
+    console.log('DEBUG: Received request body:', JSON.stringify(requestBody));
     
-    // Questions data
-    const questions = [
-      {id: 1, dimension: "EKO", polarity: -1},  // Daně nejnižší - agree(1)→right needs -1
-      {id: 2, dimension: "EKO", polarity: 1},   // Stát podporovat - agree(1)→left needs +1
-      {id: 3, dimension: "EKO", polarity: -1},  // Soukromé efektivnější - agree(1)→right needs -1
-      {id: 4, dimension: "EKO", polarity: 1},   // Min. mzda prospěšná - agree(1)→left needs +1
-      {id: 5, dimension: "EKO", polarity: -1},  // Stejné % daní - agree(1)→right needs -1
-      {id: 6, dimension: "EKO", polarity: -1},  // Soc. podpora závislost - agree(1)→right needs -1
-      {id: 7, dimension: "EKO", polarity: -1},  // Zrušení superhrubé - agree(1)→right needs -1
-      {id: 8, dimension: "EKO", polarity: -1},  // Podnikání důležitější - agree(1)→right needs -1
-      {id: 9, dimension: "EKO", polarity: 1},   // Státní důchody udržitelné - agree(1)→left needs +1
-      {id: 10, dimension: "EKO", polarity: 1},  // Zdravotnictví veřejné - agree(1)→left needs +1
-      {id: 11, dimension: "EKO", polarity: -1},
-      {id: 12, dimension: "SOC", polarity: -1},  // LGBT adopce - agree(1)→liberal needs -1
-      {id: 13, dimension: "SOC", polarity: -1},  // Konopí - agree(1)→liberal needs -1
-      {id: 14, dimension: "SOC", polarity: 1},   // Tradiční rodina - agree(1)→conserv needs +1
-      {id: 15, dimension: "SOC", polarity: -1},  // Právo žen - agree(1)→liberal needs -1
-      {id: 16, dimension: "SOC", polarity: -1},  // Multikulti - agree(1)→liberal needs -1
-      {id: 17, dimension: "SOC", polarity: 1},   // Národní identita - agree(1)→conserv needs +1
-      {id: 18, dimension: "SOC", polarity: -1},  // Manželství všem - agree(1)→liberal needs -1
-      {id: 19, dimension: "SOC", polarity: 1},   // Gender normy - agree(1)→conserv needs +1
-      {id: 20, dimension: "SOC", polarity: -1},  // Oddělení církve - agree(1)→liberal needs -1
-      {id: 21, dimension: "SOC", polarity: 1},   // Integrace úsilí - agree(1)→conserv needs +1
-      {id: 22, dimension: "SOC", polarity: -1},  // Sex výchova - agree(1)→liberal needs -1
-      {id: 23, dimension: "SUV", polarity: -1},  // Euro - agree(1)→pro-EU needs -1
-      {id: 24, dimension: "SUV", polarity: -1},  // Green Deal - agree(1)→pro-EU needs -1
-      {id: 25, dimension: "SUV", polarity: 1},   // Státy kontrola - agree(1)→anti-EU needs +1
-      {id: 26, dimension: "SUV", polarity: -1},  // Migrační pakt - agree(1)→pro-EU needs -1
-      {id: 27, dimension: "SUV", polarity: 1},   // Vystoupení - agree(1)→anti-EU needs +1
-      {id: 28, dimension: "SUV", polarity: -1},  // Kvóty - agree(1)→pro-EU needs -1
-      {id: 29, dimension: "SUV", polarity: -1},  // NATO - agree(1)→pro-West needs -1
-      {id: 30, dimension: "SUV", polarity: 1},   // Sankce škodí - agree(1)→anti-West needs +1
-      {id: 31, dimension: "SUV", polarity: -1},  // USE - agree(1)→pro-EU needs -1
-      {id: 32, dimension: "SUV", polarity: 1},   // V4 důležitější - agree(1)→anti-EU needs +1
-      {id: 33, dimension: "SUV", polarity: -1}
+    // Frontend sends { answers: {...} } but we need just the answers object
+    const answers = requestBody.answers || requestBody;
+    console.log('DEBUG: Extracted answers:', JSON.stringify(answers));
+    
+    // Load data from unified JSON file (single source of truth)
+    const partiesPath = path.join(__dirname, 'data', 'parties-unified.json');
+    const partiesData = fs.readFileSync(partiesPath, 'utf8');
+    const parties = JSON.parse(partiesData);
+    
+    // Load questions data
+    const questionsPath = path.join(__dirname, 'data', 'questions-28.json');
+    const questionsData = fs.readFileSync(questionsPath, 'utf8');
+    const questions = JSON.parse(questionsData);
+    console.log('DEBUG: Loaded', questions.length, 'questions');
+    
+    // Combine all parties with type flag
+    const allParties = [
+      ...parties.mainParties.map(p => ({...p, type: 'main'})),
+      ...parties.coalitionParties.map(p => ({...p, type: 'coalition'}))
     ];
-
-    // Parties data  
-    const parties = [
-      {code: "ANO", name: "ANO", compass_position: {EKO: -0.36, SOC: 0.23, SUV: -0.41}},
-      {code: "SPOLU", name: "SPOLU", compass_position: {EKO: 0.64, SOC: -0.05, SUV: 0.64}},
-      {code: "SPD", name: "SPD", compass_position: {EKO: -0.41, SOC: 0.86, SUV: -0.82}},
-      {code: "PIRATI", name: "Piráti", compass_position: {EKO: -0.32, SOC: -0.95, SUV: 0.68}},
-      {code: "STAN", name: "STAN", compass_position: {EKO: 0.14, SOC: -0.18, SUV: 0.73}},
-      {code: "KSČM", name: "KSČM", compass_position: {EKO: -0.95, SOC: 0.23, SUV: -0.73}},
-      {code: "TRIKOLORA", name: "Trikolóra", compass_position: {EKO: 0.77, SOC: 0.82, SUV: -0.68}},
-      {code: "PRISAHA", name: "Přísaha", compass_position: {EKO: 0.23, SOC: 0.27, SUV: 0.09}},
-      {code: "SOCDEM", name: "SOCDEM", compass_position: {EKO: -0.68, SOC: -0.55, SUV: 0.36}},
-      {code: "ZELENI", name: "Zelení", compass_position: {EKO: -0.50, SOC: -1.00, SUV: 1.00}},
-      {code: "SVOBODNI", name: "Svobodní", compass_position: {EKO: 0.95, SOC: -0.45, SUV: -0.77}},
-      {code: "MOTORISTE", name: "Motoristé", compass_position: {EKO: 0.55, SOC: 0.32, SUV: -0.50}},
-      {code: "PRO", name: "PRO", compass_position: {EKO: 0.32, SOC: 0.41, SUV: -0.64}},
-      {code: "REPUBLIKA", name: "REPUBLIKA", compass_position: {EKO: 0.27, SOC: 0.82, SUV: -0.68}},
-      {code: "STACILO", name: "Stačilo!", compass_position: {EKO: -0.95, SOC: -0.45, SUV: -0.41}},
-      {code: "VYZVA2025", name: "Výzva2025", compass_position: {EKO: 0.00, SOC: 0.14, SUV: 0.14}},
-      {code: "KRUH", name: "KRUH", compass_position: {EKO: 0.00, SOC: -0.45, SUV: -0.18}},
-      {code: "VOLUNTIA", name: "VOLUNTIA", compass_position: {EKO: 1.00, SOC: -0.73, SUV: -0.59}},
-      {code: "BUDOUCNOST", name: "Budoucnost", compass_position: {EKO: -0.32, SOC: -0.50, SUV: -0.64}},
-      {code: "JASAN", name: "JASAN", compass_position: {EKO: 0.55, SOC: 0.36, SUV: 0.23}},
-      {code: "LEVY_BLOK", name: "Levý blok", compass_position: {EKO: -1.00, SOC: -0.91, SUV: 0.09}},
-      {code: "NARODNI_DEMOKRACIE", name: "Národní demokracie", compass_position: {EKO: 0.27, SOC: 0.86, SUV: -0.77}},
-      {code: "PRAVO_RESPEKT", name: "Právo Respekt", compass_position: {EKO: 0.00, SOC: 0.00, SUV: 0.00}},
-      {code: "ALIANCE_STABILITA", name: "Aliance pro stabilitu", compass_position: {EKO: -0.18, SOC: 0.23, SUV: 0.09}},
-      {code: "CESKA_SUVERENITA", name: "Česká suverenita", compass_position: {EKO: 0.27, SOC: 0.59, SUV: -0.73}},
-      {code: "VOLT", name: "Volt", compass_position: {EKO: -0.05, SOC: -0.86, SUV: 1.00}}
-    ];
-
+    
     // Calculate user position
-    let userPosition = {EKO: 0, SOC: 0, SUV: 0};
-    let dimensionCounts = {EKO: 0, SOC: 0, SUV: 0};
-    
-    // Calculate freedom score
-    let freedomScore = 0;
-    let freedomCount = 0;
+    let userPosition = {EKO: 0, SOC: 0, STA: 0, SUV: 0};
+    let dimensionCounts = {EKO: 0, SOC: 0, STA: 0, SUV: 0};
     
     for (const [questionId, answer] of Object.entries(answers)) {
       const question = questions.find(q => q.id === parseInt(questionId));
       if (question && answer.value !== null) {
-        const score = ((answer.value - 3) / 2) * question.polarity;
+        // Fix polarity for EKO, STA, SOC, SUV dimensions (they are inverted in data)
+        let correctedPolarity = question.polarity;
+        if (question.dimension === 'EKO' || question.dimension === 'STA' || question.dimension === 'SOC' || question.dimension === 'SUV') {
+          correctedPolarity = -question.polarity;
+        }
+        const score = ((answer.value - 3) / 2) * correctedPolarity;
         const weight = answer.important ? 2 : 1;
         userPosition[question.dimension] += score * weight;
         dimensionCounts[question.dimension] += weight;
         
-        // Freedom score calculation
-        // Pro-freedom questions (less state control)
-        const proFreedom = [1, 3, 5, 11, 12, 13, 15, 20, 25, 27, 32];
-        // Pro-state questions (more state control)
-        const proState = [2, 4, 9, 10, 14, 17, 19, 21, 23, 24, 26, 28, 31];
-        
-        const qId = parseInt(questionId);
-        if (proFreedom.includes(qId)) {
-          // For pro-freedom questions: Agree (1) = +2, Disagree (5) = -2
-          freedomScore += (3 - answer.value) * weight;
-          freedomCount += weight;
-        } else if (proState.includes(qId)) {
-          // For pro-state questions: Agree (1) = -2, Disagree (5) = +2
-          freedomScore += (answer.value - 3) * weight;
-          freedomCount += weight;
-        }
+        console.log(`DEBUG Q${questionId}: dim=${question.dimension}, pol=${question.polarity}→${correctedPolarity}, val=${answer.value}, score=${score}`);
+      } else if (!question) {
+        console.log(`DEBUG: Question ${questionId} not found!`);
       }
     }
     
     // Normalize
-    for (const dim of ['EKO', 'SOC', 'SUV']) {
+    console.log('DEBUG: Before normalization:', JSON.stringify(userPosition));
+    console.log('DEBUG: Dimension counts:', JSON.stringify(dimensionCounts));
+    
+    for (const dim of ['EKO', 'SOC', 'STA', 'SUV']) {
       if (dimensionCounts[dim] > 0) {
+        const beforeNorm = userPosition[dim];
         userPosition[dim] = userPosition[dim] / dimensionCounts[dim];
         userPosition[dim] = Math.max(-1, Math.min(1, userPosition[dim]));
+        console.log(`DEBUG ${dim}: ${beforeNorm}/${dimensionCounts[dim]} = ${userPosition[dim]}`);
       }
     }
     
+    console.log('DEBUG: Final user position:', JSON.stringify(userPosition));
+    
     // Calculate matches
-    const results = parties.map(party => {
+    const results = allParties.map(party => {
       const distance = Math.sqrt(
         Math.pow(userPosition.EKO - party.compass_position.EKO, 2) +
         Math.pow(userPosition.SOC - party.compass_position.SOC, 2) +
+        Math.pow(userPosition.STA - (party.compass_position.STA || 0), 2) +
         Math.pow(userPosition.SUV - party.compass_position.SUV, 2)
       );
-      const maxDistance = Math.sqrt(12);
+      const maxDistance = Math.sqrt(16); // 4 dimensions now
       const match = Math.max(0, (1 - distance / maxDistance)) * 100;
       
       return {
         party: party.name,
         match: Math.round(match * 10) / 10,
-        compass_position: party.compass_position
+        compass_position: party.compass_position,
+        type: party.type || 'main' // Include type from party data
       };
     });
     
-    results.sort((a, b) => b.match - a.match);
+    // Sort results - put satirical parties at the end
+    results.sort((a, b) => {
+      // Find if parties are satirical
+      const aParty = allParties.find(p => p.name === a.party);
+      const bParty = allParties.find(p => p.name === b.party);
+      const aSatirical = aParty?.satirical || false;
+      const bSatirical = bParty?.satirical || false;
+      
+      // If one is satirical and other isn't, put satirical at the end
+      if (aSatirical && !bSatirical) return 1;
+      if (!aSatirical && bSatirical) return -1;
+      
+      // Otherwise sort by match percentage
+      return b.match - a.match;
+    });
     
-    // Normalize freedom score to 0-100
-    // Using actual weights for proper normalization
-    // Max possible score is freedomCount * 2 (all extreme answers)
-    // Score range is -2*freedomCount to +2*freedomCount
-    // Normalize to 0-100 where 50 is neutral
-    const normalizedFreedom = freedomCount > 0 
-      ? Math.max(0, Math.min(100, 50 + (freedomScore / (freedomCount * 2)) * 50))
-      : 50;
+    // Calculate freedom score from user position dimensions
+    // Freedom is represented by negative values (libertarian direction)
+    // Each dimension ranges from -1 (max freedom) to +1 (max state control)
+    // We calculate average and convert to 0-100 scale
+    const avgPosition = (userPosition.EKO + userPosition.SOC + userPosition.STA + userPosition.SUV) / 4;
+    // Convert from [-1, +1] to [100, 0] - more negative = more freedom = higher score
+    const normalizedFreedom = Math.round((1 - avgPosition) * 50);
+    
+    console.log('DEBUG: Freedom calculation - avg position:', avgPosition, '-> svobodometr:', normalizedFreedom);
     
     return {
       statusCode: 200,
@@ -157,12 +127,19 @@ exports.handler = async (event, context) => {
       body: JSON.stringify({
         results: results,
         user_compass: userPosition,
-        freedom_score: Math.round(normalizedFreedom)
+        svobodometr: normalizedFreedom,
+        userPosition: userPosition,
+        dimensions: userPosition
       })
     };
   } catch (error) {
+    console.error('Error in calculation:', error);
     return {
       statusCode: 400,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      },
       body: JSON.stringify({ error: 'Invalid request' })
     };
   }

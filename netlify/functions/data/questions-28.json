@@ -1,0 +1,366 @@
+[
+  {
+    "id": 1,
+    "text": "Jak by měly fungovat daně z příjmu?",
+    "dimension": "EKO",
+    "polarity": -1,
+    "answers": {
+      "1": "Zrušit daně, vše dobrovolné.",
+      "2": "Nízká rovná daň.",
+      "3": "Progresivní daň (současný model).",
+      "4": "Vysoké progresivní daně s přerozdělováním.",
+      "5": "Zrušit soukromé příjmy, vše přerozděluje stát."
+    }
+  },
+  {
+    "id": 2,
+    "text": "Jak má být organizováno zdravotnictví?",
+    "dimension": "EKO",
+    "polarity": -1,
+    "answers": {
+      "1": "Plně soukromé, bez povinného pojištění.",
+      "2": "Soukromé s minimálním povinným balíčkem.",
+      "3": "Kombinace státního a soukromého.",
+      "4": "Plně veřejné zdravotnictví.",
+      "5": "Soukromé zdravotnictví zakázat."
+    }
+  },
+  {
+    "id": 3,
+    "text": "Jak má fungovat vzdělávání?",
+    "dimension": "EKO",
+    "polarity": -1,
+    "answers": {
+      "1": "Plně soukromé, bez ministerstva a regulací.",
+      "2": "Převážně soukromé, stát jen certifikuje.",
+      "3": "Kombinace státních a soukromých škol.",
+      "4": "Povinné státní školství.",
+      "5": "Soukromé školy zakázat."
+    }
+  },
+  {
+    "id": 4,
+    "text": "Jak má být řešen důchodový systém?",
+    "dimension": "EKO",
+    "polarity": -1,
+    "answers": {
+      "1": "Každý sám (spoření, rodina, komunity).",
+      "2": "Dobrovolné soukromé pilíře.",
+      "3": "Povinný státní základ + soukromé spoření.",
+      "4": "Plně státní důchodový systém.",
+      "5": "Soukromé spoření zakázat, centrální správa."
+    }
+  },
+  {
+    "id": 5,
+    "text": "Jak má stát přistupovat k soukromým firmám?",
+    "dimension": "EKO",
+    "polarity": -1,
+    "answers": {
+      "1": "Žádná regulace, čistý trh.",
+      "2": "Minimální regulace (bezpečnost, základní pravidla).",
+      "3": "Regulace pro ochranu spotřebitele a zaměstnanců.",
+      "4": "Silná regulace a omezení podnikání.",
+      "5": "Soukromé podnikání zakázat, jen státní podniky."
+    }
+  },
+  {
+    "id": 6,
+    "text": "Jak má být řešeno bydlení?",
+    "dimension": "EKO",
+    "polarity": -1,
+    "answers": {
+      "1": "Čistě soukromý trh s nájmy a vlastnictvím.",
+      "2": "Trh s podporou v podobě daňových úlev.",
+      "3": "Státní i soukromé bydlení v kombinaci.",
+      "4": "Silné státní programy, regulace nájmů.",
+      "5": "Veškeré bydlení státní, zákaz soukromého vlastnictví."
+    }
+  },
+  {
+    "id": 7,
+    "text": "Kdo má stavět a spravovat silnice?",
+    "dimension": "EKO",
+    "polarity": -1,
+    "answers": {
+      "1": "Soukromé firmy a komunity, bez státu.",
+      "2": "Převážně soukromé, stát jen garantuje přístup.",
+      "3": "Kombinace (soukromé koncese + stát).",
+      "4": "Stát financuje a spravuje většinu silnic.",
+      "5": "Pouze stát, soukromé silnice zakázané."
+    }
+  },
+  {
+    "id": 8,
+    "text": "Kdo má zajišťovat bezpečnost?",
+    "dimension": "STA",
+    "polarity": -1,
+    "answers": {
+      "1": "Soukromé agentury, dobrovolné milice.",
+      "2": "Kombinace soukromých a státních služeb.",
+      "3": "Státní policie s dohledem.",
+      "4": "Silná státní policie s rozsáhlými pravomocemi.",
+      "5": "Totální kontrola obyvatel, policejní stát."
+    }
+  },
+  {
+    "id": 9,
+    "text": "Jak má fungovat obrana státu?",
+    "dimension": "STA",
+    "polarity": -1,
+    "answers": {
+      "1": "Bez stálé armády, čistě dobrovolníci a aliance.",
+      "2": "Malá profesionální armáda.",
+      "3": "Současný model.",
+      "4": "Povinná vojenská služba.",
+      "5": "Militarizovaná společnost, povinná služba pro všechny."
+    }
+  },
+  {
+    "id": 10,
+    "text": "Jak má být organizována spravedlnost?",
+    "dimension": "STA",
+    "polarity": -1,
+    "answers": {
+      "1": "Soukromé arbitráže, dobrovolné soudy.",
+      "2": "Kombinace státních a soukromých.",
+      "3": "Převážně státní soudnictví.",
+      "4": "Plně státní soudy, bez alternativ.",
+      "5": "Politické soudy, zvláštní tribunály."
+    }
+  },
+  {
+    "id": 11,
+    "text": "Do jaké míry má stát zasahovat do ekonomiky?",
+    "dimension": "STA",
+    "polarity": -1,
+    "answers": {
+      "1": "Žádné zásahy.",
+      "2": "Minimální rámcová regulace.",
+      "3": "Současný mix (daně, regulace, podpora).",
+      "4": "Aktivní státní plánování sektorů.",
+      "5": "Centrální plánovaná ekonomika."
+    }
+  },
+  {
+    "id": 12,
+    "text": "Jak má být řešena chudoba?",
+    "dimension": "STA",
+    "polarity": -1,
+    "answers": {
+      "1": "Dobrovolná charita a komunity.",
+      "2": "Minimální podpora (např. základní příspěvek).",
+      "3": "Současný model (kombinace dávek a práce).",
+      "4": "Široký systém dávek.",
+      "5": "Všechny zdroje spravuje stát, plná rovnost."
+    }
+  },
+  {
+    "id": 13,
+    "text": "Jak má stát využívat technologie?",
+    "dimension": "STA",
+    "polarity": -1,
+    "answers": {
+      "1": "Žádný státní dohled, anonymita chráněna.",
+      "2": "Minimální dohled pro bezpečnost.",
+      "3": "Současný mix (registry, kamerové systémy).",
+      "4": "Masivní digitální dohled (EUDI, povinné identity).",
+      "5": "Totální sledování a kontrola obyvatel."
+    }
+  },
+  {
+    "id": 14,
+    "text": "Kdo má vlastnit půdu?",
+    "dimension": "STA",
+    "polarity": -1,
+    "answers": {
+      "1": "Každý jednotlivec svobodně.",
+      "2": "Soukromé vlastnictví s minimální regulací.",
+      "3": "Kombinace soukromého a státního vlastnictví.",
+      "4": "Většina půdy státní.",
+      "5": "Žádné soukromé vlastnictví půdy."
+    }
+  },
+  {
+    "id": 15,
+    "text": "Jak má být upraveno manželství?",
+    "dimension": "SOC",
+    "polarity": -1,
+    "answers": {
+      "1": "Lidé si sami určují svazky, stát nezasahuje.",
+      "2": "Manželství pro všechny, stát jen registruje.",
+      "3": "Současný model (tradiční + partnerství).",
+      "4": "Stát chrání tradiční rodinu (muž + žena).",
+      "5": "Povinný tradiční model, zákaz alternativ."
+    }
+  },
+  {
+    "id": 16,
+    "text": "Jak má být řešeno právo na potrat?",
+    "dimension": "SOC",
+    "polarity": -1,
+    "answers": {
+      "1": "Čistě rozhodnutí ženy a lékaře.",
+      "2": "Legální s určitými omezeními.",
+      "3": "Současný stav.",
+      "4": "Přísné omezení potratů.",
+      "5": "Úplný zákaz potratů."
+    }
+  },
+  {
+    "id": 17,
+    "text": "Jak má být upraveno užívání drog?",
+    "dimension": "SOC",
+    "polarity": -1,
+    "answers": {
+      "1": "Legální všechny drogy.",
+      "2": "Legální s omezeními.",
+      "3": "Současný model.",
+      "4": "Přísnější represe.",
+      "5": "Úplný zákaz včetně alkoholu."
+    }
+  },
+  {
+    "id": 18,
+    "text": "Jak chránit svobodu slova?",
+    "dimension": "SOC",
+    "polarity": -1,
+    "answers": {
+      "1": "Bez omezení.",
+      "2": "Omezení jen při přímém ohrožení.",
+      "3": "Současný model.",
+      "4": "Silnější omezení 'škodlivých názorů'.",
+      "5": "Povinná cenzura, státní propaganda."
+    }
+  },
+  {
+    "id": 19,
+    "text": "Jak přistupovat k migraci?",
+    "dimension": "SOC",
+    "polarity": -1,
+    "answers": {
+      "1": "Otevřené hranice.",
+      "2": "Volný pohyb s registrací.",
+      "3": "Současný model (víza, kvóty).",
+      "4": "Přísné limity a kontroly.",
+      "5": "Úplný zákaz migrace."
+    }
+  },
+  {
+    "id": 20,
+    "text": "Jak má stát regulovat náboženství?",
+    "dimension": "SOC",
+    "polarity": -1,
+    "answers": {
+      "1": "Žádná regulace.",
+      "2": "Omezení jen při porušování práv.",
+      "3": "Současný model.",
+      "4": "Zvýšená podpora 'tradičního náboženství'.",
+      "5": "Povinné státní náboženství."
+    }
+  },
+  {
+    "id": 21,
+    "text": "Jak má být podporována kultura?",
+    "dimension": "SOC",
+    "polarity": -1,
+    "answers": {
+      "1": "Bez dotací, čistě dobrovolně.",
+      "2": "Minimální státní podpora.",
+      "3": "Současný model (dotace i komerce).",
+      "4": "Silné státní programy.",
+      "5": "Jen státní kultura, zákaz soukromé."
+    }
+  },
+  {
+    "id": 22,
+    "text": "Jak má být řešeno členství v EU?",
+    "dimension": "SUV",
+    "polarity": 1,
+    "answers": {
+      "1": "Vystoupit.",
+      "2": "Omezit vliv EU.",
+      "3": "Současný model.",
+      "4": "Posílit integraci.",
+      "5": "EU federální stát."
+    }
+  },
+  {
+    "id": 23,
+    "text": "Jak má fungovat měna?",
+    "dimension": "SUV",
+    "polarity": 1,
+    "answers": {
+      "1": "Volné měny, stát nevydává měnu.",
+      "2": "Národní měna s konkurencí.",
+      "3": "Koruna.",
+      "4": "Euro.",
+      "5": "Jednotná globální měna."
+    }
+  },
+  {
+    "id": 24,
+    "text": "Jak řešit klima?",
+    "dimension": "SUV",
+    "polarity": 1,
+    "answers": {
+      "1": "Dobrovolně, bez zásahů.",
+      "2": "Minimální rámec.",
+      "3": "Současný mix.",
+      "4": "Silnější závazky.",
+      "5": "Globální centrální řízení."
+    }
+  },
+  {
+    "id": 25,
+    "text": "Jak řešit obranu?",
+    "dimension": "SUV",
+    "polarity": 1,
+    "answers": {
+      "1": "Bez členství, dobrovolné aliance.",
+      "2": "Spolupráce jen v případě napadení.",
+      "3": "Současný model.",
+      "4": "Aktivní účast ve všech misích.",
+      "5": "Globální armáda."
+    }
+  },
+  {
+    "id": 26,
+    "text": "Jak řešit evropskou migrační politiku?",
+    "dimension": "SUV",
+    "polarity": 1,
+    "answers": {
+      "1": "Plně otevřené hranice.",
+      "2": "Volný pohyb v rámci dobrovolných dohod.",
+      "3": "Současný model.",
+      "4": "Povinné kvóty.",
+      "5": "Globální správa migrace."
+    }
+  },
+  {
+    "id": 27,
+    "text": "Jak má být organizován mezinárodní obchod?",
+    "dimension": "SUV",
+    "polarity": 1,
+    "answers": {
+      "1": "Volný obchod bez cel.",
+      "2": "Minimální dohody.",
+      "3": "Současný model.",
+      "4": "Silná role EU/OSN.",
+      "5": "Globální centrální obchodní správa."
+    }
+  },
+  {
+    "id": 28,
+    "text": "Kdo má mít konečné slovo v rozhodování?",
+    "dimension": "SUV",
+    "polarity": 1,
+    "answers": {
+      "1": "Jednotlivci a komunity.",
+      "2": "Národní stát.",
+      "3": "Kombinace ČR + EU.",
+      "4": "Většina rozhodnutí v EU.",
+      "5": "Globální instituce."
+    }
+  }
+]

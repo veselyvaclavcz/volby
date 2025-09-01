@@ -1,0 +1,547 @@
+{
+  "mainParties": [
+    {
+      "code": "ANO",
+      "name": "ANO 2011",
+      "compass_position": {
+        "EKO": 0.18,
+        "SOC": 0.07,
+        "STA": 0.18,
+        "SUV": -0.14
+      }
+    },
+    {
+      "code": "SPOLU",
+      "name": "Spolu (ODS–KDU–TOP09)",
+      "compass_position": {
+        "EKO": -0.11,
+        "SOC": 0.07,
+        "STA": 0.0,
+        "SUV": 0.04
+      }
+    },
+    {
+      "code": "SPD",
+      "name": "SPD",
+      "compass_position": {
+        "EKO": 0.21,
+        "SOC": 0.64,
+        "STA": 0.36,
+        "SUV": -0.5
+      }
+    },
+    {
+      "code": "PIRATI",
+      "name": "Česká pirátská strana",
+      "compass_position": {
+        "EKO": 0.0,
+        "SOC": -0.39,
+        "STA": -0.07,
+        "SUV": 0.29
+      }
+    },
+    {
+      "code": "STAN",
+      "name": "Starostové a nezávislí (STAN)",
+      "compass_position": {
+        "EKO": 0.0,
+        "SOC": -0.07,
+        "STA": 0.04,
+        "SUV": 0.14
+      }
+    },
+    {
+      "code": "PRISAHA",
+      "name": "Přísaha",
+      "compass_position": {
+        "EKO": 0.0,
+        "SOC": 0.11,
+        "STA": 0.29,
+        "SUV": 0.04
+      }
+    },
+    {
+      "code": "MOTORISTE",
+      "name": "Motoristé sobě",
+      "compass_position": {
+        "EKO": -0.29,
+        "SOC": 0.11,
+        "STA": -0.14,
+        "SUV": -0.29
+      }
+    },
+    {
+      "code": "STACILO",
+      "name": "Stačilo!",
+      "compass_position": {
+        "EKO": 0.64,
+        "SOC": 0.04,
+        "STA": 0.32,
+        "SUV": -0.25
+      }
+    },
+    {
+      "code": "VYZVA2025",
+      "name": "Výzva 2025",
+      "compass_position": {
+        "EKO": 0.21,
+        "SOC": 0.07,
+        "STA": 0.11,
+        "SUV": 0.43
+      }
+    },
+    {
+      "code": "KRUH",
+      "name": "Hnutí Kruh",
+      "compass_position": {
+        "EKO": 0.14,
+        "SOC": -0.32,
+        "STA": 0.18,
+        "SUV": 0.25
+      }
+    },
+    {
+      "code": "VOLUNTIA",
+      "name": "Voluntia",
+      "compass_position": {
+        "EKO": -0.75,
+        "SOC": -0.82,
+        "STA": -0.71,
+        "SUV": -0.79
+      }
+    },
+    {
+      "code": "JASAN",
+      "name": "Jasný signál nezávislých (JaSaN)",
+      "compass_position": {
+        "EKO": -0.29,
+        "SOC": -0.04,
+        "STA": -0.14,
+        "SUV": -0.25
+      }
+    },
+    {
+      "code": "LEVY_BLOK",
+      "name": "Levice",
+      "compass_position": {
+        "EKO": 0.75,
+        "SOC": -0.11,
+        "STA": 0.46,
+        "SUV": 0.21
+      }
+    },
+    {
+      "code": "CESKA_SUVERENITA",
+      "name": "ČSSD – Česka suverenita",
+      "compass_position": {
+        "EKO": 0.46,
+        "SOC": 0.04,
+        "STA": 0.29,
+        "SUV": 0.0
+      }
+    },
+    {
+      "code": "REPUBLIKA",
+      "name": "Česká republika na 1. místě",
+      "compass_position": {
+        "EKO": 0.14,
+        "SOC": 0.71,
+        "STA": 0.39,
+        "SUV": -0.64
+      }
+    },
+    {
+      "code": "VOLT",
+      "name": "Volt Česko",
+      "compass_position": {
+        "EKO": 0.14,
+        "SOC": -0.25,
+        "STA": 0.18,
+        "SUV": 0.82
+      }
+    },
+    {
+      "code": "HOP",
+      "name": "Hnutí občanů a podnikatelů",
+      "compass_position": {
+        "EKO": -0.21,
+        "SOC": -0.04,
+        "STA": -0.18,
+        "SUV": -0.04
+      }
+    },
+    {
+      "code": "GENERACE",
+      "name": "Hnutí Generace",
+      "compass_position": {
+        "EKO": -0.43,
+        "SOC": -0.04,
+        "STA": -0.11,
+        "SUV": -0.04
+      }
+    },
+    {
+      "code": "MONARCHISTE",
+      "name": "Koruna česká (monarchisté)",
+      "compass_position": {
+        "EKO": 0.21,
+        "SOC": 0.61,
+        "STA": 0.36,
+        "SUV": 0.14
+      }
+    },
+    {
+      "code": "CIBULKA",
+      "name": "Volte Pravý Blok (Cibulka)",
+      "compass_position": {
+        "EKO": -0.25,
+        "SOC": 0.57,
+        "STA": 0.11,
+        "SUV": -0.68
+      }
+    },
+    {
+      "code": "BALBINOVA",
+      "name": "Balbínova poetická strana",
+      "compass_position": {
+        "EKO": 0.0,
+        "SOC": 0.0,
+        "STA": 0.0,
+        "SUV": 0.0
+      },
+      "satirical": true
+    },
+    {
+      "code": "MORAVANE",
+      "name": "Moravské zemské hnutí",
+      "compass_position": {
+        "EKO": -0.04,
+        "SOC": 0.07,
+        "STA": -0.07,
+        "SUV": -0.11
+      }
+    },
+    {
+      "code": "REBELOVE",
+      "name": "Rebelové",
+      "compass_position": {
+        "EKO": 0.57,
+        "SOC": 0.14,
+        "STA": 0.21,
+        "SUV": -0.29
+      }
+    },
+    {
+      "code": "SMS",
+      "name": "SMS – Stát má sloužit",
+      "compass_position": {
+        "EKO": -0.14,
+        "SOC": -0.04,
+        "STA": -0.11,
+        "SUV": -0.18
+      }
+    },
+    {
+      "code": "SVYCARSKO",
+      "name": "Švýcarská demokracie",
+      "compass_position": {
+        "EKO": -0.29,
+        "SOC": -0.11,
+        "STA": -0.21,
+        "SUV": -0.32
+      }
+    },
+    {
+      "code": "URZA",
+      "name": "Nevolte Urza.cz",
+      "compass_position": {
+        "EKO": -1.0,
+        "SOC": -1.0,
+        "STA": -1.0,
+        "SUV": -1.0
+      }
+    }
+  ],
+  "coalitionParties": [
+    {
+      "code": "ODS",
+      "name": "ODS",
+      "compass_position": {
+        "EKO": -0.5,
+        "SOC": 0.29,
+        "STA": -0.21,
+        "SUV": 0.14
+      }
+    },
+    {
+      "code": "TOP09",
+      "name": "TOP 09",
+      "compass_position": {
+        "EKO": 0.0,
+        "SOC": 0.07,
+        "STA": 0.07,
+        "SUV": 0.64
+      }
+    },
+    {
+      "code": "KDU",
+      "name": "KDU-ČSL",
+      "compass_position": {
+        "EKO": 0.14,
+        "SOC": 0.36,
+        "STA": 0.0,
+        "SUV": 0.21
+      }
+    },
+    {
+      "code": "TRIKOLORA",
+      "name": "Trikolora",
+      "compass_position": {
+        "EKO": 0.07,
+        "SOC": 0.5,
+        "STA": 0.07,
+        "SUV": -0.64
+      }
+    },
+    {
+      "code": "PRO",
+      "name": "PRO Jindřicha Rajchla",
+      "compass_position": {
+        "EKO": 0.14,
+        "SOC": 0.36,
+        "STA": -0.21,
+        "SUV": -0.57
+      }
+    },
+    {
+      "code": "SVOBODNI",
+      "name": "Svobodní",
+      "compass_position": {
+        "EKO": -1.0,
+        "SOC": -0.64,
+        "STA": -0.86,
+        "SUV": -0.86
+      }
+    },
+    {
+      "code": "ZELENI",
+      "name": "Strana zelených",
+      "compass_position": {
+        "EKO": 0.79,
+        "SOC": -0.5,
+        "STA": -0.07,
+        "SUV": 0.71
+      }
+    },
+    {
+      "code": "KSCM",
+      "name": "KSČM",
+      "compass_position": {
+        "EKO": 1.0,
+        "SOC": 0.07,
+        "STA": 0.43,
+        "SUV": -0.43
+      }
+    },
+    {
+      "code": "CSNS",
+      "name": "ČSNS",
+      "compass_position": {
+        "EKO": 0.5,
+        "SOC": 0.07,
+        "STA": 0.0,
+        "SUV": 0.0
+      }
+    },
+    {
+      "code": "SDSN",
+      "name": "SD-SN",
+      "compass_position": {
+        "EKO": 0.43,
+        "SOC": 0.14,
+        "STA": -0.07,
+        "SUV": 0.0
+      }
+    },
+    {
+      "code": "SOCDEM",
+      "name": "SOCDEM",
+      "compass_position": {
+        "EKO": 0.43,
+        "SOC": 0.07,
+        "STA": 0.07,
+        "SUV": 0.36
+      }
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "text": "Daně by měly být co nejnižší",
+      "dimension": "EKO",
+      "polarity": -1
+    },
+    {
+      "id": 2,
+      "text": "Stát by měl podporovat domácí firmy",
+      "dimension": "EKO",
+      "polarity": 1
+    },
+    {
+      "id": 3,
+      "text": "Soukromé firmy jsou efektivnější než státní podniky",
+      "dimension": "EKO",
+      "polarity": -1
+    },
+    {
+      "id": 4,
+      "text": "Minimální mzda je prospěšná pro zaměstnance",
+      "dimension": "EKO",
+      "polarity": 1
+    },
+    {
+      "id": 5,
+      "text": "Všichni by měli platit stejné procento daní",
+      "dimension": "EKO",
+      "polarity": -1
+    },
+    {
+      "id": 6,
+      "text": "Sociální podpora vytváří závislost",
+      "dimension": "EKO",
+      "polarity": -1
+    },
+    {
+      "id": 7,
+      "text": "Bohatí by měli platit vyšší daně",
+      "dimension": "EKO",
+      "polarity": 1
+    },
+    {
+      "id": 8,
+      "text": "Stát by měl chránit občany před dezinformacemi",
+      "dimension": "STA",
+      "polarity": 1
+    },
+    {
+      "id": 9,
+      "text": "Sledování občanů je nutné pro bezpečnost",
+      "dimension": "STA",
+      "polarity": 1
+    },
+    {
+      "id": 10,
+      "text": "Státní média jsou důležitá pro demokracii",
+      "dimension": "STA",
+      "polarity": 1
+    },
+    {
+      "id": 11,
+      "text": "Internet by měl být regulován",
+      "dimension": "STA",
+      "polarity": 1
+    },
+    {
+      "id": 12,
+      "text": "Digitalizace státu zvyšuje svobodu občanů",
+      "dimension": "STA",
+      "polarity": -1
+    },
+    {
+      "id": 13,
+      "text": "Centralizace moci je nebezpečná",
+      "dimension": "STA",
+      "polarity": -1
+    },
+    {
+      "id": 14,
+      "text": "Byrokracie brání efektivitě",
+      "dimension": "STA",
+      "polarity": -1
+    },
+    {
+      "id": 15,
+      "text": "Stejnopohlavní páry by měly mít právo na adopce",
+      "dimension": "SOC",
+      "polarity": -1
+    },
+    {
+      "id": 16,
+      "text": "Dospělí by měli mít právo užívat konopí",
+      "dimension": "SOC",
+      "polarity": -1
+    },
+    {
+      "id": 17,
+      "text": "Tradiční rodina je základ společnosti",
+      "dimension": "SOC",
+      "polarity": 1
+    },
+    {
+      "id": 18,
+      "text": "Ženy mají právo rozhodovat o svém těle",
+      "dimension": "SOC",
+      "polarity": -1
+    },
+    {
+      "id": 19,
+      "text": "Multikulturalismus obohacuje společnost",
+      "dimension": "SOC",
+      "polarity": -1
+    },
+    {
+      "id": 20,
+      "text": "Národní identita je důležitější než evropská",
+      "dimension": "SOC",
+      "polarity": 1
+    },
+    {
+      "id": 21,
+      "text": "Náboženství má mít vliv na politiku",
+      "dimension": "SOC",
+      "polarity": 1
+    },
+    {
+      "id": 22,
+      "text": "Česko by mělo přijmout euro",
+      "dimension": "SUV",
+      "polarity": 1
+    },
+    {
+      "id": 23,
+      "text": "EU Green Deal je správná cesta",
+      "dimension": "SUV",
+      "polarity": 1
+    },
+    {
+      "id": 24,
+      "text": "Národní suverenita je důležitější než EU integrace",
+      "dimension": "SUV",
+      "polarity": -1
+    },
+    {
+      "id": 25,
+      "text": "EU migrační pakt je pro Česko přijatelný",
+      "dimension": "SUV",
+      "polarity": 1
+    },
+    {
+      "id": 26,
+      "text": "Vystoupení z EU by bylo pro Česko přínosné",
+      "dimension": "SUV",
+      "polarity": -1
+    },
+    {
+      "id": 27,
+      "text": "NATO je zárukou naší bezpečnosti",
+      "dimension": "SUV",
+      "polarity": 1
+    },
+    {
+      "id": 28,
+      "text": "Měli bychom spolupracovat s Ruskem",
+      "dimension": "SUV",
+      "polarity": -1
+    }
+  ]
+}

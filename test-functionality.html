@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Functionality</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #ffd93d;
+            padding-bottom: 10px;
+        }
+        button {
+            background: #ffd93d;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #f5c800;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test všech funkcí - Volební kalkulačka</h1>
+    
+    <div class="test-section">
+        <h2>1. API Endpoints</h2>
+        <button onclick="testAPI('questions')">Test Questions API</button>
+        <button onclick="testAPI('parties')">Test Parties API</button>
+        <button onclick="testAPI('positions')">Test Positions API</button>
+        <button onclick="testCalculation()">Test Calculation API</button>
+        <div id="api-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. Hlavní aplikace</h2>
+        <button onclick="openApp()">Otevřít aplikaci</button>
+        <button onclick="openCalculator()">Otevřít kalkulačku</button>
+        <button onclick="openCompass()">Otevřít kompas</button>
+        <div id="app-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>3. Náhled aplikace</h2>
+        <iframe id="app-frame" src="http://localhost:8888"></iframe>
+    </div>
+    
+    <script>
+        const API_BASE = 'http://localhost:8888/.netlify/functions';
+        
+        async function testAPI(endpoint) {
+            const resultDiv = document.getElementById('api-result');
+            resultDiv.innerHTML = `Testing ${endpoint}...`;
+            
+            try {
+                const response = await fetch(`${API_BASE}/api-${endpoint}`);
+                const data = await response.json();
+                
+                resultDiv.innerHTML = `<span class="success">✓ ${endpoint} API funguje!</span>\n`;
+                resultDiv.innerHTML += `Status: ${response.status}\n`;
+                resultDiv.innerHTML += `Data: ${JSON.stringify(data, null, 2).substring(0, 500)}...`;
+            } catch (error) {
+                resultDiv.innerHTML = `<span class="error">✗ ${endpoint} API nefunguje!</span>\n`;
+                resultDiv.innerHTML += `Error: ${error.message}`;
+            }
+        }
+        
+        async function testCalculation() {
+            const resultDiv = document.getElementById('api-result');
+            resultDiv.innerHTML = `Testing calculation...`;
+            
+            // Test answers
+            const testAnswers = {
+                q1: 3, q2: 3, q3: 3, q4: 3, q5: 3, q6: 3, q7: 3,
+                q8: 3, q9: 3, q10: 3, q11: 3, q12: 3, q13: 3, q14: 3,
+                q15: 3, q16: 3, q17: 3, q18: 3, q19: 3, q20: 3,
+                q21: 3, q22: 3, q23: 3, q24: 3, q25: 3, q26: 3,
+                q27: 3, q28: 3
+            };
+            
+            try {
+                const response = await fetch(`${API_BASE}/api-calculate`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ answers: testAnswers })
+                });
+                
+                const data = await response.json();
+                
+                resultDiv.innerHTML = `<span class="success">✓ Calculation API funguje!</span>\n`;
+                resultDiv.innerHTML += `Status: ${response.status}\n`;
+                resultDiv.innerHTML += `User position: ${JSON.stringify(data.userPosition, null, 2)}\n`;
+                resultDiv.innerHTML += `Top matches: ${data.results.slice(0, 3).map(r => `${r.party}: ${r.match}%`).join(', ')}`;
+                
+                // Check svobodometr
+                if (data.svobodometr !== undefined) {
+                    resultDiv.innerHTML += `\n<span class="success">✓ Svobodometr: ${data.svobodometr}%</span>`;
+                } else {
+                    resultDiv.innerHTML += `\n<span class="error">✗ Svobodometr chybí!</span>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<span class="error">✗ Calculation API nefunguje!</span>\n`;
+                resultDiv.innerHTML += `Error: ${error.message}`;
+            }
+        }
+        
+        function openApp() {
+            window.open('http://localhost:8888', '_blank');
+            document.getElementById('app-result').innerHTML = '<span class="success">✓ Aplikace otevřena v novém okně</span>';
+        }
+        
+        function openCalculator() {
+            window.open('http://localhost:8888#kalkulacka', '_blank');
+            document.getElementById('app-result').innerHTML = '<span class="success">✓ Kalkulačka otevřena v novém okně</span>';
+        }
+        
+        function openCompass() {
+            window.open('http://localhost:8888#compass', '_blank');
+            document.getElementById('app-result').innerHTML = '<span class="success">✓ Kompas otevřen v novém okně</span>';
+        }
+        
+        // Auto-test on load
+        window.onload = () => {
+            console.log('Test page loaded. Server should be running on http://localhost:8888');
+        };
+    </script>
+</body>
+</html>

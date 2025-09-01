@@ -1,0 +1,465 @@
+{
+  "mainParties": [
+    {
+      "code": "REBELOVE",
+      "name": "Rebelové",
+      "compass_position": {
+        "EKO": 0.42857142857142855,
+        "STA": 0.0,
+        "SOC": 0.0,
+        "SUV": -0.14285714285714285
+      },
+      "description": "Anti-establishmentová strana prezentující se jako hnutí běžných občanů proti současnému systému. Mají 1798 kandidátů pro volby 2025.",
+      "web": "https://re3elove.cz/",
+      "source": "Oficiální program ze stránek re3elove.cz"
+    },
+    {
+      "code": "MORAVANE",
+      "name": "Moravské zemské hnutí",
+      "compass_position": {
+        "EKO": -0.03571428571428571,
+        "STA": -0.07142857142857142,
+        "SOC": 0.07142857142857142,
+        "SUV": -0.10714285714285714
+      },
+      "description": "Regionální strana prosazující autonomii Moravy a decentralizaci moci z Prahy.",
+      "source": "moravskehnuti.cz, dlouhodobý program MZH"
+    },
+    {
+      "code": "JASAN",
+      "name": "Jasný signál nezávislých (JaSaN)",
+      "compass_position": {
+        "EKO": -0.2857142857142857,
+        "STA": -0.14285714285714285,
+        "SOC": -0.07142857142857142,
+        "SUV": -0.25
+      },
+      "description": "Strana energetických odborníků vedená Vladimírem Štěpánem, kritická k Green Dealu.",
+      "source": "jasan-nezavisli.cz"
+    },
+    {
+      "code": "VYZVA2025",
+      "name": "Výzva 2025",
+      "compass_position": {
+        "EKO": 0.21428571428571427,
+        "STA": 0.14285714285714285,
+        "SOC": 0.07142857142857142,
+        "SUV": 0.32142857142857145
+      },
+      "description": "Strana vedená Karolínou Kubiskovou (bývalá místopředsedkyně Přísahy), pro-evropská orientace.",
+      "source": "vyzva2025.cz, programové dokumenty"
+    },
+    {
+      "code": "SMS",
+      "name": "SMS - Stát má sloužit",
+      "compass_position": {
+        "EKO": -0.14285714285714285,
+        "STA": -0.10714285714285714,
+        "SOC": -0.03571428571428571,
+        "SUV": -0.17857142857142858
+      },
+      "description": "Hnutí vedené Karlem Laškovským, zaměřené na efektivní státní správu. \"Stát je zde pro občany a ne naopak.\"",
+      "web": "https://www.hnutisms.cz/",
+      "source": "hnutisms.cz/volebni-program-test/"
+    },
+    {
+      "code": "SVOBODA_A_PŘÍMÁ_DEMO",
+      "name": "Svoboda a přímá demokracie (SPD) + koalice",
+      "compass_position": {
+        "EKO": 0.21428571428571427,
+        "STA": 0.2857142857142857,
+        "SOC": 0.35714285714285715,
+        "SUV": -0.35714285714285715
+      },
+      "description": "Nacionalistická strana v koalici s Trikolorou, PRO a Svobodnými.",
+      "source": "spd.cz, oficiální program"
+    },
+    {
+      "code": "ČSSD_-_ČESKÁ_SUVEREN",
+      "name": "ČSSD - Česká suverenita sociální demokracie",
+      "compass_position": {
+        "EKO": 0.4642857142857143,
+        "STA": 0.25,
+        "SOC": 0.03571428571428571,
+        "SUV": 0.03571428571428571
+      },
+      "description": "Transformovaná ČSSD pod vedením Jiřího Paroubka (od února 2024).",
+      "source": "Mediální výstupy, účast v koalici \"Stačilo!\" v krajských volbách"
+    },
+    {
+      "code": "PRISAHA",
+      "name": "Přísaha občanské hnutí",
+      "compass_position": {
+        "EKO": 0.0,
+        "STA": 0.2857142857142857,
+        "SOC": 0.07142857142857142,
+        "SUV": 0.0
+      },
+      "description": "Anti-korupční hnutí Roberta Šlachty, od 2024 senátor za Břeclav.",
+      "source": "prisaha.cz, mediální výstupy, senátorská kampaň 2024"
+    },
+    {
+      "code": "LEVY_BLOK",
+      "name": "Levice",
+      "compass_position": {
+        "EKO": 0.75,
+        "STA": 0.42857142857142855,
+        "SOC": -0.03571428571428571,
+        "SUV": 0.25
+      },
+      "description": "Socialistická strana s demokratickým socialismem, 0,07% v eurovolbách 2024.",
+      "source": "jsmelevice.cz, program eurovolby 2024"
+    },
+    {
+      "code": "REPUBLIKA",
+      "name": "Česká republika na 1. místě",
+      "compass_position": {
+        "EKO": 0.14285714285714285,
+        "STA": 0.17857142857142858,
+        "SOC": 0.42857142857142855,
+        "SUV": -0.39285714285714285
+      },
+      "description": "Suverénistická strana vedená Ladislavem Vrabelem, 0,23% v eurovolbách 2024.",
+      "source": "cr1.cz"
+    },
+    {
+      "code": "SPOLU_(ODS,_KDU-ČSL,",
+      "name": "Spolu (ODS, KDU-ČSL, TOP 09)",
+      "compass_position": {
+        "EKO": -0.10714285714285714,
+        "STA": 0.03571428571428571,
+        "SOC": 0.07142857142857142,
+        "SUV": -0.03571428571428571
+      },
+      "description": "Středopravicová konzervativní koalice, vládní strana.",
+      "source": "spolu25.cz/program"
+    },
+    {
+      "code": "SVYCARSKO",
+      "name": "Švýcarská demokracie",
+      "compass_position": {
+        "EKO": -0.2857142857142857,
+        "STA": -0.21428571428571427,
+        "SOC": -0.17857142857142858,
+        "SUV": -0.25
+      },
+      "description": "Strana prosazující švýcarský model přímé demokracie a konstituční limity.",
+      "source": "svycarska-demokracie.cz/program"
+    },
+    {
+      "code": "URZA",
+      "name": "Nevolte Urza.cz",
+      "compass_position": {
+        "EKO": -1.0,
+        "STA": -1.0,
+        "SOC": -1.0,
+        "SUV": -1.0
+      },
+      "description": "Anarcho-kapitalistická strana prosazující úplné zrušení státu.",
+      "source": "ankap.urza.cz, filozofické texty o anarcho-kapitalismu"
+    },
+    {
+      "code": "HOP",
+      "name": "Hnutí občanů a podnikatelů (HOP)",
+      "compass_position": {
+        "EKO": -0.21428571428571427,
+        "STA": -0.17857142857142858,
+        "SOC": -0.03571428571428571,
+        "SUV": -0.03571428571428571
+      },
+      "description": "Radikální reformní strana s rozsáhlými systémovými změnami.",
+      "source": "Mediální výstupy, programové body"
+    },
+    {
+      "code": "GENERACE",
+      "name": "Hnutí Generace",
+      "compass_position": {
+        "EKO": -0.17857142857142858,
+        "STA": 0.0,
+        "SOC": -0.03571428571428571,
+        "SUV": -0.03571428571428571
+      },
+      "description": "Strana zaměřená na generační spravedlnost, fiskální odpovědnost a modernizaci demokracie. Reprezentuje zájmy mladých generací a těch, kdo zde budou žít za 30 let.",
+      "web": "https://hnutigenerace.cz/",
+      "source": "hnutigenerace.cz/program/, programydovoleb.cz"
+    },
+    {
+      "code": "PIRATI",
+      "name": "Česká pirátská strana",
+      "compass_position": {
+        "EKO": 0.0,
+        "STA": -0.03571428571428571,
+        "SOC": -0.35714285714285715,
+        "SUV": 0.25
+      },
+      "description": "Středolevá liberální strana s důrazem na digitalizaci a občanské svobody.",
+      "source": "pirati.cz, programové dokumenty"
+    },
+    {
+      "code": "MONARCHISTE",
+      "name": "Koruna česká (monarchistická strana)",
+      "compass_position": {
+        "EKO": 0.21428571428571427,
+        "STA": 0.32142857142857145,
+        "SOC": 0.6071428571428571,
+        "SUV": 0.07142857142857142
+      },
+      "description": "Monarchistická strana usilující o obnovení království.",
+      "source": "Historické programové body, monarchistické názory"
+    },
+    {
+      "code": "VOLT",
+      "name": "Volt Česko",
+      "compass_position": {
+        "EKO": 0.14285714285714285,
+        "STA": 0.25,
+        "SOC": -0.14285714285714285,
+        "SUV": 0.6428571428571429
+      },
+      "description": "Pan-evropská liberální strana s důrazem na evropskou integraci.",
+      "source": "Evropské programové dokumenty Volt Europa"
+    },
+    {
+      "code": "CIBULKA",
+      "name": "Volte Pravý Blok (Cibulka)",
+      "compass_position": {
+        "EKO": -0.25,
+        "STA": 0.0,
+        "SOC": 0.2857142857142857,
+        "SUV": -0.4642857142857143
+      },
+      "description": "Radikální strana s konspirativními teoriemi.",
+      "source": "Veřejná vyjádření, historické postoje"
+    },
+    {
+      "code": "MOTORISTE",
+      "name": "Motoristé sobě",
+      "compass_position": {
+        "EKO": -0.2857142857142857,
+        "STA": -0.14285714285714285,
+        "SOC": 0.10714285714285714,
+        "SUV": -0.35714285714285715
+      },
+      "description": "Pragmatická pravicová strana zaměřená na práva řidičů, ekonomickou efektivitu a národní suverenitu. Po rozchodu s Přísahou v roce 2024.",
+      "web": "https://motoristesobe.cz/",
+      "source": "motoristesobe.cz/program2025"
+    },
+    {
+      "code": "BALBINOVA",
+      "name": "Balbínova poetická strana",
+      "compass_position": {
+        "EKO": 0.0,
+        "SOC": 0.0,
+        "STA": 0.0,
+        "SUV": 0.0
+      },
+      "satirical": true
+    },
+    {
+      "code": "ANO",
+      "name": "ANO 2011",
+      "compass_position": {
+        "EKO": 0.17857142857142858,
+        "STA": 0.17857142857142858,
+        "SOC": 0.03571428571428571,
+        "SUV": -0.17857142857142858
+      },
+      "description": "Populistické hnutí Andreje Babiše, pragmatický středový populismus.",
+      "source": "Programové dokumenty, mediální vyjádření"
+    },
+    {
+      "code": "STAN",
+      "name": "Starostové a nezávislí (STAN)",
+      "compass_position": {
+        "EKO": 0.0,
+        "STA": 0.03571428571428571,
+        "SOC": -0.07142857142857142,
+        "SUV": 0.10714285714285714
+      },
+      "description": "Středová liberální strana regionů s důrazem na samosprávu.",
+      "source": "starostove-nezavisli.cz, programové dokumenty"
+    },
+    {
+      "code": "KRUH",
+      "name": "Hnutí Kruh",
+      "compass_position": {
+        "EKO": 0.14285714285714285,
+        "STA": 0.21428571428571427,
+        "SOC": -0.2857142857142857,
+        "SUV": 0.21428571428571427
+      },
+      "description": "Progresivní liberální strana s důrazem na svobodný rozvoj jednotlivce, zelené technologie a sociální spravedlnost.",
+      "web": "https://www.hnutikruh.cz/",
+      "source": "hnutikruh.cz/program/"
+    },
+    {
+      "code": "STACILO",
+      "name": "Stačilo!",
+      "compass_position": {
+        "EKO": 0.6428571428571429,
+        "STA": 0.2857142857142857,
+        "SOC": 0.0,
+        "SUV": -0.10714285714285714
+      },
+      "description": "Levicová koalice vedená Kateřinou Konečnou, kritická k EU a NATO.",
+      "source": "Mediální výstupy, koaliční spolupráce s ČSSD v krajských volbách"
+    },
+    {
+      "code": "VOLUNTIA",
+      "name": "Voluntia",
+      "compass_position": {
+        "EKO": -0.75,
+        "STA": -0.75,
+        "SOC": -0.8214285714285714,
+        "SUV": -0.5714285714285714
+      },
+      "description": "Voluntaristická/minarchistická strana prosazující minimální stát a dobrovolnost.",
+      "source": "voluntia.cz/program-2025, filozofie voluntarismu"
+    }
+  ],
+  "coalitionParties": [
+    {
+      "code": "ODS_(OBČANSKÁ_DEMOKR",
+      "name": "ODS (Občanská demokratická strana)",
+      "compass_position": {
+        "EKO": -0.2857142857142857,
+        "STA": -0.14285714285714285,
+        "SOC": 0.2857142857142857,
+        "SUV": 0.0
+      },
+      "description": "Konzervativní liberální strana, součást koalice SPOLU. Ekonomicky pravicová, sociálně konzervativní.",
+      "web": "https://ods.cz/"
+    },
+    {
+      "code": "TOP09",
+      "name": "TOP 09",
+      "compass_position": {
+        "EKO": 0.0,
+        "STA": 0.07142857142857142,
+        "SOC": 0.07142857142857142,
+        "SUV": 0.42857142857142855
+      },
+      "description": "Liberálně-konzervativní strana, součást koalice SPOLU. Pro-evropská, ekonomicky liberální.",
+      "web": "https://top09.cz/"
+    },
+    {
+      "code": "KDU-ČSL_(KŘESŤANSKÁ_",
+      "name": "KDU-ČSL (Křesťanská a demokratická unie - Československá strana lidová)",
+      "compass_position": {
+        "EKO": 0.07142857142857142,
+        "STA": 0.0,
+        "SOC": 0.42857142857142855,
+        "SUV": 0.07142857142857142
+      },
+      "description": "Křesťansko-demokratická strana, součást koalice SPOLU. Sociálně-tržní ekonomika, křesťanské hodnoty.",
+      "web": "https://kdu.cz/"
+    },
+    {
+      "code": "TRIKOLORA",
+      "name": "Trikolora",
+      "compass_position": {
+        "EKO": 0.07142857142857142,
+        "STA": 0.07142857142857142,
+        "SOC": 0.6428571428571429,
+        "SUV": -0.5
+      },
+      "description": "Národně-konzervativní strana, součást koalice se SPD. Vlastenectví, tradiční hodnoty, euroskepticismus.",
+      "web": "https://trikolora.cz/"
+    },
+    {
+      "code": "PRO",
+      "name": "PRO Jindřicha Rajchla",
+      "compass_position": {
+        "EKO": 0.07142857142857142,
+        "STA": -0.14285714285714285,
+        "SOC": 0.35714285714285715,
+        "SUV": -0.5
+      },
+      "description": "Pravicově-populistická strana, součást koalice se SPD. Anti-establishment, přímá demokracie.",
+      "web": "https://www.stranapro.cz/"
+    },
+    {
+      "code": "SVOBODNI",
+      "name": "Svobodní",
+      "compass_position": {
+        "EKO": -0.5714285714285714,
+        "STA": -0.5714285714285714,
+        "SOC": -0.5,
+        "SUV": -0.6428571428571429
+      },
+      "description": "Libertariánská strana, součást koalice se SPD. Minimální stát, volný trh, osobní svoboda.",
+      "web": "https://svobodni.cz/"
+    },
+    {
+      "code": "ZELENI",
+      "name": "Strana zelených",
+      "compass_position": {
+        "EKO": 0.35714285714285715,
+        "STA": 0.0,
+        "SOC": -0.35714285714285715,
+        "SUV": 0.5714285714285714
+      },
+      "description": "Ekologická strana, na kandidátkách Pirátů. Ochrana životního prostředí, sociální spravedlnost.",
+      "web": "https://zeleni.cz/"
+    },
+    {
+      "code": "KSČM_(KOMUNISTICKÁ_S",
+      "name": "KSČM (Komunistická strana Čech a Moravy)",
+      "compass_position": {
+        "EKO": 0.5,
+        "STA": 0.2857142857142857,
+        "SOC": 0.07142857142857142,
+        "SUV": -0.21428571428571427
+      },
+      "description": "Komunistická strana, součást koalice Stačilo!. Socialistická ekonomika, sociální spravedlnost.",
+      "web": "https://kscm.cz/"
+    },
+    {
+      "code": "ČSNS_(ČESKÁ_STRANA_N",
+      "name": "ČSNS (Česká strana národně sociální)",
+      "compass_position": {
+        "EKO": 0.21428571428571427,
+        "STA": 0.0,
+        "SOC": 0.07142857142857142,
+        "SUV": 0.0
+      },
+      "description": "Národně-sociální strana (historická, ne nacistická), součást koalice Stačilo!. Demokratický socialismus.",
+      "web": "https://csns.cz/"
+    },
+    {
+      "code": "SD-SN_(SEVEROČEŠI.CZ",
+      "name": "SD-SN (Severočeši.cz)",
+      "compass_position": {
+        "EKO": 0.21428571428571427,
+        "STA": -0.07142857142857142,
+        "SOC": 0.14285714285714285,
+        "SUV": 0.0
+      },
+      "description": "Regionální strana, součást koalice Stačilo!. Sociální demokracie, regionální zájmy.",
+      "web": "https://severocesi.cz/"
+    },
+    {
+      "code": "SOCDEM_(SOCIÁLNÍ_DEM",
+      "name": "SOCDEM (Sociální demokracie)",
+      "compass_position": {
+        "EKO": 0.21428571428571427,
+        "STA": 0.07142857142857142,
+        "SOC": 0.07142857142857142,
+        "SUV": 0.21428571428571427
+      },
+      "description": "Sociálně-demokratická strana, součást koalice Stačilo!. Sociální spravedlnost, smíšená ekonomika.",
+      "web": "https://socdem.cz/"
+    }
+  ],
+  "metadata": {
+    "source": "party-positions-unified-2025.md",
+    "questions": 28,
+    "scale": "1-5 with half-steps",
+    "dimensions": [
+      "EKO",
+      "SOC",
+      "STA",
+      "SUV"
+    ]
+  }
+}

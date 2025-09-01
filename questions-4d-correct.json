@@ -1,0 +1,172 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "text": "Jak by měly fungovat daně z příjmu?",
+      "dimension": "EKO",
+      "polarity": 1
+    },
+    {
+      "id": 2,
+      "text": "Jak má být organizováno zdravotnictví?",
+      "dimension": "EKO",
+      "polarity": 1
+    },
+    {
+      "id": 3,
+      "text": "Jak má fungovat vzdělávání?",
+      "dimension": "EKO",
+      "polarity": 1
+    },
+    {
+      "id": 4,
+      "text": "Jak má být řešen důchodový systém?",
+      "dimension": "EKO",
+      "polarity": 1
+    },
+    {
+      "id": 5,
+      "text": "Jak má stát přistupovat k soukromým firmám?",
+      "dimension": "EKO",
+      "polarity": 1
+    },
+    {
+      "id": 6,
+      "text": "Jak má být řešeno bydlení?",
+      "dimension": "EKO",
+      "polarity": 1
+    },
+    {
+      "id": 7,
+      "text": "Kdo má stavět a spravovat silnice?",
+      "dimension": "EKO",
+      "polarity": 1
+    },
+    {
+      "id": 8,
+      "text": "Kdo má zajišťovat bezpečnost?",
+      "dimension": "STA",
+      "polarity": 1
+    },
+    {
+      "id": 9,
+      "text": "Jak má fungovat obrana státu?",
+      "dimension": "STA",
+      "polarity": 1
+    },
+    {
+      "id": 10,
+      "text": "Jak má být organizována spravedlnost?",
+      "dimension": "STA",
+      "polarity": 1
+    },
+    {
+      "id": 11,
+      "text": "Do jaké míry má stát zasahovat do ekonomiky?",
+      "dimension": "STA",
+      "polarity": 1
+    },
+    {
+      "id": 12,
+      "text": "Jak má být řešena chudoba?",
+      "dimension": "STA",
+      "polarity": 1
+    },
+    {
+      "id": 13,
+      "text": "Jak má stát využívat technologie?",
+      "dimension": "STA",
+      "polarity": 1
+    },
+    {
+      "id": 14,
+      "text": "Kdo má vlastnit půdu?",
+      "dimension": "STA",
+      "polarity": 1
+    },
+    {
+      "id": 15,
+      "text": "Jak má být upraveno manželství?",
+      "dimension": "SOC",
+      "polarity": -1
+    },
+    {
+      "id": 16,
+      "text": "Jak má být řešeno právo na potrat?",
+      "dimension": "SOC",
+      "polarity": -1
+    },
+    {
+      "id": 17,
+      "text": "Jak má být upraveno užívání drog?",
+      "dimension": "SOC",
+      "polarity": -1
+    },
+    {
+      "id": 18,
+      "text": "Jak chránit svobodu slova?",
+      "dimension": "SOC",
+      "polarity": -1
+    },
+    {
+      "id": 19,
+      "text": "Jak přistupovat k migraci?",
+      "dimension": "SOC",
+      "polarity": -1
+    },
+    {
+      "id": 20,
+      "text": "Jak má stát regulovat náboženství?",
+      "dimension": "SOC",
+      "polarity": 1
+    },
+    {
+      "id": 21,
+      "text": "Jak má být podporována kultura?",
+      "dimension": "SOC",
+      "polarity": 1
+    },
+    {
+      "id": 22,
+      "text": "Jak má být řešeno členství v EU?",
+      "dimension": "SUV",
+      "polarity": 1
+    },
+    {
+      "id": 23,
+      "text": "Jak má fungovat měna?",
+      "dimension": "SUV",
+      "polarity": 1
+    },
+    {
+      "id": 24,
+      "text": "Jak řešit klima?",
+      "dimension": "SUV",
+      "polarity": 1
+    },
+    {
+      "id": 25,
+      "text": "Jak řešit obranu?",
+      "dimension": "SUV",
+      "polarity": 1
+    },
+    {
+      "id": 26,
+      "text": "Jak řešit evropskou migrační politiku?",
+      "dimension": "SUV",
+      "polarity": 1
+    },
+    {
+      "id": 27,
+      "text": "Jak má být organizován mezinárodní obchod?",
+      "dimension": "SUV",
+      "polarity": 1
+    },
+    {
+      "id": 28,
+      "text": "Kdo má mít konečné slovo v rozhodování?",
+      "dimension": "SUV",
+      "polarity": 1
+    }
+  ]
+}

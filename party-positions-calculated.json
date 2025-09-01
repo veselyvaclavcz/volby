@@ -1,0 +1,158 @@
+{
+  "Rebelové": {
+    "economy": 0.0,
+    "state": 0.0,
+    "society": 0.0,
+    "sovereignty": 0.0
+  },
+  "Moravské zemské hnutí": {
+    "economy": -0.36,
+    "state": -0.21,
+    "society": 0.0,
+    "sovereignty": -0.21
+  },
+  "Jasný signál nezávislých (JaSaN)": {
+    "economy": -0.79,
+    "state": -0.29,
+    "society": 0.07,
+    "sovereignty": -0.36
+  },
+  "Výzva 2025": {
+    "economy": 0.21,
+    "state": 0.21,
+    "society": 0.07,
+    "sovereignty": 0.93
+  },
+  "SMS - Stát má sloužit": {
+    "economy": -0.21,
+    "state": -0.07,
+    "society": 0.0,
+    "sovereignty": -0.07
+  },
+  "Svoboda a přímá demokracie (SPD) + koalice": {
+    "economy": 0.07,
+    "state": 0.93,
+    "society": 1.21,
+    "sovereignty": -0.93
+  },
+  "ČSSD - Česká suverenita sociální demokracie": {
+    "economy": 0.79,
+    "state": 0.86,
+    "society": -0.07,
+    "sovereignty": -0.07
+  },
+  "Přísaha občanské hnutí": {
+    "economy": 0.0,
+    "state": 0.57,
+    "society": 0.0,
+    "sovereignty": 0.0
+  },
+  "Levice": {
+    "economy": 1.5,
+    "state": 0.93,
+    "society": -0.21,
+    "sovereignty": 0.43
+  },
+  "Česká republika na 1. místě": {
+    "economy": 0.21,
+    "state": 1.0,
+    "society": 1.21,
+    "sovereignty": -1.07
+  },
+  "Spolu (ODS, KDU-ČSL, TOP 09)": {
+    "economy": -0.36,
+    "state": 0.07,
+    "society": 0.14,
+    "sovereignty": 0.14
+  },
+  "Švýcarská demokracie": {
+    "economy": -0.64,
+    "state": -0.36,
+    "society": -0.14,
+    "sovereignty": -0.64
+  },
+  "Nevolte Urza.cz": {
+    "economy": -2.0,
+    "state": -2.0,
+    "society": -2.0,
+    "sovereignty": -2.0
+  },
+  "Hnutí občanů a podnikatelů (HOP)": {
+    "economy": -0.43,
+    "state": -0.21,
+    "society": 0.0,
+    "sovereignty": 0.0
+  },
+  "Hnutí Generace": {
+    "economy": 0.0,
+    "state": 0.0,
+    "society": 0.0,
+    "sovereignty": 0.0
+  },
+  "Česká pirátská strana": {
+    "economy": 0.0,
+    "state": 0.0,
+    "society": -0.64,
+    "sovereignty": 0.36
+  },
+  "Koruna česká (monarchistická strana)": {
+    "economy": 0.21,
+    "state": 1.07,
+    "society": 1.29,
+    "sovereignty": 0.21
+  },
+  "Volt Česko": {
+    "economy": 0.21,
+    "state": 0.36,
+    "society": -0.36,
+    "sovereignty": 1.57
+  },
+  "Volte Pravý Blok (Cibulka)": {
+    "economy": -0.29,
+    "state": 0.14,
+    "society": 1.07,
+    "sovereignty": -1.14
+  },
+  "Motoristé sobě": {
+    "economy": -0.29,
+    "state": 0.0,
+    "society": 0.07,
+    "sovereignty": -0.36
+  },
+  "Balbínova poetická strana": {
+    "economy": 0.0,
+    "state": 0.0,
+    "society": 0.0,
+    "sovereignty": 0.0
+  },
+  "ANO 2011": {
+    "economy": 0.21,
+    "state": 0.36,
+    "society": 0.07,
+    "sovereignty": -0.36
+  },
+  "Starostové a nezávislí (STAN)": {
+    "economy": 0.0,
+    "state": 0.07,
+    "society": -0.14,
+    "sovereignty": 0.21
+  },
+  "Hnutí Kruh": {
+    "economy": 0.0,
+    "state": 0.0,
+    "society": 0.0,
+    "sovereignty": 0.0
+  },
+  "Stačilo!": {
+    "economy": 1.36,
+    "state": 0.86,
+    "society": -0.07,
+    "sovereignty": -0.43
+  },
+  "Voluntia": {
+    "economy": -1.5,
+    "state": -1.43,
+    "society": -1.36,
+    "sovereignty": -1.43
+  }
+}

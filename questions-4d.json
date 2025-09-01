@@ -1,0 +1,172 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "text": "Daně by měly být co nejnižší",
+      "dimension": "EKO",
+      "polarity": -1
+    },
+    {
+      "id": 2,
+      "text": "Stát by měl podporovat domácí firmy",
+      "dimension": "EKO", 
+      "polarity": 1
+    },
+    {
+      "id": 3,
+      "text": "Soukromé firmy jsou efektivnější než státní podniky",
+      "dimension": "EKO",
+      "polarity": -1
+    },
+    {
+      "id": 4,
+      "text": "Minimální mzda je prospěšná pro zaměstnance",
+      "dimension": "EKO",
+      "polarity": 1
+    },
+    {
+      "id": 5,
+      "text": "Všichni by měli platit stejné procento daní",
+      "dimension": "EKO",
+      "polarity": -1
+    },
+    {
+      "id": 6,
+      "text": "Sociální podpora vytváří závislost",
+      "dimension": "EKO",
+      "polarity": -1
+    },
+    {
+      "id": 7,
+      "text": "Bohatí by měli platit vyšší daně",
+      "dimension": "EKO",
+      "polarity": 1
+    },
+    {
+      "id": 8,
+      "text": "Stát by měl chránit občany před dezinformacemi",
+      "dimension": "STA",
+      "polarity": 1
+    },
+    {
+      "id": 9,
+      "text": "Sledování občanů je nutné pro bezpečnost",
+      "dimension": "STA",
+      "polarity": 1
+    },
+    {
+      "id": 10,
+      "text": "Státní média jsou důležitá pro demokracii",
+      "dimension": "STA",
+      "polarity": 1
+    },
+    {
+      "id": 11,
+      "text": "Internet by měl být regulován",
+      "dimension": "STA",
+      "polarity": 1
+    },
+    {
+      "id": 12,
+      "text": "Digitalizace státu zvyšuje svobodu občanů",
+      "dimension": "STA",
+      "polarity": -1
+    },
+    {
+      "id": 13,
+      "text": "Centralizace moci je nebezpečná",
+      "dimension": "STA",
+      "polarity": -1
+    },
+    {
+      "id": 14,
+      "text": "Byrokracie brání efektivitě",
+      "dimension": "STA",
+      "polarity": -1
+    },
+    {
+      "id": 15,
+      "text": "Stejnopohlavní páry by měly mít právo na adopce",
+      "dimension": "SOC",
+      "polarity": -1
+    },
+    {
+      "id": 16,
+      "text": "Dospělí by měli mít právo užívat konopí",
+      "dimension": "SOC",
+      "polarity": -1
+    },
+    {
+      "id": 17,
+      "text": "Tradiční rodina je základ společnosti",
+      "dimension": "SOC",
+      "polarity": 1
+    },
+    {
+      "id": 18,
+      "text": "Ženy mají právo rozhodovat o svém těle",
+      "dimension": "SOC",
+      "polarity": -1
+    },
+    {
+      "id": 19,
+      "text": "Multikulturalismus obohacuje společnost",
+      "dimension": "SOC",
+      "polarity": -1
+    },
+    {
+      "id": 20,
+      "text": "Národní identita je důležitější než evropská",
+      "dimension": "SOC",
+      "polarity": 1
+    },
+    {
+      "id": 21,
+      "text": "Náboženství má mít vliv na politiku",
+      "dimension": "SOC",
+      "polarity": 1
+    },
+    {
+      "id": 22,
+      "text": "Česko by mělo přijmout euro",
+      "dimension": "SUV",
+      "polarity": 1
+    },
+    {
+      "id": 23,
+      "text": "EU Green Deal je správná cesta",
+      "dimension": "SUV",
+      "polarity": 1
+    },
+    {
+      "id": 24,
+      "text": "Národní suverenita je důležitější než EU integrace",
+      "dimension": "SUV",
+      "polarity": -1
+    },
+    {
+      "id": 25,
+      "text": "EU migrační pakt je pro Česko přijatelný",
+      "dimension": "SUV",
+      "polarity": 1
+    },
+    {
+      "id": 26,
+      "text": "Vystoupení z EU by bylo pro Česko přínosné",
+      "dimension": "SUV",
+      "polarity": -1
+    },
+    {
+      "id": 27,
+      "text": "NATO je zárukou naší bezpečnosti",
+      "dimension": "SUV",
+      "polarity": 1
+    },
+    {
+      "id": 28,
+      "text": "Měli bychom spolupracovat s Ruskem",
+      "dimension": "SUV",
+      "polarity": -1
+    }
+  ]
+}

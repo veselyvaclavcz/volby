@@ -1,0 +1,184 @@
+{
+  "Rebelové": {
+    "economy": 0.4,
+    "state": 0.8,
+    "society": 0.8,
+    "sovereignty": 1.2,
+    "summary": "Protestní, národně-konzervativní ladění; důraz na pořádek a suverenitu, umírněně etatistická ekonomika."
+  },
+  "Moravské zemské hnutí": {
+    "economy": 0.0,
+    "state": 0.0,
+    "society": 0.1,
+    "sovereignty": 0.2,
+    "summary": "Regionalisté: umírněný střed, důraz na samosprávu a decentralizaci v rámci EU."
+  },
+  "Jasný signál nezávislých": {
+    "economy": 0.5,
+    "state": 0.9,
+    "society": 1.0,
+    "sovereignty": 1.5,
+    "summary": "Národně-konzervativní mix; tvrdší bezpečnost a suverenita, spíš státní zásahy."
+  },
+  "Výzva 2025": {
+    "economy": 0.6,
+    "state": 0.7,
+    "society": 0.4,
+    "sovereignty": 0.8,
+    "summary": "Sociálně akcentované návrhy, důraz na rodiny a seniory, umírněný etatismus."
+  },
+  "SMS - Stát má sloužit": {
+    "economy": 0.3,
+    "state": 0.6,
+    "society": 0.3,
+    "sovereignty": 0.8,
+    "summary": "Pragmatické „stát jako služba“, vyšší roli přiznává státu v praktických agendách."
+  },
+  "Svoboda a přímá demokracie (SPD)": {
+    "economy": 0.6,
+    "state": 1.1,
+    "society": 1.2,
+    "sovereignty": 2.0,
+    "summary": "Silná národní suverenita, konzervativní společnost, vyšší role státu."
+  },
+  "ČSSD - Česká suverenita sociální demokracie": {
+    "economy": 1.1,
+    "state": 1.0,
+    "society": 0.6,
+    "sovereignty": 1.4,
+    "summary": "Levicová redistribuce s národním akcentem; etatismus a sociální stát."
+  },
+  "Přísaha občanské hnutí": {
+    "economy": 0.4,
+    "state": 0.9,
+    "society": 0.5,
+    "sovereignty": 1.0,
+    "summary": "Důraz na pořádek a bezpečnost, umírněně etatistická ekonomika, suverenita bez extrémů."
+  },
+  "Levice": {
+    "economy": 1.7,
+    "state": 1.0,
+    "society": -0.6,
+    "sovereignty": 1.0,
+    "summary": "Silný sociální stát a přerozdělování, společensky liberální, proevropské rámce."
+  },
+  "Česká republika na 1. místě": {
+    "economy": 0.8,
+    "state": 1.3,
+    "society": 1.2,
+    "sovereignty": 2.0,
+    "summary": "Tvrdě suverenitní a konzervativní, ekonomicky etatistické návrhy."
+  },
+  "Spolu (ODS, KDU-ČSL, TOP 09)": {
+    "economy": -0.4,
+    "state": 0.2,
+    "society": 0.7,
+    "sovereignty": 1.1,
+    "summary": "Tržnější ekonomika, konzervativnější společnost, proevropské ukotvení."
+  },
+  "Švýcarská demokracie": {
+    "economy": -0.2,
+    "state": -0.2,
+    "society": 0.6,
+    "sovereignty": -0.2,
+    "summary": "Přímá demokracie, neutralita, mírně konzervativní společnost, euroskeptismus."
+  },
+  "Nevolte Urza.cz.": {
+    "economy": -2.0,
+    "state": -2.0,
+    "society": -2.0,
+    "sovereignty": -2.0,
+    "summary": "Anarchokapitalisté: nulový stát, volný trh, dobrovolné řády, lokální rozhodování."
+  },
+  "Hnutí občanů a podnikatelů": {
+    "economy": -0.5,
+    "state": 0.0,
+    "society": 0.2,
+    "sovereignty": 0.6,
+    "summary": "Pro-podnikatelské, nízké regulace, společensky spíše umírněně konzervativní."
+  },
+  "Hnutí Generace": {
+    "economy": 0.5,
+    "state": 0.4,
+    "society": -0.6,
+    "sovereignty": 1.2,
+    "summary": "Mladé proevropské hnutí, důraz na udržitelnost, společensky liberální."
+  },
+  "Česká pirátská strana": {
+    "economy": 0.2,
+    "state": 0.0,
+    "society": -1.4,
+    "sovereignty": 1.0,
+    "summary": "Progresivní svobody a digitální práva, ekonomicky smíšené, pro-EU."
+  },
+  "Koruna česká (monarchistická strana Čech Moravy a Slezska)": {
+    "economy": 0.4,
+    "state": 1.0,
+    "society": 1.4,
+    "sovereignty": 0.8,
+    "summary": "Monarchisté: tradice a národní orientace, vyšší role státu."
+  },
+  "Volt Česko": {
+    "economy": 0.6,
+    "state": 0.3,
+    "society": -1.3,
+    "sovereignty": 2.0,
+    "summary": "Silně pro-federální EU, společensky velmi liberální, sociálně-liberální ekonomika."
+  },
+  "Volte Pravý Blok": {
+    "economy": -0.5,
+    "state": -0.5,
+    "society": -0.2,
+    "sovereignty": 0.5,
+    "summary": "Antikomunismus a důraz na svobody, menší stát, smíšený postoj k EU."
+  },
+  "Motoristé sobě": {
+    "economy": -0.2,
+    "state": 0.2,
+    "society": 0.3,
+    "sovereignty": 0.6,
+    "summary": "Proti přeregulaci v dopravě a klimatických opatřeních, jinak umírnění."
+  },
+  "Balbínova poetická strana": {
+    "economy": 0.0,
+    "state": 0.0,
+    "society": 0.0,
+    "sovereignty": 0.0,
+    "summary": "Satirická strana; politicky neutrální profil (pro účely kompasu zjednodušeně uprostřed)."
+  },
+  "ANO 2011": {
+    "economy": 0.5,
+    "state": 0.7,
+    "society": 0.2,
+    "sovereignty": 0.6,
+    "summary": "Manažerský etatismus: vyšší role státu v řízení, pragmaticky proevropské bez eura."
+  },
+  "Starostové a nezávislí": {
+    "economy": -0.2,
+    "state": 0.0,
+    "society": -0.2,
+    "sovereignty": 1.0,
+    "summary": "Umírněně liberální a proevropští, důraz na samosprávy."
+  },
+  "Hnutí Kruh": {
+    "economy": 0.3,
+    "state": 0.3,
+    "society": 0.3,
+    "sovereignty": 0.3,
+    "summary": "Menší hnutí s obecným programem; pro účely kompasu mírně nad středem."
+  },
+  "Stačilo!": {
+    "economy": 0.9,
+    "state": 1.0,
+    "society": 1.0,
+    "sovereignty": 1.8,
+    "summary": "Protestní, důraz na suverenitu a sociální stát, konzervativnější společnost."
+  },
+  "Voluntia": {
+    "economy": 0.3,
+    "state": 0.3,
+    "society": 0.0,
+    "sovereignty": 0.4,
+    "summary": "Umírněné, komunitní důraz; středová pozice s mírným etatismem."
+  }
+}

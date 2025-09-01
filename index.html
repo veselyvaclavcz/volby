@@ -13,8 +13,8 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Volební kompas 2025 | A kdo by stavěl silnice?</title>
-    <meta name="description" content="Objektivní volební kompas založený na vědecké metodologii. Zjistěte, která strana vám sedí podle programu.">
+    <title>Volební test 2025 | A kdo by stavěl silnice?</title>
+    <meta name="description" content="Objektivní volební test založený na vědecké metodologii. Zjistěte, která strana vám sedí podle programu.">
     <link rel="icon" type="image/png" href="/static/favicon.png">
     <link rel="stylesheet" href="/static/css/style-ankap.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,7 +33,7 @@
                 </div>
                 <nav class="nav">
                     <a href="#jak-to-funguje" class="nav-link">Jak to funguje</a>
-                    <a href="#kalkulacka" class="nav-link">Kalkulačka</a>
+                    <a href="#kalkulacka" class="nav-link">Test</a>
                     <a href="#metodologie" class="nav-link">Metodologie</a>
                     <a href="#faq" class="nav-link">FAQ</a>
                     <a href="#compass" class="nav-link">Politický kompas</a>
@@ -56,9 +56,9 @@
         <div class="container">
             <div class="hero-content">
                 <h1 class="hero-title">Spočítej si, koho <span class="accent">(ne)volit</span></h1>
-                <p class="hero-subtitle">AI-poháněná kalkulačka analyzující skutečné programy všech 26 stran. <br>Objektivní data, matematika, AI analýza a <strong>svobodometr</strong> navíc.</p>
+                <p class="hero-subtitle">AI-poháněný test analyzující skutečné programy všech 26 stran. <br>Objektivní data, matematika, AI analýza a <strong>svobodometr</strong> navíc.</p>
                 <div class="hero-actions">
-                    <a href="#kalkulacka" class="btn btn-primary">Začít kalkulačku</a>
+                    <a href="#kalkulacka" class="btn btn-primary">Začít test</a>
                     <a href="#jak-to-funguje" class="btn btn-secondary">Jak to funguje</a>
                 </div>
                 <div class="hero-stats">
@@ -67,11 +67,11 @@
                         <span class="stat-label">oficiálních stran</span>
                     </div>
                     <div class="stat">
-                        <span class="stat-number">33</span>
+                        <span class="stat-number">28</span>
                         <span class="stat-label">konkrétních otázek</span>
                     </div>
                     <div class="stat">
-                        <span class="stat-number">3D</span>
+                        <span class="stat-number">4D</span>
                         <span class="stat-label">politický kompas</span>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
                 <div class="step">
                     <div class="step-number">01</div>
                     <h3>Odpovíš na otázky</h3>
-                    <p>33 konkrétních otázek z aktuálních témat voleb 2025. Založeno na reálných programech stran.</p>
+                    <p>28 konkrétních otázek z aktuálních témat voleb 2025. Založeno na reálných programech stran.</p>
                 </div>
                 <div class="step">
                     <div class="step-number">02</div>
@@ -122,7 +122,7 @@
     <section id="kalkulacka" class="calculator-section">
         <div class="container">
             <div class="calculator-header">
-                <h2>Volební kompas</h2>
+                <h2>Volební test</h2>
                 <p>Začni odpovídat a zjisti, které straně jsou tvoje názory nejblíž.</p>
             </div>
 
@@ -130,7 +130,7 @@
             <div class="section active" id="welcome">
                 <div class="welcome-content">
                     <h3>Připraven/a začít?</h3>
-                    <p>Čeká tě 33 otázek pokrývajících 3 politické dimenze. AI analyzovala všech 26 volebních programů a vytipovala pozice stran. Plus bonus - svobodometr!</p>
+                    <p>Čeká tě 28 otázek pokrývajících 4 politické dimenze. AI analyzovala všech 26 volebních programů a vytipovala pozice stran. Plus bonus - svobodometr!</p>
                     <div class="welcome-info">
                         <div class="info-item">
                             <span class="info-icon">●</span>
@@ -146,7 +146,7 @@
                         </div>
                     </div>
                     <button class="btn btn-primary btn-large" onclick="startCalculator()">
-                        Začít kalkulačku
+                        Začít test
                     </button>
                 </div>
             </div>
@@ -155,9 +155,9 @@
             <div class="section" id="calculator">
                 <div id="questionContainer">
                     <!-- Progress Bar -->
-                    <div class="progress-container" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="33">
+                    <div class="progress-container" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="28">
                         <div class="progress-info">
-                            <span id="progressText">Otázka 1 z 33</span>
+                            <span id="progressText">Otázka 1 z 28</span>
                             <span id="progressPercentage">4%</span>
                         </div>
                         <div class="progress-bar">
@@ -171,19 +171,24 @@
                         <h3 class="question-text" id="questionText">Načítání otázky...</h3>
                         
                         <div class="answers-grid">
-                            <button class="answer-btn" onclick="selectAnswer(1)" aria-pressed="false">
+                            <button class="answer-btn" onclick="selectAnswer(1)" aria-pressed="false" title="Klávesa 1">
+                                <span class="answer-key">1</span>
                                 <span class="answer-label">Rozhodně souhlasím</span>
                             </button>
-                            <button class="answer-btn" onclick="selectAnswer(2)" aria-pressed="false">
+                            <button class="answer-btn" onclick="selectAnswer(2)" aria-pressed="false" title="Klávesa 2">
+                                <span class="answer-key">2</span>
                                 <span class="answer-label">Spíše souhlasím</span>
                             </button>
-                            <button class="answer-btn" onclick="selectAnswer(3)" aria-pressed="false">
+                            <button class="answer-btn" onclick="selectAnswer(3)" aria-pressed="false" title="Klávesa 3">
+                                <span class="answer-key">3</span>
                                 <span class="answer-label">Neutrální</span>
                             </button>
-                            <button class="answer-btn" onclick="selectAnswer(4)" aria-pressed="false">
+                            <button class="answer-btn" onclick="selectAnswer(4)" aria-pressed="false" title="Klávesa 4">
+                                <span class="answer-key">4</span>
                                 <span class="answer-label">Spíše nesouhlasím</span>
                             </button>
-                            <button class="answer-btn" onclick="selectAnswer(5)" aria-pressed="false">
+                            <button class="answer-btn" onclick="selectAnswer(5)" aria-pressed="false" title="Klávesa 5">
+                                <span class="answer-key">5</span>
                                 <span class="answer-label">Rozhodně nesouhlasím</span>
                             </button>
                         </div>
@@ -196,14 +201,18 @@
                             </label>
                         </div>
 
+                        <div class="keyboard-help">
+                            <small>💡 Klávesy: <kbd>1-5</kbd> pro odpovědi, <kbd>Enter</kbd> nebo <kbd>Space</kbd> pokračovat, <kbd>←→</kbd> navigace</small>
+                        </div>
+
                         <div class="question-actions">
-                            <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled>
+                            <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled title="Šipka ←">
                                 Zpět
                             </button>
-                            <button class="btn btn-ghost" onclick="skipQuestion()">
+                            <button class="btn btn-ghost" onclick="skipQuestion()" title="Space (bez odpovědi)">
                                 Přeskočit
                             </button>
-                            <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>
+                            <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled title="Enter nebo Space">
                                 Další
                             </button>
                         </div>
@@ -239,7 +248,7 @@
                 
                 <!-- Support and Links Section -->
                 <div class="support-links-compact">
-                    <p class="support-text">Pokud se vám kalkulačka nebo náš podcast líbí, podpořte nás:</p>
+                    <p class="support-text">Pokud se vám test nebo náš podcast líbí, podpořte nás:</p>
                     <div class="support-icons">
                         <a href="https://herohero.co/kdobystavel" target="_blank" class="support-icon" title="Herohero">🔒</a>
                         <a href="https://buymeacoffee.com/kdobystavels" target="_blank" class="support-icon" title="Buy me a coffee">☕</a>
@@ -301,25 +310,26 @@
             <h2 class="section-title">Metodologie</h2>
             <div class="methodology-content">
                 <div class="method-description">
-                    <h3>3D Politický kompas + Svobodometr</h3>
-                    <p>Naše metodologie je založená na třech klíčových dimenzích:</p>
+                    <h3>4D Politický kompas + Svobodometr</h3>
+                    <p>Naše metodologie je založená na čtyřech klíčových dimenzích:</p>
                     <ul>
-                        <li><strong>Ekonomická (EKO)</strong> - Státní kontrola vs. volný trh</li>
-                        <li><strong>Sociální (SOC)</strong> - Tradiční hodnoty vs. progresivní změny</li>
-                        <li><strong>Suverenitní (SUV)</strong> - Národní suverenita vs. evropská integrace</li>
+                        <li><strong>Ekonomika</strong> - Volný trh vs. státní kontrola</li>
+                        <li><strong>Role státu</strong> - Minimální stát vs. silný stát</li>
+                        <li><strong>Společnost</strong> - Liberální hodnoty vs. konzervativní hodnoty</li>
+                        <li><strong>Suverenita</strong> - Národní nezávislost vs. globální integrace</li>
                     </ul>
-                    <p>Používáme <strong>Euklidovskou vzdálenost</strong> v 3D prostoru pro přesné určení vaší pozice a shody se stranami.</p>
-                    <p><strong>🔥 NOVINKA: Svobodometr</strong> - Unikátní metriku míry svobody vypočítáváme z vašich odpovědí. Ukazuje, kolik svobody jste ochotni obětovat státu.</p>
+                    <p>Používáme <strong>Euklidovskou vzdálenost</strong> ve 4D prostoru pro přesné určení vaší pozice a shody se stranami.</p>
+                    <p><strong>🔥 Svobodometr</strong> - Měří vaši celkovou preferenci svobody vs. státního zasahování (0-100%). Vypočítává se jako průměr vašich pozic ve všech čtyřech dimenzích, kde 100% = maximální svoboda, 0% = maximální státní kontrola.</p>
                 </div>
                 <div class="methodology-references">
                     <h4>Data a zdroje</h4>
                     <ul>
                         <li>Oficiální programy 26 stran pro volby 2025</li>
-                        <li>33 konkrétních otázek vycházejících z aktuálních témat</li>
+                        <li>28 konkrétních otázek s 5 možnostmi odpovědí pro každou</li>
                         <li>Pozice stran určeny pomocí AI analýzy programů a veřejných prohlášení</li>
                         <li>Objektivní zpracování dat bez stranických preferencí</li>
                     </ul>
-                    <p style="margin-top: 1rem; font-style: italic;">Kalkulačku vytvořili libertariáni věřící ve svobodnou společnost, ale samotný algoritmus je maximálně objektivní a nezkresluje výsledky.</p>
+                    <p style="margin-top: 1rem; font-style: italic;">Test vytvořili libertariáni věřící ve svobodnou společnost, ale samotný algoritmus je maximálně objektivní a nezkresluje výsledky.</p>
                 </div>
             </div>
         </div>
@@ -333,7 +343,7 @@
                 <details class="faq-item">
                     <summary>Jak můžu věřit výsledkům?</summary>
                     <div class="faq-answer">
-                        <p>Používáme 3D politický kompas, který mapuje pozice na třech osách: ekonomická (stát vs. trh), sociální (tradice vs. progres) a suverenita (národní vs. evropská). Otázky vycházejí z konkrétních témat voleb 2025. Strany jsou umístěny podle analýzy jejich oficiálních programů.</p>
+                        <p>Používáme 4D politický kompas, který mapuje pozice na čtyřech osách: ekonomika, role státu, společnost a suverenita. Každá otázka nabízí 5 možností od extrémních po umírněné pozice. Strany jsou umístěny podle analýzy jejich oficiálních programů.</p>
                     </div>
                 </details>
 
@@ -347,7 +357,7 @@
                 <details class="faq-item">
                     <summary>Kdo za tím stojí?</summary>
                     <div class="faq-answer">
-                        <p>Projekt vytvořili libertariáni z webu "A kdo by stavěl silnice?". Věříme ve svobodnou společnost a minimální stát. Ale nebojte - kalkulačka samotná je maximálně objektivní. Používá AI analýzu programů, matematické algoritmy a transparentní metodologii. Žádné stranické financování, žádné manipulace s výsledky.</p>
+                        <p>Projekt vytvořili libertariáni z webu "A kdo by stavěl silnice?". Věříme ve svobodnou společnost a minimální stát. Ale nebojte - test samotný je maximálně objektivní. Používá AI analýzu programů, matematické algoritmy a transparentní metodologii. Žádné stranické financování, žádné manipulace s výsledky.</p>
                     </div>
                 </details>
 
@@ -368,7 +378,7 @@
                 <details class="faq-item">
                     <summary>Co je to ten svobodometr?</summary>
                     <div class="faq-answer">
-                        <p>Svobodometr je unikátní doplněk kalkulačky, který z vašich odpovědí vypočítává, kolik svobody jste ochotni obětovat státu. Měří na škále 0-100%, kde 0% znamená totální kontrolu státu a 100% maximální osobní svobodu. Ukazuje, jak moc věříte ve schopnost lidí řídit si vlastní život bez státního dohledu.</p>
+                        <p>Svobodometr je unikátní doplněk testu, který z vašich odpovědí vypočítává, kolik svobody jste ochotni obětovat státu. Měří na škále 0-100%, kde 0% znamená totální kontrolu státu a 100% maximální osobní svobodu. Ukazuje, jak moc věříte ve schopnost lidí řídit si vlastní život bez státního dohledu.</p>
                     </div>
                 </details>
 
@@ -380,29 +390,42 @@
                 </details>
 
                 <details class="faq-item">
-                    <summary>Proč libertariánská kalkulačka?</summary>
+                    <summary>Proč libertariánský test?</summary>
                     <div class="faq-answer">
-                        <p>Protože věříme, že každý má právo znát důsledky svých voleb. Stát není řešením vašich problémů - stát JE problém. Ale pokud si přesto myslíte opak, máte právo na svůj názor. Naše kalkulačka vám nezkreslí výsledky, i když byste chtěli totalitní socialismus. Jen vám k tomu ukáže, že váš svobodometr bude někde u nuly.</p>
+                        <p>Protože věříme, že každý má právo znát důsledky svých voleb. Stát není řešením vašich problémů - stát JE problém. Ale pokud si přesto myslíte opak, máte právo na svůj názor. Náš test vám nezkreslí výsledky, i když byste chtěli totalitní socialismus. Jen vám k tomu ukáže, že váš svobodometr bude někde u nuly.</p>
                     </div>
                 </details>
 
                 <details class="faq-item">
                     <summary>Jak přesné jsou výsledky?</summary>
                     <div class="faq-answer">
-                        <p>3D politický kompas počítá euklidovskou vzdálenost mezi vaší pozicí a pozicí každé strany v třídimenzionálním prostoru. Výsledek ukazuje, jak blízko jsou vaše hodnoty hodnotám strany. Není to předpověď, ale matematické porovnání ideologických pozic založené na 33 konkrétních otázkách.</p>
+                        <p>4D politický kompas počítá euklidovskou vzdálenost mezi vaší pozicí a pozicí každé strany ve čtyřdimenzionálním prostoru. Výsledek ukazuje, jak blízko jsou vaše hodnoty hodnotám strany. Není to předpověď, ale matematické porovnání ideologických pozic založené na 28 konkrétních otázkách.</p>
                     </div>
                 </details>
 
                 <details class="faq-item">
-                    <summary>Co je 3D politický kompas?</summary>
+                    <summary>Co je 4D politický kompas?</summary>
                     <div class="faq-answer">
-                        <p>Tradiční pravolevé spektrum je příliš jednoduché. Náš model používá 3 dimenze: 1) Ekonomická (stát vs. trh), 2) Sociální (tradice vs. progres), 3) Suverenita (národní vs. evropská). To umožňuje přesnější zachycení složitosti politických postojů než jednoduché levo-pravé dělení.</p>
+                        <p>Tradiční pravolevé spektrum je příliš jednoduché. Náš model používá 4 dimenze: 1) Ekonomická (volný trh vs. státní kontrola), 2) Role státu (minimální vs. silný stát), 3) Společenská (liberální vs. konzervativní), 4) Suverenita (národní vs. globální). To umožňuje přesnější zachycení složitosti politických postojů než jednoduché levo-pravé dělení.</p>
                     </div>
                 </details>
                 <details class="faq-item">
-                    <summary>Jak vznikla kalkulačka a pozice stran?</summary>
+                    <summary>Jak vznikl test a pozice stran?</summary>
                     <div class="faq-answer">
-                        <p>Celý proces proběhl ve třech fázích: <strong>1) Sběr dat</strong> - AI systém prošel oficiální webové stránky všech 26 stran a stáhl jejich volební programy a programová prohlášení pro volby 2025. <strong>2) Analýza pozic</strong> - AI analyzovala každý program a vytipovala postoje stran k 33 konkrétním otázkám rozdělených do tří dimenzí (ekonomická, sociální, suverenita). Každé straně byla přiřazena pozice od -1 do +1 na základě jejích deklarovaných postojů. <strong>3) Porovnání s uživatelem</strong> - Vaše odpovědi na stejné otázky jsou převedeny na pozici v 3D prostoru a matematicky porovnány s pozicemi stran pomocí výpočtu Euklidovské vzdálenosti. Čím menší vzdálenost, tím větší shoda.</p>
+                        <p>Celý proces proběhl ve třech fázích: <strong>1) Sběr dat</strong> - AI systém prošel oficiální webové stránky všech 26 stran a stáhl jejich volební programy a programová prohlášení pro volby 2025. <strong>2) Analýza pozic</strong> - AI analyzovala každý program a vytipovala postoje stran k 28 konkrétním otázkám rozdělených do čtyř dimenzí (ekonomika, role státu, společnost, suverenita). Každé straně byla přiřazena pozice od -2 do +2 na základě jejích deklarovaných postojů. <strong>3) Porovnání s uživatelem</strong> - Vaše odpovědi na stejné otázky jsou převedeny na pozici ve 4D prostoru a matematicky porovnány s pozicemi stran pomocí výpočtu Euklidovské vzdálenosti. Čím menší vzdálenost, tím větší shoda.</p>
+                    </div>
+                </details>
+                
+                <details class="faq-item">
+                    <summary>Kde najdu zdrojová data a detailní analýzu?</summary>
+                    <div class="faq-answer">
+                        <p>Pro zájemce o technické detaily a kompletní analýzu pozic stran je k dispozici zdrojový dokument s podrobným rozborem každé strany včetně citací z jejich programů a vysvětlení jednotlivých pozic.</p>
+                        <p style="margin-top: 1rem;">
+                            <a href="/party-positions-detailed-2025.md" download="party-positions-detailed-2025.md" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: rgba(255,217,61,0.1); border: 1px solid var(--color-primary); border-radius: 4px; color: var(--color-primary); text-decoration: none; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(255,217,61,0.2)'" onmouseout="this.style.background='rgba(255,217,61,0.1)'">
+                                📄 Stáhnout zdrojový dokument (MD)
+                            </a>
+                        </p>
+                        <p style="margin-top: 0.5rem; font-size: 0.9em; color: var(--color-text-muted);">Dokument obsahuje: metodologii analýzy, detailní pozice všech 26 stran, citace z programů, vysvětlení bodování a kompletní datovou strukturu.</p>
                     </div>
                 </details>
             </div>
@@ -413,61 +436,77 @@
     <section id="compass" class="compass-section" style="display: none;">
         <div class="container">
             <div class="compass-header">
-                <h2>3D Politický kompas českých stran</h2>
-                <p>Vizualizace pozic českých stran na třech politických osách</p>
+                <h2>4D Politický kompas českých stran</h2>
+                <p>Vizualizace pozic českých stran na čtyřech politických dimenzích</p>
             </div>
             
-            <div class="compass-grid">
-                <!-- Main compass: Economic vs Social -->
+            <!-- Expandable Methodology -->
+            <details class="compass-methodology" style="background: rgba(255,217,61,0.05); border: 1px solid rgba(255,217,61,0.3); border-radius: 6px; margin-bottom: 1.5rem;">
+                <summary style="padding: 1rem; cursor: pointer; font-weight: 600; color: var(--color-primary); display: flex; align-items: center; gap: 0.5rem; user-select: none;">
+                    📊 Metodika 4D politického kompasu
+                    <span style="margin-left: auto; font-size: 0.8em; opacity: 0.7;">▼ Klikni pro rozbalení</span>
+                </summary>
+                <div style="padding: 0 1rem 1rem 1rem; font-size: 0.9em;">
+                    <h3 style="margin-top: 0; color: var(--color-text); font-size: 1em; margin-bottom: 1rem;">🔬 Jak funguje výpočet pozic</h3>
+                    <div style="background: rgba(0,0,0,0.2); padding: 0.8rem; border-radius: 4px; margin-bottom: 1rem;">
+                        <p style="margin: 0; font-size: 0.85em; line-height: 1.4; color: var(--color-text-muted);">
+                            <strong>Čtyři dimenze politiky:</strong> Každá strana je hodnocena na škále -2 až +2 ve čtyřech oblastech:
+                            <strong>Ekonomika</strong> (svobodný trh ↔ státní plánování), 
+                            <strong>Společnost</strong> (liberální ↔ konzervativní), 
+                            <strong>Stát</strong> (decentralizace ↔ centralizace), 
+                            <strong>Suverenita</strong> (individuální/národní ↔ kolektivní/EU)
+                        </p>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;">
+                        <div>
+                            <h4 style="margin-bottom: 0.5rem; font-size: 0.9em; color: var(--color-text);">🎯 Levý kompas: Ekonomika × Společnost</h4>
+                            <ul style="margin: 0; padding-left: 1rem; line-height: 1.3; font-size: 0.8em; color: var(--color-text-muted);">
+                                <li><strong>Levý dolní kvadrant:</strong> Libertariáni (svobodný trh + liberální společnost)</li>
+                                <li><strong>Pravý dolní:</strong> Pravicová strana (svobodný trh + tradiční hodnoty)</li>
+                                <li><strong>Levý horní:</strong> Levice (státní ekonomika + progresivní společnost)</li>
+                                <li><strong>Pravý horní:</strong> Autoritáři (státní ekonomika + tradiční hodnoty)</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom: 0.5rem; font-size: 0.9em; color: var(--color-text);">⚖️ Pravý kompas: Stát × Suverenita</h4>
+                            <ul style="margin: 0; padding-left: 1rem; line-height: 1.3; font-size: 0.8em; color: var(--color-text-muted);">
+                                <li><strong>Levý horní:</strong> Lokální samospráva + národní rozhodování</li>
+                                <li><strong>Pravý horní:</strong> Silný stát + národní suverenita</li>
+                                <li><strong>Levý dolní:</strong> Lokální samospráva + EU integrace</li>
+                                <li><strong>Pravý dolní:</strong> Centralizace + EU federalismus</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1rem; padding: 0.6rem; background: rgba(255,217,61,0.1); border-radius: 4px;">
+                        <p style="margin: 0; text-align: center; font-size: 0.8em; color: var(--color-text);">
+                            📏 <strong>Shoda s vámi:</strong> Vypočítává se euklidovská vzdálenost ve 4D prostoru - čím blíže strana k vašim odpovědím, tím vyšší shoda
+                        </p>
+                    </div>
+                </div>
+            </details>
+            
+            <!-- Two Compasses Side by Side -->
+            <div class="compass-dual-container">
+                <!-- First Compass: Society × Economy -->
                 <div class="compass-container">
-                    <h3 class="compass-title">Ekonomická × Sociální</h3>
+                    <h3 class="compass-title">Společnost × Ekonomika</h3>
                     <div class="compass-wrapper">
-                        <div class="compass" id="compass-eco-soc">
+                        <div class="compass" id="compass-eco-state">
                             <div class="axis horizontal"></div>
                             <div class="axis vertical"></div>
-                        </div>
-                        <div class="axis-label axis-label-top">
-                            <span class="axis-icon">🏳️‍🌈</span>
-                            <span>Progres</span>
-                        </div>
-                        <div class="axis-label axis-label-bottom">
-                            <span class="axis-icon">⛪</span>
-                            <span>Tradice</span>
-                        </div>
-                        <div class="axis-label axis-label-left">
-                            <span class="axis-icon">🏛️</span>
-                            <span>Stát</span>
-                        </div>
-                        <div class="axis-label axis-label-right">
-                            <span class="axis-icon">💰</span>
-                            <span>Trh</span>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Secondary compass: Economic vs Sovereignty -->
+                <!-- Second Compass: State × Sovereignty -->
                 <div class="compass-container">
-                    <h3 class="compass-title">Ekonomická × Suverenitní</h3>
+                    <h3 class="compass-title">Role státu × Suverenita</h3>
                     <div class="compass-wrapper">
-                        <div class="compass" id="compass-eco-suv">
+                        <div class="compass" id="compass-soc-suv">
                             <div class="axis horizontal"></div>
                             <div class="axis vertical"></div>
-                        </div>
-                        <div class="axis-label axis-label-top">
-                            <span class="axis-icon">🇪🇺</span>
-                            <span>Evropská</span>
-                        </div>
-                        <div class="axis-label axis-label-bottom">
-                            <span class="axis-icon">🇨🇿</span>
-                            <span>Národní</span>
-                        </div>
-                        <div class="axis-label axis-label-left">
-                            <span class="axis-icon">🏛️</span>
-                            <span>Stát</span>
-                        </div>
-                        <div class="axis-label axis-label-right">
-                            <span class="axis-icon">💰</span>
-                            <span>Trh</span>
                         </div>
                     </div>
                 </div>
@@ -486,12 +525,12 @@
             <div class="footer-content">
                 <div class="footer-main">
                     <h4>A kdo by stavěl silnice?</h4>
-                    <p>Volební kompas 2025</p>
+                    <p>Volební test 2025</p>
                 </div>
                 <div class="footer-disclaimer">
                     <p><small>
                         Výsledky jsou orientační a vycházejí z programových priorit stran k datu vytvoření. 
-                        Kalkulačka nenahrazuje vlastní úsudek a studium volebních programů. 
+                        Test nenahrazuje vlastní úsudek a studium volebních programů. 
                         Nezávislý projekt, bez stranické podpory.
                     </small></p>
                 </div>

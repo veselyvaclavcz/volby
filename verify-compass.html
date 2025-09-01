@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Ověření funkčnosti kompasu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f9f9f9;
+        }
+        .test-section {
+            background: white;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 { color: #333; border-bottom: 2px solid #FFD93D; padding-bottom: 10px; }
+        .success { color: #28a745; font-weight: bold; }
+        .error { color: #dc3545; font-weight: bold; }
+        .warning { color: #ffc107; font-weight: bold; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        th {
+            background: #f5f5f5;
+            font-weight: bold;
+        }
+        .party-correct { background: #d4edda; }
+        .party-wrong { background: #f8d7da; }
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Ověření správnosti politického kompasu</h1>
+    
+    <div class="test-section">
+        <h2>Očekávané umístění klíčových stran</h2>
+        <div class="info-box">
+            <strong>Kompas 1 (Společnost × Ekonomika):</strong><br>
+            • Levý dolní roh: Liberální + Volný trh (URZA, Voluntia, Svobodní)<br>
+            • Pravý dolní roh: Konzervativní + Volný trh (ODS)<br>
+            • Levý horní roh: Liberální + Plánovaná ekonomika (Piráti + sociální témata)<br>
+            • Pravý horní roh: Konzervativní + Plánovaná ekonomika (SPD, KSČM)<br><br>
+            
+            <strong>Kompas 2 (Stát × Suverenita):</strong><br>
+            • Levý dolní roh: Malý stát + Národní (libertariáni)<br>
+            • Pravý dolní roh: Velký stát + Národní (SPD, komunisté)<br>
+            • Levý horní roh: Malý stát + Globální (liberální pro-EU)<br>
+            • Pravý horní roh: Velký stát + Globální (Volt, federalisté)
+        </div>
+        <div id="party-check"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test výpočtů</h2>
+        <div id="calculation-test"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>API Status</h2>
+        <div id="api-status"></div>
+    </div>
+
+    <script>
+        async function checkParties() {
+            const div = document.getElementById('party-check');
+            try {
+                const response = await fetch('/.netlify/functions/api-parties');
+                const data = await response.json();
+                
+                let html = '<table>';
+                html += '<thead><tr><th>Strana</th><th>EKO</th><th>SOC</th><th>STA</th><th>SUV</th><th>Očekávaná pozice</th><th>Status</th></tr></thead>';
+                html += '<tbody>';
+                
+                // Critical parties to check
+                const checks = [
+                    { code: 'URZA', name: 'URZA (ankap)', 
+                      expected: 'Volný trh + Liberální + Malý stát',
+                      validate: (p) => p.EKO < -0.8 && p.SOC < -0.8 && p.STA < -0.8 },
+                    { code: 'VOLUNTIA', name: 'Voluntia', 
+                      expected: 'Volný trh + Liberální + Malý stát',
+                      validate: (p) => p.EKO < -0.6 && p.SOC < -0.6 && p.STA < -0.6 },
+                    { code: 'SVOBODNI', name: 'Svobodní', 
+                      expected: 'Volný trh + Liberální + Malý stát',
+                      validate: (p) => p.EKO < -0.4 && p.SOC < -0.4 && p.STA < -0.4 },
+                    { code: 'KSCM', name: 'KSČM', 
+                      expected: 'Plánovaná ekonomika + Velký stát',
+                      validate: (p) => p.EKO > 0.4 && p.STA > 0.2 },
+                    { code: 'SPD', name: 'SPD', 
+                      expected: 'Konzervativní + Národní',
+                      validate: (p) => p.SOC > 0.3 && p.SUV > 0.3 },
+                    { code: 'VOLT', name: 'Volt', 
+                      expected: 'Pro-EU/Globální',
+                      validate: (p) => p.SUV < -0.5 }
+                ];
+                
+                for (const check of checks) {
+                    const party = [...data.mainParties, ...data.coalitionParties].find(p => p.code === check.code);
+                    if (party) {
+                        const pos = party.compass_position;
+                        const isCorrect = check.validate(pos);
+                        html += `<tr class="${isCorrect ? 'party-correct' : 'party-wrong'}">
+                            <td><strong>${check.name}</strong></td>
+                            <td>${pos.EKO.toFixed(2)}</td>
+                            <td>${pos.SOC.toFixed(2)}</td>
+                            <td>${pos.STA.toFixed(2)}</td>
+                            <td>${pos.SUV.toFixed(2)}</td>
+                            <td>${check.expected}</td>
+                            <td>${isCorrect ? '<span class="success">✓ Správně</span>' : '<span class="error">✗ Chyba</span>'}</td>
+                        </tr>`;
+                    }
+                }
+                
+                html += '</tbody></table>';
+                div.innerHTML = html;
+            } catch (e) {
+                div.innerHTML = `<p class="error">Chyba: ${e.message}</p>`;
+            }
+        }
+        
+        async function testCalculations() {
+            const div = document.getElementById('calculation-test');
+            let html = '<h3>Test extrémních odpovědí:</h3>';
+            
+            // Test libertarian answers (all 1s)
+            const libertarianAnswers = Array(28).fill(1);
+            try {
+                const response = await fetch('/.netlify/functions/api-calculate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ answers: libertarianAnswers })
+                });
+                const result = await response.json();
+                
+                const isLibertarian = result.compass_position.EKO < 0 && 
+                                     result.compass_position.SOC < 0 && 
+                                     result.compass_position.STA < 0;
+                
+                html += `<div class="${isLibertarian ? 'success' : 'error'}">
+                    <strong>Libertariánské odpovědi (vše 1):</strong><br>
+                    EKO: ${result.compass_position.EKO.toFixed(2)}, 
+                    SOC: ${result.compass_position.SOC.toFixed(2)}, 
+                    STA: ${result.compass_position.STA.toFixed(2)}, 
+                    SUV: ${result.compass_position.SUV.toFixed(2)}<br>
+                    Svobodometr: ${result.svobodometr}%<br>
+                    ${isLibertarian ? '✓ Správně - negativní hodnoty (volný trh, liberální, malý stát)' : '✗ CHYBA - měly by být negativní hodnoty!'}
+                </div>`;
+                
+                // Find closest party
+                if (result.matches && result.matches.length > 0) {
+                    html += `<div>Nejbližší strana: <strong>${result.matches[0].name}</strong> (${result.matches[0].match}% shoda)</div>`;
+                }
+            } catch (e) {
+                html += `<div class="error">Chyba při testu: ${e.message}</div>`;
+            }
+            
+            div.innerHTML = html;
+        }
+        
+        async function checkAPIStatus() {
+            const div = document.getElementById('api-status');
+            let html = '<table><thead><tr><th>Endpoint</th><th>Status</th><th>Detail</th></tr></thead><tbody>';
+            
+            const endpoints = [
+                { name: 'Questions', url: '/.netlify/functions/api-questions' },
+                { name: 'Parties', url: '/.netlify/functions/api-parties' },
+                { name: 'Calculate', url: '/.netlify/functions/api-calculate', method: 'POST', body: { answers: Array(28).fill(3) } }
+            ];
+            
+            for (const endpoint of endpoints) {
+                try {
+                    const options = endpoint.method === 'POST' ? {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(endpoint.body)
+                    } : {};
+                    
+                    const response = await fetch(endpoint.url, options);
+                    const data = await response.json();
+                    
+                    let detail = '';
+                    if (endpoint.name === 'Questions') detail = `${data.length} otázek`;
+                    else if (endpoint.name === 'Parties') detail = `${data.mainParties.length} stran`;
+                    else if (endpoint.name === 'Calculate') detail = `Svobodometr: ${data.svobodometr}%`;
+                    
+                    html += `<tr>
+                        <td>${endpoint.name}</td>
+                        <td class="success">✓ OK</td>
+                        <td>${detail}</td>
+                    </tr>`;
+                } catch (e) {
+                    html += `<tr>
+                        <td>${endpoint.name}</td>
+                        <td class="error">✗ Error</td>
+                        <td>${e.message}</td>
+                    </tr>`;
+                }
+            }
+            
+            html += '</tbody></table>';
+            div.innerHTML = html;
+        }
+        
+        // Run all checks
+        checkParties();
+        testCalculations();
+        checkAPIStatus();
+    </script>
+</body>
+</html>

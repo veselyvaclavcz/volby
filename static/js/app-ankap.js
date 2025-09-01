@@ -10,11 +10,51 @@ let parties = [];
 // Theme management
 let currentTheme = 'dark';
 
+// Navigation state
+let isNavigating = false;
+let compassInitialized = false;
+
 // Initialize app
 document.addEventListener('DOMContentLoaded', async () => {
     await loadQuestions();
     await loadParties();
-    showSection('welcome');
+    
+    // Restore saved test data from localStorage
+    const savedAnswers = localStorage.getItem('userAnswers');
+    const savedCurrentQuestion = localStorage.getItem('currentQuestion');
+    
+    if (savedAnswers) {
+        try {
+            answers = JSON.parse(savedAnswers);
+            console.log('Restored answers from localStorage:', answers);
+        } catch (e) {
+            console.error('Error parsing saved answers:', e);
+        }
+    }
+    
+    if (savedCurrentQuestion) {
+        currentQuestion = parseInt(savedCurrentQuestion);
+        console.log('Restored currentQuestion from localStorage:', currentQuestion);
+    }
+    
+    // Check URL hash and show appropriate section
+    const hash = window.location.hash.slice(1);
+    console.log('Initial hash:', hash);
+    
+    if (hash && ['welcome', 'calculator', 'compass', 'jak-to-funguje', 'kalkulacka', 'metodologie', 'faq'].includes(hash)) {
+        console.log('Showing section:', hash);
+        showSection(hash);
+        // Special handling for compass on direct load
+        if (hash === 'compass') {
+            setTimeout(() => {
+                initializeCompass();
+            }, 800);
+        }
+    } else {
+        console.log('No valid hash, showing welcome');
+        showSection('welcome');
+    }
+    
     initializeMobileMenu();
     initializeKeyboardNavigation();
     initializeThemeToggle();
@@ -22,12 +62,27 @@ document.addEventListener('DOMContentLoaded', async () => {
     initializeActiveNavigation();
 });
 
+// Handle browser back/forward navigation
+window.addEventListener('popstate', () => {
+    const hash = window.location.hash.slice(1);
+    if (hash && ['welcome', 'calculator', 'compass', 'jak-to-funguje', 'kalkulacka', 'metodologie', 'faq'].includes(hash)) {
+        showSection(hash);
+    } else {
+        showSection('welcome');
+    }
+});
+
 // Load questions from API
 async function loadQuestions() {
     try {
         const response = await fetch('/.netlify/functions/api-questions');
         if (!response.ok) throw new Error('API not available');
-        questions = await response.json();
+        const rawQuestions = await response.json();
+        
+        // Keep questions in original format (answers as object)
+        questions = rawQuestions;
+        
+        console.log('Loaded questions:', questions.length, 'Format:', questions[0]?.answers ? 'object' : 'unknown');
     } catch (error) {
         console.error('Error loading questions:', error);
         // Fallback pro lokální testování
@@ -47,69 +102,29 @@ async function loadParties() {
     try {
         const response = await fetch('/.netlify/functions/api-parties');
         if (!response.ok) throw new Error('API not available');
-        parties = await response.json();
+        const data = await response.json();
+        // Combine main and coalition parties with type flag
+        parties = [
+            ...data.mainParties.map(p => ({...p, type: 'main'})),
+            ...data.coalitionParties.map(p => ({...p, type: 'coalition'}))
+        ];
     } catch (error) {
         console.error('Error loading parties:', error);
-        // Fallback pro lokální testování - všech 26 stran
-        parties = [
-            {code: "ANO", name: "ANO", compass_position: {EKO: -0.36, SOC: 0.23, SUV: 0.41}},
-            {code: "SPOLU", name: "SPOLU", compass_position: {EKO: 0.64, SOC: -0.05, SUV: -0.64}},
-            {code: "SPD", name: "SPD", compass_position: {EKO: -0.41, SOC: 0.86, SUV: 0.82}},
-            {code: "PIRATI", name: "Piráti", compass_position: {EKO: -0.32, SOC: -0.95, SUV: -0.68}},
-            {code: "STAN", name: "STAN", compass_position: {EKO: 0.14, SOC: -0.18, SUV: -0.73}},
-            {code: "KSČM", name: "KSČM", compass_position: {EKO: -0.95, SOC: 0.23, SUV: 0.73}},
-            {code: "TRIKOLORA", name: "Trikolóra", compass_position: {EKO: 0.77, SOC: 0.82, SUV: 0.68}},
-            {code: "PRISAHA", name: "Přísaha", compass_position: {EKO: 0.23, SOC: 0.27, SUV: 0.09}},
-            {code: "SOCDEM", name: "SOCDEM", compass_position: {EKO: -0.68, SOC: -0.55, SUV: -0.36}},
-            {code: "ZELENI", name: "Zelení", compass_position: {EKO: -0.50, SOC: -1.00, SUV: -1.00}},
-            {code: "SVOBODNI", name: "Svobodní", compass_position: {EKO: 0.95, SOC: -0.45, SUV: 0.36}},
-            {code: "MOTORISTE", name: "Motoristé", compass_position: {EKO: 0.55, SOC: 0.32, SUV: 0.50}},
-            {code: "PRO", name: "PRO", compass_position: {EKO: 0.32, SOC: 0.41, SUV: 0.64}},
-            {code: "REPUBLIKA", name: "REPUBLIKA", compass_position: {EKO: 0.27, SOC: 0.82, SUV: 0.68}},
-            {code: "STACILO", name: "Stačilo!", compass_position: {EKO: -0.95, SOC: -0.45, SUV: 0.41}},
-            {code: "VYZVA2025", name: "Výzva2025", compass_position: {EKO: 0.00, SOC: 0.14, SUV: 0.14}},
-            {code: "KRUH", name: "KRUH", compass_position: {EKO: 0.00, SOC: -0.45, SUV: -0.18}},
-            {code: "VOLUNTIA", name: "VOLUNTIA", compass_position: {EKO: 1.00, SOC: -0.73, SUV: -0.09}},
-            {code: "BUDOUCNOST", name: "Budoucnost", compass_position: {EKO: -0.32, SOC: -0.50, SUV: -0.64}},
-            {code: "JASAN", name: "JASAN", compass_position: {EKO: 0.55, SOC: 0.36, SUV: 0.23}},
-            {code: "LEVY_BLOK", name: "Levý blok", compass_position: {EKO: -1.00, SOC: -0.91, SUV: 0.09}},
-            {code: "NARODNI_DEMOKRACIE", name: "Národní demokracie", compass_position: {EKO: 0.27, SOC: 0.86, SUV: 0.77}},
-            {code: "PRAVO_RESPEKT", name: "Právo Respekt", compass_position: {EKO: 0.00, SOC: 0.00, SUV: 0.00}},
-            {code: "ALIANCE_STABILITA", name: "Aliance pro stabilitu", compass_position: {EKO: -0.18, SOC: 0.23, SUV: 0.09}},
-            {code: "CESKA_SUVERENITA", name: "Česká suverenita", compass_position: {EKO: 0.27, SOC: 0.59, SUV: 0.73}},
-            {code: "VOLT", name: "Volt", compass_position: {EKO: -0.05, SOC: -0.86, SUV: -1.00}}
-        ];
-        console.log('Using fallback parties for local testing');
+        // Fallback for local testing - empty array since API should work
+        parties = [];
+        console.log('API failed, using empty fallback');
     }
 }
 
-// Go to home - show all normal sections, hide special ones
+// Go to home - show welcome section
 function goHome() {
-    // Hide special sections (compass, calculator if it's in separate mode)
-    const compassSection = document.getElementById('compass');
-    if (compassSection) {
-        compassSection.style.display = 'none';
-    }
-    
-    // Show all normal sections
-    document.querySelectorAll('section:not(#compass)').forEach(section => {
-        section.style.display = '';
-    });
-    
-    // Clear any active navigation
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.classList.remove('active');
-    });
-    
-    // Scroll to top
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    
-    // Clear hash
-    history.pushState('', document.title, window.location.pathname + window.location.search);
+    showSection('welcome');
 }
 
 // Navigation with smooth transitions
 function showSection(sectionId) {
+    console.log('showSection called with:', sectionId);
+    
     // Update navigation active state
     document.querySelectorAll('.nav-link').forEach(link => {
         link.classList.remove('active');
@@ -120,32 +135,104 @@ function showSection(sectionId) {
         activeLink.classList.add('active');
     }
     
-    // Fade out current section
-    const currentSection = document.querySelector('.section.active');
-    if (currentSection) {
-        currentSection.style.animation = 'fadeOut 0.3s ease';
-        setTimeout(() => {
-            currentSection.classList.remove('active');
-            currentSection.style.animation = '';
-            
-            // Fade in new section
-            const newSection = document.getElementById(sectionId);
-            if (newSection) {
-                newSection.classList.add('active');
-                newSection.style.animation = 'fadeIn 0.5s ease';
-            }
-        }, 300);
+    if (sectionId === 'compass') {
+        // Hide main content and show compass
+        document.querySelectorAll('section:not(#compass)').forEach(section => {
+            section.style.display = 'none';
+        });
+        
+        const compassSection = document.getElementById('compass');
+        if (compassSection) {
+            compassSection.style.display = 'block';
+            compassSection.classList.add('active');
+            setTimeout(() => {
+                initializeCompass();
+            }, 100);
+        }
     } else {
+        // Show main content and hide compass
+        document.querySelectorAll('section:not(#compass)').forEach(section => {
+            section.style.display = '';
+            section.classList.remove('active');
+        });
+        
+        const compassSection = document.getElementById('compass');
+        if (compassSection) {
+            compassSection.style.display = 'none';
+            compassSection.classList.remove('active');
+            console.log('Compass hidden, display:', compassSection.style.display);
+        }
+        
+        // Activate the target section
         const newSection = document.getElementById(sectionId);
-        if (newSection) {
+        if (newSection && newSection.id !== 'compass') {
             newSection.classList.add('active');
+            
+            // If switching to calculator, ensure it's properly initialized
+            if (sectionId === 'calculator' || sectionId === 'kalkulacka') {
+                console.log('DEBUG: Switching to calculator section');
+                const questionContainer = document.getElementById('questionContainer');
+                const resultsContainer = document.getElementById('resultsContainer');
+                const welcomeSection = document.getElementById('welcome');
+                
+                // Check if we have saved results (more reliable than checking answer count)
+                const savedResults = localStorage.getItem('testResults');
+                const hasResults = savedResults !== null;
+                
+                console.log('DEBUG: Has saved results?', hasResults);
+                console.log('DEBUG: Current answers count:', Object.keys(answers).length);
+                console.log('DEBUG: Questions loaded:', questions.length);
+                
+                if (hasResults) {
+                    console.log('DEBUG: Restoring test results view');
+                    // Show results if test is completed
+                    if (questionContainer && resultsContainer) {
+                        questionContainer.style.display = 'none';
+                        resultsContainer.style.display = 'block';
+                    }
+                    // Keep welcome section hidden when showing results
+                    if (welcomeSection) {
+                        welcomeSection.style.display = 'none';
+                    }
+                    
+                    // Restore results from localStorage
+                    try {
+                        const resultsData = JSON.parse(savedResults);
+                        console.log('Restoring results from localStorage:', resultsData);
+                        // Only call displayResults if results container is empty
+                        if (resultsContainer && !resultsContainer.querySelector('.results-list')) {
+                            displayResults(resultsData.results, resultsData.userCompass, resultsData.dimensions, resultsData.svobodometr);
+                        }
+                    } catch (e) {
+                        console.error('Error parsing saved results:', e);
+                    }
+                } else {
+                    // Show calculator interface for incomplete test
+                    if (questionContainer && resultsContainer) {
+                        questionContainer.style.display = 'block';
+                        resultsContainer.style.display = 'none';
+                    }
+                    
+                    // Restore welcome section if test not started
+                    if (welcomeSection && (currentQuestion === 0 && Object.keys(answers).length === 0)) {
+                        welcomeSection.style.display = 'block';
+                    }
+                    
+                    // If no question is displayed and questions are loaded, start from beginning
+                    if (currentQuestion === 0 && Object.keys(answers).length === 0 && questions.length > 0) {
+                        displayQuestion();
+                    } else if (questions.length === 0) {
+                        console.log('DEBUG: Questions not loaded yet, cannot display question');
+                    }
+                }
+            }
         }
     }
     
     // Close mobile menu if open
     closeMobileMenu();
     
-    // Update URL hash
+    // Always update URL hash
     window.location.hash = sectionId;
 }
 
@@ -153,12 +240,24 @@ function showSection(sectionId) {
 function startCalculator() {
     currentQuestion = 0;
     answers = {};
+    
+    // Clear previous test data from localStorage
+    localStorage.removeItem('userAnswers');
+    localStorage.removeItem('currentQuestion');
+    localStorage.removeItem('testResults');
+    
     showSection('calculator');
     displayQuestion();
 }
 
 // Display current question with smooth transition
 function displayQuestion() {
+    // Check if questions are loaded
+    if (!questions || questions.length === 0) {
+        console.error('Questions not loaded yet!');
+        return;
+    }
+    
     if (currentQuestion >= questions.length) {
         calculateResults();
         return;
@@ -187,24 +286,57 @@ function displayQuestion() {
     const questionCard = document.querySelector('.question-card');
     questionCard.style.animation = 'slideInUp 0.4s ease';
     
-    // Update question content
-    document.getElementById('questionCategory').textContent = question.category;
+    // Update question content for v2 format
+    const categoryMap = {
+        'economy': 'Ekonomika',
+        'state': 'Role státu',
+        'society': 'Společnost',
+        'sovereignty': 'Suverenita'
+    };
+    document.getElementById('questionCategory').textContent = categoryMap[question.dimension] || question.dimension || question.category;
     document.getElementById('questionText').textContent = question.text;
     
-    // Clear previous selection
-    document.querySelectorAll('.answer-btn').forEach(btn => {
-        btn.classList.remove('selected');
-        btn.setAttribute('aria-pressed', 'false');
-    });
+    // Update answer buttons with v2 format
+    const answerButtons = document.querySelectorAll('.answer-btn');
+    if (question.answers && typeof question.answers === 'object') {
+        // New format with answer texts as object {"1": "text", "2": "text", ...}
+        answerButtons.forEach((btn, index) => {
+            const answerSpan = btn.querySelector('.answer-label');
+            const answerKey = String(index + 1);
+            answerSpan.textContent = question.answers[answerKey] || `Odpověď ${index + 1}`;
+            btn.onclick = () => selectAnswer(index + 1);
+            btn.classList.remove('selected');
+            btn.setAttribute('aria-pressed', 'false');
+        });
+    } else {
+        // Fallback to old format
+        const defaultAnswers = [
+            'Rozhodně souhlasím',
+            'Spíše souhlasím',
+            'Neutrální',
+            'Spíše nesouhlasím',
+            'Rozhodně nesouhlasím'
+        ];
+        answerButtons.forEach((btn, index) => {
+            const answerSpan = btn.querySelector('.answer-label');
+            answerSpan.textContent = defaultAnswers[index];
+            btn.onclick = () => selectAnswer(index + 1);
+            btn.classList.remove('selected');
+            btn.setAttribute('aria-pressed', 'false');
+        });
+    }
     
     // Check if question was already answered
     if (answers[question.id]) {
         const answer = answers[question.id];
-        if (answer.value !== null) {
-            const selectedBtn = document.querySelectorAll('.answer-btn')[answer.value - 1];
-            selectedBtn.classList.add('selected');
-            selectedBtn.setAttribute('aria-pressed', 'true');
-            document.getElementById('importantCheckbox').checked = answer.important;
+        if (answer.value !== null && answer.value !== undefined) {
+            // Select the button based on answer value (1-5)
+            const selectedBtn = answerButtons[answer.value - 1];
+            if (selectedBtn) {
+                selectedBtn.classList.add('selected');
+                selectedBtn.setAttribute('aria-pressed', 'true');
+            }
+            document.getElementById('importantCheckbox').checked = answer.important || false;
             document.getElementById('nextBtn').disabled = false;
         }
     } else {
@@ -216,15 +348,18 @@ function displayQuestion() {
     document.getElementById('prevBtn').disabled = currentQuestion === 0;
 }
 
-// Select answer with visual feedback
-function selectAnswer(position) {
+// Select answer with visual feedback - V2 format
+function selectAnswer(value) {
     const question = questions[currentQuestion];
+    console.log(`DEBUG selectAnswer: Q${question.id}, value=${value}`);
     
     // Update UI with smooth transition
     document.querySelectorAll('.answer-btn').forEach((btn, index) => {
         btn.classList.remove('selected');
         btn.setAttribute('aria-pressed', 'false');
-        if (index === position - 1) {
+        
+        // Match button by index (value is 1-5, index is 0-4)
+        if (index === value - 1) {
             btn.classList.add('selected');
             btn.setAttribute('aria-pressed', 'true');
         }
@@ -233,9 +368,16 @@ function selectAnswer(position) {
     // Save answer
     const isImportant = document.getElementById('importantCheckbox').checked;
     answers[question.id] = {
-        value: position,
+        value: value,
         important: isImportant
     };
+    
+    // Save to localStorage immediately
+    localStorage.setItem('userAnswers', JSON.stringify(answers));
+    localStorage.setItem('currentQuestion', currentQuestion.toString());
+    
+    console.log(`DEBUG saved answer: Q${question.id} = ${value}, important=${isImportant}`);
+    console.log('DEBUG all answers so far:', answers);
     
     // Enable next button
     const nextBtn = document.getElementById('nextBtn');
@@ -263,6 +405,8 @@ function skipQuestion() {
 function nextQuestion() {
     if (currentQuestion < questions.length - 1) {
         currentQuestion++;
+        // Save current question state to localStorage
+        localStorage.setItem('currentQuestion', currentQuestion.toString());
         displayQuestion();
     } else {
         calculateResults();
@@ -300,7 +444,8 @@ async function calculateResults() {
         
         try {
             // Debug: Log what we're sending
-            console.log('Sending answers to API:', answers);
+            console.log('DEBUG calculateResults: Total collected answers:', Object.keys(answers).length);
+            console.log('DEBUG calculateResults: Sending answers to API:', answers);
             
             // Send answers to API
             const response = await fetch('/.netlify/functions/api-calculate', {
@@ -308,7 +453,7 @@ async function calculateResults() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(answers)
+                body: JSON.stringify({ answers: answers })
             });
             
             if (!response.ok) throw new Error('API not available');
@@ -317,14 +462,31 @@ async function calculateResults() {
             // Debug: Log what we received
             console.log('Received from API:', data);
             console.log('User compass position:', data.user_compass);
+            console.log('Svobodometr:', data.svobodometr);
             
             if (data.error) {
                 throw new Error(data.error);
             }
             
+            // Store party answers globally for agreement display
+            window.partyAnswersData = {};
+            if (data.results) {
+                data.results.forEach(result => {
+                    if (result.answers) {
+                        window.partyAnswersData[result.party] = result.answers;
+                    }
+                });
+            }
+            
+            // Store full response for stats
+            window.lastCalculationResponse = data;
+            
             // Add slight delay for better UX
             setTimeout(() => {
-                displayResults(data.results, data.user_compass, data.compass_description, data.freedom_score);
+                console.log('DEBUG calculateResults: API response data:', data);
+                console.log('DEBUG calculateResults: user_compass:', data.user_compass);
+                console.log('DEBUG calculateResults: dimensions:', data.dimensions);
+                displayResults(data.results, data.user_compass, data.dimensions, data.svobodometr);
             }, 1000);
             
         } catch (error) {
@@ -332,9 +494,16 @@ async function calculateResults() {
             // Fallback pro lokální testování
             console.log('Using fallback calculation for local testing');
             
+            // Use party list if available, otherwise use hardcoded names
+            const partyList = parties.length > 0 ? parties.map(p => p.name) : [
+                'ANO 2011', 'Spolu (ODS–KDU–TOP09)', 'SPD', 'Česká pirátská strana',
+                'Starostové a nezávislí (STAN)', 'Stačilo!', 'Přísaha', 'Motoristé sobě'
+            ];
+            
             // Jednoduchý výpočet pro testování
-            const fallbackResults = parties.map(party => ({
-                party: party.name,
+            const fallbackResults = partyList.map(partyName => ({
+                party: partyName,
+                party_name: partyName,
                 match: Math.floor(Math.random() * 40) + 60, // 60-100%
                 distance: Math.random() * 0.5 + 0.1
             }));
@@ -342,8 +511,8 @@ async function calculateResults() {
             setTimeout(() => {
                 displayResults(
                     fallbackResults,
-                    { EKO: 0.2, SOC: 0.1, SUV: 0.3 },
-                    "Lokální testování",
+                    { economy: 0.2, state: 0.1, society: 0.3, sovereignty: 0.2 },
+                    { economy: 0.2, state: 0.1, society: 0.3, sovereignty: 0.2 },
                     75
                 );
             }, 1000);
@@ -351,22 +520,80 @@ async function calculateResults() {
     }, 300);
 }
 
-// Display results with animations
-function displayResults(results, userCompass, compassDescription, freedomScore) {
-    // Sort by match percentage
-    results.sort((a, b) => b.match - a.match);
+// Display results with animations - V2 4D format
+function displayResults(results, userCompass, dimensions, svobodometr) {
+    console.log('DEBUG: displayResults called with:', { results, userCompass, dimensions, svobodometr });
+    
+    // Save results to localStorage for navigation persistence
+    localStorage.setItem('testResults', JSON.stringify({
+        results: results,
+        userCompass: userCompass,
+        dimensions: dimensions,
+        svobodometr: svobodometr
+    }));
+    console.log('DEBUG: Results saved to localStorage');
+    
+    // Hide the welcome and calculator header when showing results
+    const welcomeSection = document.getElementById('welcome');
+    const calculatorHeader = document.querySelector('.calculator-header');
+    
+    if (welcomeSection) {
+        welcomeSection.style.display = 'none';
+    }
+    if (calculatorHeader) {
+        calculatorHeader.style.display = 'none';
+    }
+    
+    // Sort by match percentage if results exist
+    if (results && results.length > 0) {
+        results.sort((a, b) => b.match - a.match);
+    }
+    
+    // Store party results globally for compass visualization
+    // Map party results from API format to compass format
+    if (results && results.length > 0) {
+        window.partyResults = results.map(party => ({
+            ...party,
+            // Use type from API if available, otherwise default to 'main'
+            type: party.type || 'main',
+            compass_position: party.compass_position ? {
+                economy: party.compass_position.EKO || 0,
+                society: party.compass_position.SOC || 0, 
+                state: party.compass_position.STA || 0,
+                sovereignty: party.compass_position.SUV || 0
+            } : {economy: 0, society: 0, state: 0, sovereignty: 0}
+        }));
+    } else {
+        window.partyResults = [];
+    }
+    
+    // Use svobodometr parameter or default value
+    const freedomScore = svobodometr || 50;
     
     // Save user position to localStorage for compass visualization
     if (userCompass) {
-        localStorage.setItem('userCompassPosition', JSON.stringify(userCompass));
-        localStorage.setItem('userCompassDescription', compassDescription || '');
+        // Convert from API format (EKO, SOC, SUV) to compass format (economy, society, state, sovereignty)
+        const mappedUserCompass = {
+            economy: userCompass.EKO || 0,      // Economic dimension
+            society: userCompass.SOC || 0,      // Social dimension
+            state: userCompass.STA || 0,        // State role dimension
+            sovereignty: userCompass.SUV || 0   // Sovereignty dimension
+        };
+        localStorage.setItem('userCompassPosition', JSON.stringify(mappedUserCompass));
+        localStorage.setItem('userDimensions', JSON.stringify(dimensions || mappedUserCompass));
     }
     
-    // Detect anarchocapitalist position
-    const isAnarchoCapitalist = userCompass && 
-        userCompass.EKO > 0.8 && 
-        userCompass.SOC < -0.6 && 
-        freedomScore > 85;
+    // Save user stats if available
+    if (window.lastCalculationResponse && window.lastCalculationResponse.user_stats) {
+        localStorage.setItem('userStats', JSON.stringify(window.lastCalculationResponse.user_stats));
+    }
+    
+    // Detect anarchocapitalist position - updated for 4D
+    const isAnarchoCapitalist = dimensions && 
+        dimensions.economy > 0.8 && 
+        dimensions.state < -0.6 && 
+        dimensions.society < -0.6 &&
+        svobodometr > 85;
     
     // Create HTML for results with staggered animations
     const resultsHTML = `
@@ -393,26 +620,26 @@ function displayResults(results, userCompass, compassDescription, freedomScore) 
             ` : ''}
             ${userCompass ? `
                 <div class="compass-position-info" style="background: rgba(255,217,61,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0; text-align: center;">
-                    <h4 style="margin: 0 0 0.5rem 0; color: var(--color-primary);">Vaše politická pozice</h4>
-                    <p style="margin: 0; font-size: 0.9em;">${compassDescription || 'Pozice vypočítaná z vašich odpovědí'}</p>
-                    <p style="margin: 0.5rem 0 0 0; font-size: 0.8em; color: var(--color-text-muted);">
-                        EKO: ${userCompass.EKO?.toFixed(2) || '0.00'} | SOC: ${userCompass.SOC?.toFixed(2) || '0.00'} | SUV: ${userCompass.SUV?.toFixed(2) || '0.00'}
+                    <h4 style="margin: 0 0 0.5rem 0; color: var(--color-primary);">Vaše pozice ve 4D prostoru</h4>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.9em; color: var(--color-text-muted);">
+                        Ekonomika: ${userCompass.EKO?.toFixed(2) || '0.00'} | Stát: ${userCompass.STA?.toFixed(2) || '0.00'}<br>
+                        Společnost: ${userCompass.SOC?.toFixed(2) || '0.00'} | Suverenita: ${userCompass.SUV?.toFixed(2) || '0.00'}
                     </p>
                 </div>
             ` : ''}
             
-            ${freedomScore !== undefined ? `
+            ${svobodometr !== undefined ? `
                 <div class="freedom-meter" style="background: linear-gradient(135deg, #1a1a1a, #2a2a2a); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0; border: 2px solid var(--color-primary);">
                     <h3 style="margin: 0 0 0.5rem 0; color: var(--color-primary); text-align: center;">
-                        🔥 SVOBODOMETR: ${freedomScore}%
+                        🔥 SVOBODOMETR: ${svobodometr}%
                     </h3>
                     <p style="text-align: center; margin: 0 0 1rem 0; font-size: 0.85em; opacity: 0.9;">
-                        Měří vaši preferenci mezi osobní svobodou a státní kontrolou<br>
-                        <small style="opacity: 0.7;">Zahrnuje ekonomickou i osobní svobodu</small>
+                        Měří vaši celkovou preferenci svobody vs. státního zasahování<br>
+                        <small style="opacity: 0.7;">Vypočítáno ze všech čtyř dimenzí</small>
                     </p>
-                    <div style="width: 100%; height: 40px; background: linear-gradient(90deg, #ff0000, #ff6666, #ffff66, #66ff66, #00ff00); border-radius: 20px; position: relative; overflow: hidden;">
-                        <div style="position: absolute; top: 50%; left: ${freedomScore}%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: white; border: 3px solid #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; color: #000; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
-                            ${freedomScore}
+                    <div style="width: 100%; height: 40px; background: linear-gradient(90deg, #ff0000, #ff6666, #ffff66, #66ff66, #00ff00); border-radius: 20px; position: relative; overflow: visible; margin: 15px 0;">
+                        <div style="position: absolute; top: 50%; left: ${Math.max(5, Math.min(95, svobodometr))}%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: white; border: 3px solid #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; color: #000; box-shadow: 0 4px 8px rgba(0,0,0,0.3); z-index: 10;">
+                            ${svobodometr}
                         </div>
                     </div>
                     <div style="display: flex; justify-content: space-between; margin-top: 0.5rem; font-size: 0.85em; opacity: 0.8;">
@@ -447,7 +674,12 @@ function displayResults(results, userCompass, compassDescription, freedomScore) 
                             </div>
                             <span class="result-percentage">${result.match}%</span>
                         </div>
-                        <button class="agreement-details-btn" onclick="toggleAgreementDetails('${result.party.replace(/'/g, "\\'")}', ${index})" style="
+                        ${result.confidence && result.coverage ? `
+                        <div class="result-quality-indicators" style="display: flex; gap: 1rem; margin-top: 0.5rem; font-size: 0.8em; color: var(--color-text-muted);">
+                            <span title="Spolehlivost dat">📊 ${Math.round(result.confidence * 100)}%</span>
+                            <span title="Pokrytí otázek">📋 ${Math.round(result.coverage * 100)}%</span>
+                        </div>` : ''}
+                        <button class="agreement-details-btn" onclick="toggleAgreementDetails('${(result.party_name || result.party || '').replace(/'/g, "\\'")}', ${index})" style="
                             background: transparent;
                             border: 1px solid rgba(255,217,61,0.3);
                             color: var(--color-text);
@@ -489,7 +721,7 @@ function displayResults(results, userCompass, compassDescription, freedomScore) 
         
         <div class="results-info" style="margin-top: 2rem; text-align: center; color: var(--color-text-muted);">
             <h3>Metodologie</h3>
-            <p>3D politický kompas: Euklidovská vzdálenost v prostoru EKO × SOC × SUV</p>
+            <p>4D politický kompas: Euklidovská vzdálenost v prostoru Ekonomika × Stát × Společnost × Suverenita</p>
             <p class="disclaimer" style="font-size: 0.9em; margin-top: 1rem;">
                 Výsledky jsou orientační a vycházejí z programových priorit stran.
             </p>
@@ -525,6 +757,14 @@ function resetCalculator() {
     currentQuestion = 0;
     answers = {};
     
+    // Clear localStorage
+    localStorage.removeItem('userAnswers');
+    localStorage.removeItem('currentQuestion');
+    localStorage.removeItem('testResults');
+    
+    // Show welcome and header again
+    const welcomeSection = document.getElementById('welcome');
+    const calculatorHeader = document.querySelector('.calculator-header');
     const questionContainer = document.getElementById('questionContainer');
     const resultsContainer = document.getElementById('resultsContainer');
     
@@ -532,9 +772,24 @@ function resetCalculator() {
     
     setTimeout(() => {
         resultsContainer.style.display = 'none';
-        questionContainer.style.display = 'block';
-        questionContainer.style.animation = 'fadeIn 0.3s ease';
-        displayQuestion();
+        
+        // Show welcome and header again
+        if (welcomeSection) {
+            welcomeSection.style.display = 'block';
+        }
+        if (calculatorHeader) {
+            calculatorHeader.style.display = 'block';  
+        }
+        
+        // Hide question container initially and show welcome
+        questionContainer.style.display = 'none';
+        showSection('welcome');
+        
+        // Scroll to the calculator section
+        const calculatorSection = document.getElementById('kalkulacka');
+        if (calculatorSection) {
+            calculatorSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     }, 300);
 }
 
@@ -757,11 +1012,28 @@ function initializeActiveNavigation() {
         observer.observe(section);
     });
     
-    // Handle hash changes
+    // Handle hash changes - but only for external changes (browser back/forward)
     window.addEventListener('hashchange', () => {
         const sectionId = window.location.hash.substring(1);
-        if (sectionId) {
+        if (sectionId && ['welcome', 'calculator', 'compass'].includes(sectionId)) {
             updateActiveNavigation(sectionId);
+            // Only change sections if they're not already active (prevents loop)
+            const currentActive = document.querySelector('.section.active')?.id;
+            if (currentActive !== sectionId) {
+                // Hide current section and show new one without calling showSection
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                const newSection = document.getElementById(sectionId);
+                if (newSection) {
+                    newSection.classList.add('active');
+                    if (sectionId === 'compass') {
+                        setTimeout(() => {
+                            initializeCompass();
+                        }, 100);
+                    }
+                }
+            }
         }
     });
 }
@@ -796,6 +1068,7 @@ function initializeKeyboardNavigation() {
         
         // Number keys 1-5 for answers
         if (e.key >= '1' && e.key <= '5') {
+            console.log(`DEBUG keydown: pressed ${e.key}, calling selectAnswer(${parseInt(e.key)})`);
             selectAnswer(parseInt(e.key));
         }
         
@@ -807,10 +1080,22 @@ function initializeKeyboardNavigation() {
             nextQuestion();
         }
         
-        // Space for skip
+        // Enter to continue to next question (if answer selected)
+        if (e.key === 'Enter' && !document.getElementById('nextBtn').disabled) {
+            console.log('DEBUG keydown: Enter pressed, calling nextQuestion()');
+            nextQuestion();
+        }
+        
+        // Space for skip or continue
         if (e.key === ' ' && e.target.tagName !== 'BUTTON') {
             e.preventDefault();
-            skipQuestion();
+            if (!document.getElementById('nextBtn').disabled) {
+                console.log('DEBUG keydown: Space pressed, calling nextQuestion()');
+                nextQuestion();
+            } else {
+                console.log('DEBUG keydown: Space pressed, calling skipQuestion()');
+                skipQuestion();
+            }
         }
     });
 }
@@ -818,7 +1103,7 @@ function initializeKeyboardNavigation() {
 // Handle hash changes
 window.addEventListener('hashchange', () => {
     const hash = window.location.hash.slice(1);
-    if (hash && ['welcome', 'calculator', 'jak-to-funguje', 'metodologie', 'faq'].includes(hash)) {
+    if (hash && ['welcome', 'calculator', 'compass', 'jak-to-funguje', 'kalkulacka', 'metodologie', 'faq'].includes(hash)) {
         if (hash === 'jak-to-funguje') {
             // Scroll to section instead of showing it as calculator section
             const target = document.getElementById(hash);
@@ -827,6 +1112,8 @@ window.addEventListener('hashchange', () => {
             }
         } else if (hash === 'calculator') {
             showSection('calculator');
+        } else if (hash === 'compass') {
+            showSection('compass');
         }
     }
 });
@@ -866,62 +1153,149 @@ document.addEventListener('DOMContentLoaded', initializeAnimations);
 
 // Compass functionality
 function showCompass() {
-    // Hide all sections
-    document.querySelectorAll('section').forEach(section => {
-        if (section.id !== 'compass') {
-            section.style.display = 'none';
-        }
-    });
+    // Use the standard showSection method to properly handle navigation
+    showSection('compass');
     
-    // Show compass section
-    const compassSection = document.getElementById('compass');
-    if (compassSection) {
-        compassSection.style.display = 'block';
-        window.scrollTo(0, 0);
-        
-        // Initialize compass if not already done
-        if (!compassSection.hasAttribute('data-initialized')) {
-            initializeCompass();
-            compassSection.setAttribute('data-initialized', 'true');
-        }
-        
-        // Add user position if available
-        const userPosition = localStorage.getItem('userCompassPosition');
-        if (userPosition) {
-            const position = JSON.parse(userPosition);
-            addUserPositionToCompass(position);
-        }
-        
-        // Update active navigation
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.classList.remove('active');
-        });
-        document.querySelector('.nav-link[href="#compass"]')?.classList.add('active');
-    }
+    // Initialize compass properly with all components
+    setTimeout(() => {
+        initializeCompass();
+    }, 100);
 }
+        
+// Removed - both compasses are displayed side by side now
 
-// Initialize compass visualization
 async function initializeCompass() {
-    // Load parties if not already loaded
-    if (parties.length === 0) {
-        await loadParties();
+    console.log('DEBUG initializeCompass: Starting compass initialization');
+    console.log('DEBUG initializeCompass: Current partyResults:', window.partyResults?.length || 0, 'parties');
+    
+    // Load user position from localStorage if available
+    const userPositionData = localStorage.getItem('userCompassPosition');
+    if (userPositionData) {
+        window.userCompassPosition = JSON.parse(userPositionData);
+        console.log('DEBUG initializeCompass: Loaded userCompassPosition from localStorage:', window.userCompassPosition);
+    } else {
+        console.log('DEBUG initializeCompass: No userCompassPosition in localStorage');
     }
     
-    // Render compasses
-    renderCompass('compass-eco-soc', 'EKO', 'SOC');
-    renderCompass('compass-eco-suv', 'EKO', 'SUV');
+    console.log('DEBUG initializeCompass: Current userCompassPosition:', window.userCompassPosition);
+    
+    // If we don't have party results, get default positions
+    if (!window.partyResults || window.partyResults.length === 0) {
+        console.log('DEBUG initializeCompass: Loading default party positions');
+        await loadDefaultPartyPositions();
+    }
+    
+    console.log('DEBUG initializeCompass: Final partyResults:', window.partyResults?.length || 0, 'parties');
+    
+    // Render both compasses with new axis combinations
+    // Compass 1: Personal Freedom (Social) × Economic Freedom
+    renderCompass('compass-eco-state', 'society', 'economy');
+    // Compass 2: Power Distribution (State) × Power Scope (Sovereignty)
+    renderCompass('compass-soc-suv', 'state', 'sovereignty');
     
     // Render legend
     renderLegend();
+    
+    // Add user position if available
+    if (window.userCompassPosition) {
+        console.log('DEBUG initializeCompass: Adding user position to compass');
+        setTimeout(() => {
+            addUserPositionToCompass(window.userCompassPosition, null);
+        }, 200);
+    }
+}
+
+// Load default party positions from API
+async function loadDefaultPartyPositions() {
+    try {
+        const response = await fetch('/.netlify/functions/api-parties');
+        
+        if (response.ok) {
+            const data = await response.json();
+            // Combine main and coalition parties with type flag
+            const allParties = [
+                ...data.mainParties.map(p => ({...p, type: 'main'})),
+                ...data.coalitionParties.map(p => ({...p, type: 'coalition'}))
+            ];
+            
+            // Convert to party results format with correct dimension mapping
+            // API uses EKO, SOC, SUV but compass expects economy, society, state, sovereignty
+            window.partyResults = allParties.map(party => ({
+                party: party.code,
+                name: party.name,
+                type: party.type,  // Important: preserve the type (main/coalition)
+                compass_position: {
+                    economy: party.compass_position.EKO,      // Economic dimension (left-right)
+                    society: party.compass_position.SOC,      // Social dimension (liberal-conservative) 
+                    state: party.compass_position.STA !== undefined ? party.compass_position.STA : 
+                           (party.compass_position.EKO + party.compass_position.SOC) / 2,  // State role - use STA if available, else average of EKO and SOC
+                    sovereignty: party.compass_position.SUV   // Sovereignty dimension (national-global)
+                }
+            }));
+            console.log('Loaded', window.partyResults.length, 'party positions from API');
+        }
+    } catch (error) {
+        console.error('Error loading default party positions:', error);
+    }
+}
+
+// Add axis labels dynamically to ensure they're on top
+function addAxisLabels(compassId, dimX, dimY) {
+    const compass = document.getElementById(compassId);
+    if (!compass) return;
+    
+    // Remove existing axis labels
+    compass.querySelectorAll('.axis-label').forEach(label => label.remove());
+    
+    // Define labels based on dimensions
+    const labels = getAxisLabels(dimX, dimY);
+    
+    // Create and add labels
+    Object.entries(labels).forEach(([position, {icon, text}]) => {
+        const label = document.createElement('div');
+        label.className = `axis-label axis-label-${position}`;
+        label.innerHTML = `<span class="axis-icon">${icon}</span><span>${text}</span>`;
+        label.style.cssText = 'z-index: 99999 !important; position: absolute !important;';
+        compass.appendChild(label);
+    });
+}
+
+// Get axis labels for dimensions
+function getAxisLabels(dimX, dimY) {
+    const labels = {};
+    
+    // Set labels based on dimensions
+    if (dimX === 'society' && dimY === 'economy') {
+        labels.top = {icon: '⚙️', text: 'Plánovaná ekonomika'};
+        labels.bottom = {icon: '💰', text: 'Volný trh'};
+        labels.left = {icon: '🌈', text: 'Liberální'};
+        labels.right = {icon: '⛪', text: 'Konzervativní'};
+    } else if (dimX === 'state' && dimY === 'sovereignty') {
+        labels.top = {icon: '👤', text: 'Individuální/Národní'};
+        labels.bottom = {icon: '🌍', text: 'Kolektivní/EU'};
+        labels.left = {icon: '🏛️', text: 'Decentralizace'};
+        labels.right = {icon: '👑', text: 'Centralizace'};
+    }
+    
+    return labels;
 }
 
 // Render a single compass
 function renderCompass(compassId, dimX, dimY) {
+    console.log(`DEBUG renderCompass: Rendering ${compassId} (${dimX} x ${dimY})`);
     const compass = document.getElementById(compassId);
-    if (!compass) return;
+    if (!compass) {
+        console.log(`DEBUG renderCompass: Element ${compassId} not found!`);
+        return;
+    }
     
     // Clear existing content (except axes)
     compass.querySelectorAll('.party').forEach(p => p.remove());
+    compass.querySelectorAll('.quadrant-match').forEach(q => q.remove());
+    
+    // Use party results from calculation or fallback to loaded parties
+    const partiesToRender = window.partyResults || parties;
+    console.log(`DEBUG renderCompass: Rendering ${partiesToRender?.length || 0} parties`);
     
     // Wait for layout to be ready
     setTimeout(() => {
@@ -929,81 +1303,304 @@ function renderCompass(compassId, dimX, dimY) {
         const compassHeight = compass.offsetHeight || 420;
         const centerX = compassWidth / 2;
         const centerY = compassHeight / 2;
+        // Reduced scale for parties to fit within bounds
         const scale = Math.min(centerX, centerY) * 0.85;
         
-        parties.forEach(party => {
-            const x = party.compass_position[dimX] * scale + centerX;
-            const y = party.compass_position[dimY] * scale + centerY;
+        // Quadrant percentages removed - were confusing
+        
+        partiesToRender.forEach((party, index) => {
+            // Handle both old and new data formats
+            const position = party.compass_position || {};
+            let xValue = position[dimX] || 0;
+            let yValue = position[dimY] || 0;
+            
+            // Map values correctly based on dimension
+            // When used as X-axis:
+            // - Society: negative = liberal (LEFT), positive = conservative (RIGHT)
+            // - State: negative = decentralized (LEFT), positive = centralized (RIGHT)
+            // When used as Y-axis:
+            // - Economy: negative = free market (BOTTOM), positive = planned economy (TOP)
+            // - Sovereignty: negative = national (TOP), positive = global (BOTTOM)
+            
+            const x = xValue * scale + centerX;
+            // Invert Y for different dimensions:
+            // - Economy (EKO): needs inversion - positive (planned) should be UP
+            // - Sovereignty (SUV): needs inversion - positive (global) should be DOWN
+            let y;
+            if (dimY === 'economy') {
+                y = -yValue * scale + centerY;  // Invert: planned economy UP, free market DOWN
+            } else if (dimY === 'sovereignty') {
+                y = yValue * scale + centerY;   // Normal: national UP, global DOWN
+            } else {
+                y = yValue * scale + centerY;   // Default
+            }
             
             const dot = document.createElement('div');
-            dot.className = `party party-${party.code.toLowerCase()}`;
-            dot.style.left = `${x - 8}px`;
-            dot.style.top = `${y - 8}px`;
-            dot.style.background = getPartyColor(party.code);
-            dot.setAttribute('data-party', party.code);
+            const partyCode = party.code || party.party || `party-${index}`;
+            const partyName = party.name || party.party || `Party ${index + 1}`;
+            const isCoalition = party.type === 'coalition';
             
-            // Add tooltip
+            // Add coalition-party class for coalition parties
+            const classes = ['party', `party-${partyCode.toLowerCase().replace(/\s+/g, '-')}`];
+            if (isCoalition) {
+                classes.push('coalition-party');
+            }
+            dot.className = classes.join(' ');
+            
+            // CSS handles the actual size - we just need to center the dots
+            // Coalition dots: 10px, Main dots: 16px (from CSS)
+            const dotRadius = isCoalition ? 5 : 8;
+            dot.style.left = `${x - dotRadius}px`;
+            dot.style.top = `${y - dotRadius}px`;
+            dot.style.background = getPartyColor(partyCode);
+            dot.style.zIndex = '10';
+            
+            // Coalition parties should be hidden by default
+            if (isCoalition) {
+                dot.style.display = 'none';
+            }
+            
+            // Coalition styling is handled by CSS class .coalition-party
+            dot.setAttribute('data-party', partyCode);
+            
+            // Remove the static label - will only show tooltip on hover
+            
+            // Add tooltip outside of dot element
             const tooltip = document.createElement('div');
             tooltip.className = 'party-tooltip';
-            tooltip.textContent = party.name;
-            dot.appendChild(tooltip);
+            tooltip.id = `tooltip-${compassId}-${partyCode}`;
+            const tooltipText = `${partyName}${party.match ? ` (${party.match}%)` : ''}`;
+            tooltip.textContent = tooltipText;
+            tooltip.style.cssText = `
+                position: absolute;
+                bottom: ${compass.offsetHeight - y + 25}px;
+                left: ${x}px;
+                transform: translateX(-50%);
+                background: rgba(0, 0, 0, 0.9);
+                color: white;
+                padding: 0.25rem 0.5rem;
+                border-radius: 4px;
+                font-size: 0.65rem;
+                white-space: nowrap;
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity 0.2s ease;
+                z-index: 99999 !important;
+                font-weight: 400;
+                text-align: center;
+            `;
+            
+            compass.appendChild(tooltip);
             
             // Add hover interaction with legend
-            dot.addEventListener('mouseenter', () => highlightParty(party.code));
-            dot.addEventListener('mouseleave', () => unhighlightParty(party.code));
+            dot.addEventListener('mouseenter', () => {
+                dot.style.zIndex = '99998';
+                const tooltip = document.getElementById(`tooltip-${compassId}-${partyCode}`);
+                if (tooltip) tooltip.style.opacity = '1';
+                highlightParty(partyCode);
+            });
+            dot.addEventListener('mouseleave', () => {
+                dot.style.zIndex = '10';
+                const tooltip = document.getElementById(`tooltip-${compassId}-${partyCode}`);
+                if (tooltip) tooltip.style.opacity = '0';
+                unhighlightParty(partyCode);
+            });
+            // Add click for persistent highlighting
+            dot.addEventListener('click', () => togglePersistentHighlight(partyCode));
             
             compass.appendChild(dot);
         });
+        
+        // Re-add axis labels to ensure they're on top
+        addAxisLabels(compassId, dimX, dimY);
     }, 100);
 }
 
 // Render legend
 function renderLegend() {
     const legend = document.getElementById('legend');
-    if (!legend) return;
+    if (!legend) {
+        console.error('Legend element not found');
+        return;
+    }
     
     legend.innerHTML = '';
     
-    parties.forEach(party => {
-        const item = document.createElement('div');
-        item.className = 'legend-item';
-        item.setAttribute('data-party', party.code);
-        
-        const color = document.createElement('div');
-        color.className = 'legend-color';
-        color.style.background = getPartyColor(party.code);
-        
-        const name = document.createElement('div');
-        name.className = 'legend-name';
-        name.textContent = party.name;
-        
-        item.appendChild(color);
-        item.appendChild(name);
-        
-        // Add hover interaction
-        item.addEventListener('mouseenter', () => highlightParty(party.code));
-        item.addEventListener('mouseleave', () => unhighlightParty(party.code));
-        
+    // Use party results or fallback
+    const partiesToRender = window.partyResults || parties;
+    console.log('Rendering legend with parties:', partiesToRender);
+    
+    // Separate coalition and main parties based on type from API
+    const mainParties = [];
+    const coalitionPartiesList = [];
+    
+    partiesToRender.forEach((party, index) => {
+        // Check party type from API data
+        if (party.type === 'coalition') {
+            coalitionPartiesList.push({...party, index});
+        } else {
+            mainParties.push({...party, index});
+        }
+    });
+    
+    // Render main parties first
+    mainParties.forEach((party) => {
+        const item = createLegendItem(party, false);
         legend.appendChild(item);
     });
+    
+    // Create coalition section if there are coalition parties
+    console.log('Coalition parties found:', coalitionPartiesList.length, coalitionPartiesList);
+    if (coalitionPartiesList.length > 0) {
+        // Create coalition section container
+        const coalitionSection = document.createElement('div');
+        coalitionSection.className = 'coalition-section';
+        
+        // Create toggle button
+        const toggleDiv = document.createElement('div');
+        toggleDiv.className = 'coalition-toggle';
+        toggleDiv.innerHTML = `
+            <span>Zobrazit jednotlivé strany z koalic</span>
+            <span class="arrow">▼</span>
+        `;
+        console.log('Created coalition toggle element');
+        
+        // Create coalition parties container
+        const coalitionContainer = document.createElement('div');
+        coalitionContainer.className = 'coalition-parties';
+        
+        // Render coalition parties
+        coalitionPartiesList.forEach((party) => {
+            const item = createLegendItem(party, true);
+            coalitionContainer.appendChild(item);
+        });
+        
+        coalitionSection.appendChild(toggleDiv);
+        coalitionSection.appendChild(coalitionContainer);
+        legend.appendChild(coalitionSection);
+        
+        // Add toggle functionality
+        toggleDiv.addEventListener('click', () => {
+            toggleDiv.classList.toggle('expanded');
+            coalitionContainer.classList.toggle('expanded');
+            
+            // Toggle visibility on compass - much simpler: just check for coalition-party class
+            const isExpanded = coalitionContainer.classList.contains('expanded');
+            const coalitionDots = document.querySelectorAll('.party.coalition-party');
+            coalitionDots.forEach(dot => {
+                dot.style.display = isExpanded ? '' : 'none';
+            });
+        });
+    }
+}
+
+// Helper function to create legend item
+function createLegendItem(party, isCoalition) {
+    const item = document.createElement('div');
+    const partyCode = party.code || party.party || `party-${party.index}`;
+    const partyName = party.name || party.party || `Party ${party.index + 1}`;
+    
+    item.className = isCoalition ? 'legend-item coalition-party' : 'legend-item';
+    item.setAttribute('data-party', partyCode);
+    
+    const color = document.createElement('div');
+    color.className = 'legend-color';
+    color.style.background = getPartyColor(partyCode);
+    
+    const name = document.createElement('div');
+    name.className = 'legend-name';
+    name.textContent = partyName;
+    
+    item.appendChild(color);
+    item.appendChild(name);
+    
+    // Add hover interaction
+    item.addEventListener('mouseenter', () => highlightParty(partyCode));
+    item.addEventListener('mouseleave', () => unhighlightParty(partyCode));
+    // Add click for persistent highlighting
+    item.addEventListener('click', () => togglePersistentHighlight(partyCode));
+    
+    return item;
 }
 
 // Get party color
 function getPartyColor(code) {
-    const colors = {
+    // Specific party colors based on their branding and political position
+    const partyColors = {
+        // Libertarian parties - yellow shades
+        'Voluntia': '#FFD700',           // Gold
+        'Nevolte Urza.cz': '#FFC107',    // Amber
+        
+        // Progressive/liberal parties
+        'Česká pirátská strana': '#000000',  // Black (Pirate party)
+        'Volt Česko': '#502379',             // Purple (Volt brand)
+        
+        // Social democratic / left
+        'ČSSD – Česká suverenita': '#FF6B35',  // Orange (SOCDEM)
+        'Stačilo!': '#CC0000',                 // Red (Communist)
+        'Levice': '#E53935',                   // Red
+        
+        // Conservative / nationalist
+        'SPD': '#005CAA',                      // Blue (SPD brand)
+        'ANO 2011': '#261E6A',                 // Dark blue (ANO brand)
+        
+        // Center-right coalition
+        'Spolu (ODS–KDU–TOP09)': '#004B87',    // Blue
+        'SPOLU': '#004B87',                    // Same as above
+        
+        // Liberal center
+        'Starostové a nezávislí (STAN)': '#5D9C3B',  // Green
+        
+        // Regionalist
+        'Moravské zemské hnutí': '#FFB400',    // Gold-yellow
+        
+        // Other national conservative
+        'Přísaha': '#1C4E8B',                  // Dark blue
+        'Česká republika na 1. místě': '#8B0000',  // Dark red
+        'Švýcarská demokracie': '#FF0000',     // Red (Swiss flag)
+        
+        // Monarchist
+        'Koruna česká (monarchisté)': '#6B3AA6',  // Royal purple
+        
+        // New/other parties
+        'Motoristé sobě': '#4CAF50',          // Green (motorists)
+        'Výzva 2025': '#2196F3',              // Blue
+        'SMS – Stát má sloužit': '#607D8B',   // Blue-grey
+        'Rebelové': '#FF5722',                // Deep orange
+        'Hnutí Generace': '#9C27B0',          // Purple
+        'Hnutí Kruh': '#00BCD4',              // Cyan
+        'Hnutí občanů a podnikatelů': '#8BC34A',  // Light green
+        'Volte Pravý Blok (Cibulka)': '#795548',  // Brown
+        'Jasný signál nezávislých (JaSaN)': '#FF9800',  // Orange
+        'Balbínova poetická strana': '#E91E63'   // Pink (artistic)
+    };
+    
+    // Return specific color if defined, otherwise generate based on position
+    if (partyColors[code]) {
+        return partyColors[code];
+    }
+    
+    // Debug: log what codes are being requested
+    console.log('Color requested for code:', code, 'Not found in partyColors');
+    
+    // Fallback: generate color based on hash
+    const hashCode = (str) => {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            const char = str.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash;
+        }
+        return hash;
+    };
+    
+    // Fallback to old colors system if still not found
+    const oldColors = {
         'ANO': '#261060',
         'SPOLU': '#0056A7',
         'SPD': '#E31E24',
         'PIRATI': '#000000',
         'STAN': '#5D9C59',
-        'KSČM': '#8B0000',
-        'TRIKOLORA': '#0D47A1',
-        'PRISAHA': '#87CEEB',
-        'SOCDEM': '#FF4500',
-        'ZELENI': '#00C853',
-        'SVOBODNI': '#009C58',
-        'MOTORISTE': '#FF9800',
-        'PRO': '#1E88E5',
         'REPUBLIKA': '#B22222',
         'STACILO': '#DC143C',
         'VYZVA2025': '#20B2AA',
@@ -1016,48 +1613,161 @@ function getPartyColor(code) {
         'PRAVO_RESPEKT': '#696969',
         'ALIANCE_STABILITA': '#483D8B',
         'CESKA_SUVERENITA': '#8B4513',
-        'VOLT': '#502379'
+        'VOLT': '#502379',
+        'URZA': '#FFD700',                    // Yellow
+        
+        // Coalition parties - different shades of parent coalition colors
+        // SPOLU coalition (blue shades)
+        'ODS': '#87CEEB',                     // Light blue (světle modrá)
+        'ODS_(OBČANSKÁ_DEMOKR': '#87CEEB',    // ODS with data code
+        'ODS (Občanská demokratická strana)': '#87CEEB',  // ODS with parentheses
+        'Občanská demokratická strana': '#87CEEB',  // ODS full name
+        'TOP09': '#3366CC',                   // Medium blue
+        'TOP 09': '#3366CC',                  // Medium blue
+        'KDU-ČSL': '#6699FF',                 // Lighter blue
+        'KDU': '#6699FF',                     // Lighter blue
+        
+        // REPUBLIKA coalition (similar to SPD - dark blue)
+        'TRIKOLORA': '#003366',               // Very dark blue
+        'PRO': '#004080',                     // Different dark blue shade
+        'PRO Jindřicha Rajchla': '#004080',   // Different dark blue shade
+        'SVOBODNI': '#2F4F2F',                // Dark green (tmavší zelená)
+        'Svobodní': '#2F4F2F',                // Dark green (tmavší zelená)
+        
+        // STAČILO! coalition (red/leftist colors)
+        'KSČM': '#CC0000',                    // Red (communist)
+        'KSCM': '#CC0000',                    // Red (communist)
+        'KSČM_(KOMUNISTICKÁ_S': '#CC0000',    // KSČM with data code
+        'KSČM (Komunistická strana Čech a Moravy)': '#CC0000', // KSČM with parentheses
+        'SOCDEM': '#FF8C00',                  // Orange (SOCDEM oranžová)
+        'SOCDEM_(SOCIÁLNÍ_DEM': '#FF8C00',    // SOCDEM with data code
+        'SOCDEM (Sociální demokracie)': '#FF8C00', // SOCDEM with parentheses
+        'Sociální demokracie': '#FF8C00',     // SOCDEM full name
+        'Strana zelených': '#228B22',         // Green (zelená)
+        'ZELENI': '#228B22',                  // Green (zelená)
+        'Zelení': '#228B22',                  // Green alternative name
+        
+        // ČESKÁ SUVERENITA coalition (brown shades)
+        'ČSNS': '#8B4513',                    // Brown
+        'CSNS': '#8B4513',                    // Brown
+        'SD-SN': '#704214',                   // Darker brown
+        'SDSN': '#704214'                     // Darker brown
     };
-    return colors[code] || '#666666';
+    
+    // Return the color or a default color
+    const normalizedCode = code.replace(/\s+/g, '-').toUpperCase();
+    return partyColors[code] || partyColors[normalizedCode] || partyColors[code.toUpperCase()] ||
+           oldColors[code] || oldColors[normalizedCode] || oldColors[code.toUpperCase()] ||
+           `hsl(${Math.abs(code.charCodeAt(0) * 137) % 360}, 70%, 50%)`;
 }
 
 // Highlight party in both compass and legend
+// Track single persistently highlighted party
+let currentPersistentHighlight = null;
+
 function highlightParty(code) {
     document.querySelectorAll(`[data-party="${code}"]`).forEach(el => {
         el.classList.add('highlight');
+        el.style.zIndex = '99998';
+    });
+    // Show tooltips in both compasses
+    document.querySelectorAll(`[id^="tooltip-"][id$="-${code}"]`).forEach(tooltip => {
+        tooltip.style.opacity = '1';
     });
 }
 
-// Remove highlight from party
+// Remove highlight from party (only if not persistent)
 function unhighlightParty(code) {
-    document.querySelectorAll(`[data-party="${code}"]`).forEach(el => {
-        el.classList.remove('highlight');
-    });
+    if (currentPersistentHighlight !== code) {
+        document.querySelectorAll(`[data-party="${code}"]`).forEach(el => {
+            el.classList.remove('highlight');
+            el.style.zIndex = '10';
+        });
+        // Hide tooltips in both compasses
+        document.querySelectorAll(`[id^="tooltip-"][id$="-${code}"]`).forEach(tooltip => {
+            tooltip.style.opacity = '0';
+        });
+    }
+}
+
+// Toggle persistent highlight (only one at a time)
+function togglePersistentHighlight(code) {
+    // If clicking on currently highlighted party, remove highlight
+    if (currentPersistentHighlight === code) {
+        document.querySelectorAll(`[data-party="${currentPersistentHighlight}"]`).forEach(el => {
+            el.classList.remove('highlight', 'persistent-highlight');
+        });
+        currentPersistentHighlight = null;
+    } else {
+        // Remove previous highlight if any
+        if (currentPersistentHighlight) {
+            document.querySelectorAll(`[data-party="${currentPersistentHighlight}"]`).forEach(el => {
+                el.classList.remove('highlight', 'persistent-highlight');
+            });
+        }
+        
+        // Add new highlight
+        currentPersistentHighlight = code;
+        document.querySelectorAll(`[data-party="${code}"]`).forEach(el => {
+            el.classList.add('highlight', 'persistent-highlight');
+        });
+    }
 }
 
 // Add user position to compass
-function addUserPositionToCompass(userPosition) {
+function addUserPositionToCompass(userPosition, userStats) {
     // Remove any existing user position markers
     document.querySelectorAll('.user-position').forEach(el => el.remove());
+    document.querySelectorAll('.user-uncertainty').forEach(el => el.remove());
     
-    // Add user position to both compasses
-    addUserDotToCompass('compass-eco-soc', userPosition, 'EKO', 'SOC');
-    addUserDotToCompass('compass-eco-suv', userPosition, 'EKO', 'SUV');
+    // Only add user position if we have actual position data
+    if (!userPosition || Object.keys(userPosition).length === 0) {
+        return;
+    }
+    
+    // Add user position to both compasses with new axis combinations
+    // Compass 1: Personal Freedom (Social) × Economic Freedom
+    addUserDotToCompass('compass-eco-state', userPosition, 'society', 'economy', userStats);
+    // Compass 2: Power Distribution (State) × Power Scope (Sovereignty)
+    addUserDotToCompass('compass-soc-suv', userPosition, 'state', 'sovereignty', userStats);
 }
 
 // Add user dot to a specific compass
-function addUserDotToCompass(compassId, position, dimX, dimY) {
+function addUserDotToCompass(compassId, position, dimX, dimY, stats) {
     const compass = document.getElementById(compassId);
     if (!compass) return;
+    
+    // Don't add anything if we don't have valid position data
+    if (!position || position[dimX] === undefined || position[dimY] === undefined) return;
     
     const compassWidth = compass.offsetWidth || 420;
     const compassHeight = compass.offsetHeight || 420;
     const centerX = compassWidth / 2;
     const centerY = compassHeight / 2;
+    // Scale adjusted to fit within compass bounds
+    // Maximum party values seem to be around 1.5-2.0
+    // We'll use a scale that ensures -2 to 2 fits within 90% of radius
     const scale = Math.min(centerX, centerY) * 0.85;
     
-    const x = (position[dimX] || 0) * scale + centerX;
-    const y = (position[dimY] || 0) * scale + centerY;
+    let xValue = position[dimX];
+    let yValue = position[dimY];
+    
+    // Clamp values to reasonable range
+    xValue = Math.max(-2, Math.min(2, xValue));
+    yValue = Math.max(-2, Math.min(2, yValue));
+    
+    // Same mapping as for parties
+    const x = xValue * scale + centerX;
+    let y;
+    if (dimY === 'economy') {
+        y = -yValue * scale + centerY;  // Invert: planned economy UP, free market DOWN
+    } else if (dimY === 'sovereignty') {
+        y = yValue * scale + centerY;   // Normal: national UP, global DOWN  
+    } else {
+        y = yValue * scale + centerY;   // Default
+    }
+    
+    // Uncertainty circles removed - no longer showing dashed circles
     
     // Create user position marker - larger than regular dots
     const userDot = document.createElement('div');
@@ -1066,8 +1776,8 @@ function addUserDotToCompass(compassId, position, dimX, dimY) {
     userDot.style.top = `${y - 16}px`;
     userDot.style.width = '32px';
     userDot.style.height = '32px';
-    userDot.style.background = '#FFD700';
-    userDot.style.border = '3px solid black';
+    userDot.style.background = 'rgba(255, 255, 255, 0.85)';
+    userDot.style.border = '3px solid rgba(255, 255, 255, 0.9)';
     userDot.style.borderRadius = '50%';
     userDot.style.zIndex = '100';
     userDot.style.display = 'flex';
@@ -1086,17 +1796,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Handle navigation clicks for non-compass sections
     document.querySelectorAll('.nav-link[href^="#"]:not([href="#compass"])').forEach(link => {
         link.addEventListener('click', (e) => {
+            e.preventDefault();
             const href = link.getAttribute('href');
             if (href && href !== '#compass') {
-                // Hide compass if visible
-                const compassSection = document.getElementById('compass');
-                if (compassSection) {
-                    compassSection.style.display = 'none';
-                }
-                // Show all other sections
-                document.querySelectorAll('section:not(#compass)').forEach(section => {
-                    section.style.display = '';
-                });
+                const sectionId = href.slice(1); // Remove # from href
+                showSection(sectionId);
             }
         });
     });
@@ -1172,6 +1876,9 @@ async function generateAgreementDetails(partyName) {
     // Calculate agreement for ALL questions (all 33)
     const agreementData = [];
     
+    // Get party answers from stored data
+    const partyAnswers = window.partyAnswersData && window.partyAnswersData[partyName];
+    
     // Go through ALL questions from questionsData
     for (const question of questionsData) {
         const answer = answers[question.id];
@@ -1179,8 +1886,15 @@ async function generateAgreementDetails(partyName) {
         // Skip if user hasn't answered this question
         if (!answer || answer.value === null) continue;
         
-        // Estimate party answer based on compass position and question dimension
-        const partyScore = estimatePartyAnswer(party, question);
+        // Get actual party answer or estimate if not available
+        let partyScore;
+        if (partyAnswers && partyAnswers[question.id]) {
+            // Convert from 1-5 scale to -2 to +2
+            partyScore = partyAnswers[question.id] - 3;
+        } else {
+            // Fallback to estimation if no data
+            partyScore = estimatePartyAnswer(party, question);
+        }
         const userScore = answer.value;
         
         // Calculate agreement (1-5 scale, lower difference = better agreement)
@@ -1312,38 +2026,53 @@ function getUserAnswerText(answerValue) {
 async function loadPartiesData() {
     if (partiesData.length > 0) return;
     
-    // Since parties are hardcoded in calculate function, replicate here
-    partiesData = [
-        {code: "ANO", name: "ANO", compass_position: {EKO: -0.36, SOC: 0.23, SUV: 0.41}},
-        {code: "SPOLU", name: "SPOLU", compass_position: {EKO: 0.64, SOC: -0.05, SUV: -0.64}},
-        {code: "SPD", name: "SPD", compass_position: {EKO: -0.41, SOC: 0.86, SUV: 0.82}},
-        {code: "PIRATI", name: "Piráti", compass_position: {EKO: -0.32, SOC: -0.95, SUV: -0.68}},
-        {code: "STAN", name: "STAN", compass_position: {EKO: 0.14, SOC: -0.18, SUV: -0.73}},
-        {code: "KSČM", name: "KSČM", compass_position: {EKO: -0.95, SOC: 0.23, SUV: 0.73}},
-        {code: "TRIKOLORA", name: "Trikolóra", compass_position: {EKO: 0.77, SOC: 0.82, SUV: 0.68}},
-        {code: "PRISAHA", name: "Přísaha", compass_position: {EKO: 0.23, SOC: 0.27, SUV: 0.09}},
-        {code: "SOCDEM", name: "SOCDEM", compass_position: {EKO: -0.68, SOC: -0.55, SUV: -0.36}},
-        {code: "ZELENI", name: "Zelení", compass_position: {EKO: -0.50, SOC: -1.00, SUV: -1.00}},
-        {code: "SVOBODNI", name: "Svobodní", compass_position: {EKO: 0.95, SOC: -0.45, SUV: 0.36}},
-        {code: "MOTORISTE", name: "Motoristé", compass_position: {EKO: 0.55, SOC: 0.32, SUV: 0.50}},
-        {code: "PRO", name: "PRO", compass_position: {EKO: 0.32, SOC: 0.41, SUV: 0.64}},
-        {code: "REPUBLIKA", name: "REPUBLIKA", compass_position: {EKO: 0.27, SOC: 0.82, SUV: 0.68}},
-        {code: "STACILO", name: "Stačilo!", compass_position: {EKO: -0.95, SOC: -0.45, SUV: 0.41}},
-        {code: "VYZVA2025", name: "Výzva2025", compass_position: {EKO: 0.00, SOC: 0.14, SUV: 0.14}},
-        {code: "KRUH", name: "KRUH", compass_position: {EKO: 0.00, SOC: -0.45, SUV: -0.18}},
-        {code: "VOLUNTIA", name: "VOLUNTIA", compass_position: {EKO: 1.00, SOC: -0.73, SUV: -0.09}},
-        {code: "BUDOUCNOST", name: "Budoucnost", compass_position: {EKO: -0.32, SOC: -0.50, SUV: -0.64}},
-        {code: "JASAN", name: "JASAN", compass_position: {EKO: 0.55, SOC: 0.36, SUV: 0.23}},
-        {code: "LEVY_BLOK", name: "Levý blok", compass_position: {EKO: -1.00, SOC: -0.91, SUV: 0.09}},
-        {code: "NARODNI_DEMOKRACIE", name: "Národní demokracie", compass_position: {EKO: 0.27, SOC: 0.86, SUV: 0.77}},
-        {code: "PRAVO_RESPEKT", name: "Právo Respekt", compass_position: {EKO: 0.00, SOC: 0.00, SUV: 0.00}},
-        {code: "ALIANCE_STABILITA", name: "Aliance pro stabilitu", compass_position: {EKO: -0.18, SOC: 0.23, SUV: 0.09}},
-        {code: "CESKA_SUVERENITA", name: "Česká suverenita", compass_position: {EKO: 0.27, SOC: 0.59, SUV: 0.73}},
-        {code: "VOLT", name: "Volt", compass_position: {EKO: -0.05, SOC: -0.86, SUV: -1.00}}
-    ];
+    try {
+        // Load parties from API to get correct data
+        const response = await fetch('/.netlify/functions/api-parties');
+        if (!response.ok) throw new Error('API not available');
+        const data = await response.json();
+        // Combine main and coalition parties with type flag
+        partiesData = [
+            ...data.mainParties.map(p => ({...p, type: 'main'})),
+            ...data.coalitionParties.map(p => ({...p, type: 'coalition'}))
+        ];
+        console.log('Parties data loaded from API:', partiesData.length, 'parties');
+    } catch (error) {
+        console.error('Error loading parties data:', error);
+        partiesData = [];
+    }
 }
 
 // Initialize parties data on load
 document.addEventListener('DOMContentLoaded', () => {
     loadPartiesData();
 });
+
+// Test function for manual compass testing
+window.testCompassPosition = function(economy, state, society, sovereignty, name = "Test") {
+    const position = {
+        economy: economy,
+        state: state,
+        society: society,
+        sovereignty: sovereignty
+    };
+    
+    // Save to localStorage for compass to read
+    localStorage.setItem('userCompassPosition', JSON.stringify(position));
+    localStorage.setItem('userDimensions', JSON.stringify(position));
+    
+    // Show compass section
+    showCompass();
+    
+    // Wait a bit for compass to render, then add user position
+    setTimeout(() => {
+        addUserPositionToCompass(position, null);
+        console.log(`✅ Testovací pozice "${name}" zobrazena v kompasu`);
+        console.log('Ekonomika:', economy, '(levá = volný trh, pravá = státní kontrola)');
+        console.log('Role státu:', state, '(nahoře = minimální, dole = silný)');
+        console.log('Společnost:', society, '(nahoře = liberální, dole = konzervativní)');
+        console.log('Suverenita:', sovereignty, '(nahoře = globální, dole = národní)');
+    }, 100);
+    
+    return position;
+};
