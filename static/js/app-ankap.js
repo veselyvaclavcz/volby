@@ -118,7 +118,7 @@ async function loadParties() {
 
 // Go to home - show welcome section
 function goHome() {
-    showSection('welcome');
+    showSection('home');
 }
 
 // Navigation with smooth transitions
@@ -133,6 +133,31 @@ function showSection(sectionId) {
     const activeLink = document.querySelector(`[href="#${sectionId}"]`);
     if (activeLink) {
         activeLink.classList.add('active');
+    }
+    
+    // Special handling for home page
+    if (sectionId === 'home' || sectionId === 'welcome') {
+        // Hide compass and calculator
+        const compassSection = document.getElementById('compass');
+        if (compassSection) {
+            compassSection.style.display = 'none';
+        }
+        const calculatorSection = document.getElementById('kalkulacka');
+        if (calculatorSection) {
+            calculatorSection.style.display = 'none';
+        }
+        // Show all other sections
+        document.querySelectorAll('section:not(#compass):not(#kalkulacka)').forEach(section => {
+            section.style.display = 'block';
+        });
+        // Clear localStorage for fresh start
+        localStorage.removeItem('testResults');
+        localStorage.removeItem('userAnswers');
+        localStorage.removeItem('currentQuestion');
+        // Reset state
+        currentQuestion = 0;
+        answers = {};
+        return;
     }
     
     if (sectionId === 'compass') {
@@ -150,12 +175,7 @@ function showSection(sectionId) {
             }, 100);
         }
     } else {
-        // Show main content and hide compass
-        document.querySelectorAll('section:not(#compass)').forEach(section => {
-            section.style.display = '';
-            section.classList.remove('active');
-        });
-        
+        // Hide compass
         const compassSection = document.getElementById('compass');
         if (compassSection) {
             compassSection.style.display = 'none';
@@ -163,10 +183,18 @@ function showSection(sectionId) {
             console.log('Compass hidden, display:', compassSection.style.display);
         }
         
-        // Activate the target section
+        // Hide all sections first
+        document.querySelectorAll('section').forEach(section => {
+            section.style.display = 'none';
+            section.classList.remove('active');
+        });
+        
+        // Show only the target section
         const newSection = document.getElementById(sectionId);
         if (newSection && newSection.id !== 'compass') {
+            newSection.style.display = 'block';
             newSection.classList.add('active');
+            console.log('DEBUG: Showing section:', sectionId, 'display:', newSection.style.display);
             
             // If switching to calculator, ensure it's properly initialized
             if (sectionId === 'calculator' || sectionId === 'kalkulacka') {
@@ -189,10 +217,12 @@ function showSection(sectionId) {
                     if (questionContainer && resultsContainer) {
                         questionContainer.style.display = 'none';
                         resultsContainer.style.display = 'block';
+                        console.log('DEBUG: Results container display:', resultsContainer.style.display);
                     }
                     // Keep welcome section hidden when showing results
                     if (welcomeSection) {
                         welcomeSection.style.display = 'none';
+                        console.log('DEBUG: Welcome section hidden');
                     }
                     
                     // Restore results from localStorage
@@ -232,8 +262,10 @@ function showSection(sectionId) {
     // Close mobile menu if open
     closeMobileMenu();
     
-    // Always update URL hash
-    window.location.hash = sectionId;
+    // Update URL hash only if it's different (prevents hashchange event loops)
+    if (window.location.hash.slice(1) !== sectionId) {
+        window.location.hash = sectionId;
+    }
 }
 
 // Start calculator
