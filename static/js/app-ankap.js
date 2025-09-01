@@ -260,22 +260,33 @@ function showSection(sectionId) {
                         console.error('Error parsing saved results:', e);
                     }
                 } else {
-                    // Show calculator interface for incomplete test
-                    if (questionContainer && resultsContainer) {
-                        questionContainer.style.display = 'block';
-                        resultsContainer.style.display = 'none';
-                    }
-                    
-                    // Restore welcome section if test not started
-                    if (welcomeSection && (currentQuestion === 0 && Object.keys(answers).length === 0)) {
-                        welcomeSection.style.display = 'block';
-                    }
-                    
-                    // If no question is displayed and questions are loaded, start from beginning
-                    if (currentQuestion === 0 && Object.keys(answers).length === 0 && questions.length > 0) {
-                        displayQuestion();
-                    } else if (questions.length === 0) {
-                        console.log('DEBUG: Questions not loaded yet, cannot display question');
+                    console.log('DEBUG: No saved results, checking test state');
+                    // Check if we have answers in progress
+                    const savedAnswers = localStorage.getItem('userAnswers');
+                    if (savedAnswers && Object.keys(JSON.parse(savedAnswers)).length > 0) {
+                        console.log('DEBUG: Test in progress, showing current question');
+                        // Show calculator interface for incomplete test
+                        if (questionContainer && resultsContainer) {
+                            questionContainer.style.display = 'block';
+                            resultsContainer.style.display = 'none';
+                        }
+                        if (welcomeSection) {
+                            welcomeSection.style.display = 'none';
+                        }
+                        // Display current question
+                        if (questions.length > 0) {
+                            displayQuestion();
+                        }
+                    } else {
+                        console.log('DEBUG: No test in progress, showing welcome');
+                        // Show welcome section for new test
+                        if (questionContainer && resultsContainer) {
+                            questionContainer.style.display = 'none';
+                            resultsContainer.style.display = 'none';
+                        }
+                        if (welcomeSection) {
+                            welcomeSection.style.display = 'block';
+                        }
                     }
                 }
             }
@@ -1158,15 +1169,14 @@ function initializeKeyboardNavigation() {
 // Handle hash changes
 window.addEventListener('hashchange', () => {
     const hash = window.location.hash.slice(1);
+    console.log('DEBUG: Hash changed to:', hash);
     if (hash && ['welcome', 'calculator', 'compass', 'jak-to-funguje', 'kalkulacka', 'metodologie', 'faq'].includes(hash)) {
-        if (hash === 'jak-to-funguje') {
-            // Scroll to section instead of showing it as calculator section
-            const target = document.getElementById(hash);
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth' });
-            }
-        } else if (hash === 'calculator') {
-            showSection('calculator');
+        if (hash === 'jak-to-funguje' || hash === 'metodologie' || hash === 'faq') {
+            // These are sections on the main page, just scroll to them
+            showSection(hash);
+        } else if (hash === 'kalkulacka' || hash === 'calculator') {
+            // Always use showSection for calculator
+            showSection('kalkulacka');
         } else if (hash === 'compass') {
             showSection('compass');
         }
