@@ -1958,11 +1958,6 @@ async function loadQuestionsData() {
         const response = await fetch('/.netlify/functions/api-questions');
         const data = await response.json();
         questionsData = data; // The API returns array directly
-            EKO: questionsData.filter(q => q.dimension === 'EKO').length,
-            STA: questionsData.filter(q => q.dimension === 'STA').length,
-            SOC: questionsData.filter(q => q.dimension === 'SOC').length,
-            SUV: questionsData.filter(q => q.dimension === 'SUV').length
-        });
     } catch (error) {
         console.error('Error loading questions:', error);
         // Fallback data - all 33 questions
