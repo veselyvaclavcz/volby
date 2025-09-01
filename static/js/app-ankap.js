@@ -37,6 +37,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log('Restored currentQuestion from localStorage:', currentQuestion);
     }
     
+    // Check if we have saved results and restore them
+    const savedResults = localStorage.getItem('testResults');
+    if (savedResults) {
+        console.log('Found saved test results on page load');
+        // Will be restored when showing calculator section
+    }
+    
     // Check URL hash and show appropriate section
     const hash = window.location.hash.slice(1);
     console.log('Initial hash:', hash);
@@ -163,6 +170,30 @@ function showSection(sectionId) {
             section.style.display = '';
         });
         
+        // Always check and restore calculator state when leaving compass
+        const savedResults = localStorage.getItem('testResults');
+        if (savedResults) {
+            const questionContainer = document.getElementById('questionContainer');
+            const resultsContainer = document.getElementById('resultsContainer');
+            const welcomeSection = document.getElementById('welcome');
+            
+            if (questionContainer && resultsContainer) {
+                questionContainer.style.display = 'none';
+                resultsContainer.style.display = 'block';
+                welcomeSection.style.display = 'none';
+                
+                // Restore results if container is empty
+                if (!resultsContainer.querySelector('.results-list')) {
+                    try {
+                        const resultsData = JSON.parse(savedResults);
+                        displayResults(resultsData.results, resultsData.userCompass, resultsData.dimensions, resultsData.svobodometr);
+                    } catch (e) {
+                        console.error('Error restoring results:', e);
+                    }
+                }
+            }
+        }
+        
         // For specific sections, scroll to them
         if (sectionId === 'home' || sectionId === 'welcome') {
             // Scroll to top
@@ -174,7 +205,7 @@ function showSection(sectionId) {
                 targetSection.scrollIntoView({ behavior: 'smooth' });
             }
             
-            // If switching to calculator, ensure it's properly initialized
+            // If explicitly switching to calculator, do additional setup
             if (sectionId === 'calculator' || sectionId === 'kalkulacka') {
                 console.log('DEBUG: Switching to calculator section');
                 const questionContainer = document.getElementById('questionContainer');
