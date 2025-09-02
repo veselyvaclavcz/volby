@@ -2058,13 +2058,43 @@ div.party.coalition-party {
     bottom: 0;
   }
   
-  /* Hide axis labels on mobile, keep only icons */
-  .axis-label span {
+  /* Hide axis label text on mobile, keep only icons */
+  .axis-label span:not(.axis-icon) {
     display: none;
   }
   
-  .axis-label .axis-icon {
+  .axis-label {
     font-size: 1.2rem;
+  }
+  
+  .axis-label .axis-icon {
+    display: inline-block;
+    font-size: 1.2rem;
+  }
+  
+  /* Adjust label positions for mobile */
+  .axis-label-top,
+  .axis-label-bottom {
+    top: auto;
+    bottom: auto;
+  }
+  
+  .axis-label-top {
+    top: 5px;
+  }
+  
+  .axis-label-bottom {
+    bottom: 5px;
+  }
+  
+  .axis-label-left {
+    left: 5px;
+    right: auto;
+  }
+  
+  .axis-label-right {
+    right: 5px;
+    left: auto;
   }
   
   .legend-grid {
