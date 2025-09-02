@@ -754,6 +754,7 @@ kbd {
   animation: slideInUp 0.5s ease forwards;
   opacity: 0;
   transform: translateY(20px);
+  position: relative;
 }
 
 .result-item:hover {
@@ -1318,6 +1319,25 @@ kbd {
   .answers-grid {
     gap: 6px;
     margin-bottom: var(--space-sm);
+  }
+  
+  /* Ensure compasses are stacked and properly sized on small screens */
+  .compass-dual-container {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem;
+  }
+  
+  .compass-wrapper {
+    max-width: 320px;
+  }
+  
+  /* Make result cards more compact on small screens */
+  .result-item {
+    padding: 0.75rem;
+  }
+  
+  .result-party {
+    font-size: 0.9rem;
   }
   
   .answer-btn {
@@ -1985,6 +2005,37 @@ div.party.coalition-party {
     gap: 1.5rem;
   }
   
+  /* Stack compass containers vertically on mobile */
+  .compass-dual-container {
+    grid-template-columns: 1fr !important;
+    gap: 2rem;
+  }
+  
+  /* Make compasses larger on mobile when stacked */
+  .compass-container {
+    width: 100%;
+  }
+  
+  .compass-wrapper {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .compass {
+    width: 100%;
+    padding-bottom: 100%; /* Maintain square aspect ratio */
+  }
+  
+  /* Hide axis labels on mobile, keep only icons */
+  .axis-label span {
+    display: none;
+  }
+  
+  .axis-label .axis-icon {
+    font-size: 1.2rem;
+  }
+  
   .legend-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1997,5 +2048,61 @@ div.party.coalition-party {
   
   .party-tooltip.long-name {
     max-width: 120px;
+  }
+  
+  /* Fix results list alignment and progress bars */
+  .results-list {
+    max-width: 100%;
+    padding: 0;
+  }
+  
+  .result-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+  
+  .result-rank {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+  
+  .result-content {
+    width: 100%;
+  }
+  
+  .result-party {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    padding-right: 3rem; /* Space for rank number */
+  }
+  
+  .result-match-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+  }
+  
+  .result-bar {
+    flex: 1;
+    height: 8px;
+    background: rgba(255, 217, 61, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  .result-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  }
+  
+  .result-percentage {
+    min-width: 45px;
+    text-align: right;
+    font-weight: 600;
+    font-size: 0.9rem;
   }
 }
