@@ -2033,11 +2033,29 @@ div.party.coalition-party {
     max-width: 100%;
     margin: 0 auto;
     padding: 0;
+    aspect-ratio: 1;
+    overflow: hidden; /* Prevent dots from escaping */
   }
   
   .compass {
-    width: 100%;
-    padding-bottom: 100%; /* Maintain square aspect ratio */
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    width: auto;
+    padding-bottom: 0;
+  }
+  
+  /* Adjust axes to be properly centered */
+  .axis.horizontal {
+    left: 0;
+    right: 0;
+  }
+  
+  .axis.vertical {
+    top: 0;
+    bottom: 0;
   }
   
   /* Hide axis labels on mobile, keep only icons */
