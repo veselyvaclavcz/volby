@@ -1325,12 +1325,12 @@ kbd {
   .compass-dual-container {
     grid-template-columns: 1fr !important;
     gap: 1.5rem;
-    padding: 0 0.5rem;
+    padding: 0;
   }
   
   .compass-wrapper {
-    width: 95%;
-    max-width: 320px;
+    width: 100%;
+    max-width: 100%;
   }
   
   /* Make result cards more compact on small screens */
@@ -2017,7 +2017,7 @@ div.party.coalition-party {
   .compass-dual-container {
     grid-template-columns: 1fr !important;
     gap: 2rem;
-    padding: 0 1rem;
+    padding: 0;
   }
   
   /* Make compasses larger on mobile when stacked */
@@ -2029,8 +2029,8 @@ div.party.coalition-party {
   }
   
   .compass-wrapper {
-    width: 90%;
-    max-width: 350px;
+    width: 100%;
+    max-width: 100%;
     margin: 0 auto;
     padding: 0;
   }
@@ -2098,14 +2098,14 @@ div.party.coalition-party {
   
   .result-match-container {
     display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.5rem;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
     width: 100%;
   }
   
   .result-bar {
-    width: 100%;
+    flex: 1;
     height: 8px;
     background: rgba(255, 217, 61, 0.1);
     border-radius: 4px;
@@ -2118,8 +2118,10 @@ div.party.coalition-party {
   }
   
   .result-percentage {
-    text-align: left;
+    min-width: 50px;
+    text-align: right;
     font-weight: 600;
     font-size: 0.9rem;
+    order: -1; /* Move percentage before progress bar */
   }
 }
