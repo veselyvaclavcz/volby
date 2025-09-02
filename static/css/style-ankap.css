@@ -1325,15 +1325,23 @@ kbd {
   .compass-dual-container {
     grid-template-columns: 1fr !important;
     gap: 1.5rem;
+    padding: 0 0.5rem;
   }
   
   .compass-wrapper {
+    width: 95%;
     max-width: 320px;
   }
   
   /* Make result cards more compact on small screens */
   .result-item {
     padding: 0.75rem;
+  }
+  
+  .result-rank {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
   }
   
   .result-party {
@@ -2009,17 +2017,22 @@ div.party.coalition-party {
   .compass-dual-container {
     grid-template-columns: 1fr !important;
     gap: 2rem;
+    padding: 0 1rem;
   }
   
   /* Make compasses larger on mobile when stacked */
   .compass-container {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
   .compass-wrapper {
-    width: 100%;
-    max-width: 400px;
+    width: 90%;
+    max-width: 350px;
     margin: 0 auto;
+    padding: 0;
   }
   
   .compass {
@@ -2057,37 +2070,42 @@ div.party.coalition-party {
   }
   
   .result-item {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
     gap: 0.75rem;
     padding: 1rem;
   }
   
   .result-rank {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 35px;
+    height: 35px;
+    font-size: 0.9rem;
   }
   
   .result-content {
-    width: 100%;
+    flex: 1;
+    width: calc(100% - 50px);
   }
   
   .result-party {
-    font-size: 1rem;
+    font-size: 0.95rem;
     margin-bottom: 0.5rem;
-    padding-right: 3rem; /* Space for rank number */
+    padding-right: 0;
   }
   
   .result-match-container {
     display: flex;
-    align-items: center;
-    gap: 0.75rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
     width: 100%;
   }
   
   .result-bar {
-    flex: 1;
+    width: 100%;
     height: 8px;
     background: rgba(255, 217, 61, 0.1);
     border-radius: 4px;
@@ -2100,8 +2118,7 @@ div.party.coalition-party {
   }
   
   .result-percentage {
-    min-width: 45px;
-    text-align: right;
+    text-align: left;
     font-weight: 600;
     font-size: 0.9rem;
   }
