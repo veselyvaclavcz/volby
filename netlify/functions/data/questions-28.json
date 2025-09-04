@@ -1,15 +1,15 @@
 [
   {
     "id": 1,
-    "text": "Jak by měly fungovat daně z příjmu?",
+    "text": "Jaké by měly být daně z příjmu?",
     "dimension": "EKO",
     "polarity": -1,
     "answers": {
-      "1": "Zrušit daně, vše dobrovolné.",
-      "2": "Nízká rovná daň.",
-      "3": "Progresivní daň (současný model).",
-      "4": "Vysoké progresivní daně s přerozdělováním.",
-      "5": "Zrušit soukromé příjmy, vše přerozděluje stát."
+      "1": "Zrušit daně, vše dobrovolné",
+      "2": "Nízká rovná daň",
+      "3": "Progresivní daň (současný model)",
+      "4": "Vysoké progresivní daně s přerozdělováním",
+      "5": "Zrušit soukromé příjmy, vše přerozděluje stát"
     }
   },
   {
@@ -18,11 +18,11 @@
     "dimension": "EKO",
     "polarity": -1,
     "answers": {
-      "1": "Plně soukromé, bez povinného pojištění.",
-      "2": "Soukromé s minimálním povinným balíčkem.",
-      "3": "Kombinace státního a soukromého.",
-      "4": "Plně veřejné zdravotnictví.",
-      "5": "Soukromé zdravotnictví zakázat."
+      "1": "Plně soukromé, bez povinného pojištění",
+      "2": "Soukromé s minimálním povinným balíčkem",
+      "3": "Kombinace státního a soukromého",
+      "4": "Plně veřejné zdravotnictví",
+      "5": "Soukromé zdravotnictví zakázat"
     }
   },
   {
@@ -31,11 +31,11 @@
     "dimension": "EKO",
     "polarity": -1,
     "answers": {
-      "1": "Plně soukromé, bez ministerstva a regulací.",
-      "2": "Převážně soukromé, stát jen certifikuje.",
-      "3": "Kombinace státních a soukromých škol.",
-      "4": "Povinné státní školství.",
-      "5": "Soukromé školy zakázat."
+      "1": "Plně soukromé, bez ministerstva a regulací",
+      "2": "Převážně soukromé, stát jen certifikuje",
+      "3": "Kombinace státních a soukromých škol",
+      "4": "Povinné státní školství",
+      "5": "Soukromé školy zakázat"
     }
   },
   {
@@ -44,11 +44,11 @@
     "dimension": "EKO",
     "polarity": -1,
     "answers": {
-      "1": "Každý sám (spoření, rodina, komunity).",
-      "2": "Dobrovolné soukromé pilíře.",
-      "3": "Povinný státní základ + soukromé spoření.",
-      "4": "Plně státní důchodový systém.",
-      "5": "Soukromé spoření zakázat, centrální správa."
+      "1": "Každý sám (spoření, rodina, komunity)",
+      "2": "Dobrovolné soukromé pilíře",
+      "3": "Povinný státní základ + soukromé spoření",
+      "4": "Plně státní důchodový systém",
+      "5": "Soukromé spoření zakázat, centrální správa"
     }
   },
   {
@@ -57,11 +57,11 @@
     "dimension": "EKO",
     "polarity": -1,
     "answers": {
-      "1": "Žádná regulace, čistý trh.",
-      "2": "Minimální regulace (bezpečnost, základní pravidla).",
-      "3": "Regulace pro ochranu spotřebitele a zaměstnanců.",
-      "4": "Silná regulace a omezení podnikání.",
-      "5": "Soukromé podnikání zakázat, jen státní podniky."
+      "1": "Žádná regulace, čistý trh",
+      "2": "Minimální regulace (bezpečnost, základní pravidla)",
+      "3": "Regulace pro ochranu spotřebitele a zaměstnanců",
+      "4": "Silná regulace a omezení podnikání",
+      "5": "Soukromé podnikání zakázat, jen státní podniky"
     }
   },
   {
@@ -70,11 +70,11 @@
     "dimension": "EKO",
     "polarity": -1,
     "answers": {
-      "1": "Čistě soukromý trh s nájmy a vlastnictvím.",
-      "2": "Trh s podporou v podobě daňových úlev.",
-      "3": "Státní i soukromé bydlení v kombinaci.",
-      "4": "Silné státní programy, regulace nájmů.",
-      "5": "Veškeré bydlení státní, zákaz soukromého vlastnictví."
+      "1": "Čistě soukromý trh s nájmy a vlastnictvím",
+      "2": "Trh s podporou v podobě daňových úlev",
+      "3": "Státní i soukromé bydlení v kombinaci",
+      "4": "Silné státní programy, regulace nájmů",
+      "5": "Veškeré bydlení státní, zákaz soukromého vlastnictví"
     }
   },
   {
@@ -83,11 +83,11 @@
     "dimension": "EKO",
     "polarity": -1,
     "answers": {
-      "1": "Soukromé firmy a komunity, bez státu.",
-      "2": "Převážně soukromé, stát jen garantuje přístup.",
-      "3": "Kombinace (soukromé koncese + stát).",
-      "4": "Stát financuje a spravuje většinu silnic.",
-      "5": "Pouze stát, soukromé silnice zakázané."
+      "1": "Soukromé firmy a komunity, bez státu",
+      "2": "Převážně soukromé, stát jen garantuje přístup",
+      "3": "Kombinace (soukromé koncese + stát)",
+      "4": "Stát financuje a spravuje většinu silnic",
+      "5": "Pouze stát, soukromé silnice zakázané"
     }
   },
   {
@@ -96,11 +96,11 @@
     "dimension": "STA",
     "polarity": -1,
     "answers": {
-      "1": "Soukromé agentury, dobrovolné milice.",
-      "2": "Kombinace soukromých a státních služeb.",
-      "3": "Státní policie s dohledem.",
-      "4": "Silná státní policie s rozsáhlými pravomocemi.",
-      "5": "Totální kontrola obyvatel, policejní stát."
+      "1": "Soukromé agentury, dobrovolné milice",
+      "2": "Kombinace soukromých a státních služeb",
+      "3": "Státní policie s dohledem",
+      "4": "Silná státní policie s rozsáhlými pravomocemi",
+      "5": "Totální kontrola obyvatel, policejní stát"
     }
   },
   {
@@ -109,11 +109,11 @@
     "dimension": "STA",
     "polarity": -1,
     "answers": {
-      "1": "Bez stálé armády, čistě dobrovolníci a aliance.",
-      "2": "Malá profesionální armáda.",
-      "3": "Současný model.",
-      "4": "Povinná vojenská služba.",
-      "5": "Militarizovaná společnost, povinná služba pro všechny."
+      "1": "Bez stálé armády, čistě dobrovolníci a aliance",
+      "2": "Malá profesionální armáda",
+      "3": "Současný model",
+      "4": "Povinná vojenská služba",
+      "5": "Militarizovaná společnost, povinná služba pro všechny"
     }
   },
   {
@@ -122,11 +122,11 @@
     "dimension": "STA",
     "polarity": -1,
     "answers": {
-      "1": "Soukromé arbitráže, dobrovolné soudy.",
-      "2": "Kombinace státních a soukromých.",
-      "3": "Převážně státní soudnictví.",
-      "4": "Plně státní soudy, bez alternativ.",
-      "5": "Politické soudy, zvláštní tribunály."
+      "1": "Soukromé arbitráže, dobrovolné soudy",
+      "2": "Kombinace státních a soukromých",
+      "3": "Převážně státní soudnictví",
+      "4": "Plně státní soudy, bez alternativ",
+      "5": "Politické soudy, zvláštní tribunály"
     }
   },
   {
@@ -135,11 +135,11 @@
     "dimension": "STA",
     "polarity": -1,
     "answers": {
-      "1": "Žádné zásahy.",
-      "2": "Minimální rámcová regulace.",
-      "3": "Současný mix (daně, regulace, podpora).",
-      "4": "Aktivní státní plánování sektorů.",
-      "5": "Centrální plánovaná ekonomika."
+      "1": "Žádné zásahy",
+      "2": "Minimální rámcová regulace",
+      "3": "Současný mix (daně, regulace, podpora)",
+      "4": "Aktivní státní plánování sektorů",
+      "5": "Centrální plánovaná ekonomika"
     }
   },
   {
@@ -148,11 +148,11 @@
     "dimension": "STA",
     "polarity": -1,
     "answers": {
-      "1": "Dobrovolná charita a komunity.",
-      "2": "Minimální podpora (např. základní příspěvek).",
-      "3": "Současný model (kombinace dávek a práce).",
-      "4": "Široký systém dávek.",
-      "5": "Všechny zdroje spravuje stát, plná rovnost."
+      "1": "Dobrovolná charita a komunity",
+      "2": "Minimální podpora (např základní příspěvek)",
+      "3": "Současný model (kombinace dávek a práce)",
+      "4": "Široký systém dávek",
+      "5": "Všechny zdroje spravuje stát, plná rovnost"
     }
   },
   {
@@ -161,11 +161,11 @@
     "dimension": "STA",
     "polarity": -1,
     "answers": {
-      "1": "Žádný státní dohled, anonymita chráněna.",
-      "2": "Minimální dohled pro bezpečnost.",
-      "3": "Současný mix (registry, kamerové systémy).",
-      "4": "Masivní digitální dohled (EUDI, povinné identity).",
-      "5": "Totální sledování a kontrola obyvatel."
+      "1": "Žádný státní dohled, anonymita chráněna",
+      "2": "Minimální dohled pro bezpečnost",
+      "3": "Současný mix (registry, kamerové systémy)",
+      "4": "Masivní digitální dohled (EUDI, povinné identity)",
+      "5": "Totální sledování a kontrola obyvatel"
     }
   },
   {
@@ -174,11 +174,11 @@
     "dimension": "STA",
     "polarity": -1,
     "answers": {
-      "1": "Každý jednotlivec svobodně.",
-      "2": "Soukromé vlastnictví s minimální regulací.",
-      "3": "Kombinace soukromého a státního vlastnictví.",
-      "4": "Většina půdy státní.",
-      "5": "Žádné soukromé vlastnictví půdy."
+      "1": "Každý jednotlivec svobodně",
+      "2": "Soukromé vlastnictví s minimální regulací",
+      "3": "Kombinace soukromého a státního vlastnictví",
+      "4": "Většina půdy státní",
+      "5": "Žádné soukromé vlastnictví půdy"
     }
   },
   {
@@ -187,11 +187,11 @@
     "dimension": "SOC",
     "polarity": -1,
     "answers": {
-      "1": "Lidé si sami určují svazky, stát nezasahuje.",
-      "2": "Manželství pro všechny, stát jen registruje.",
-      "3": "Současný model (tradiční + partnerství).",
-      "4": "Stát chrání tradiční rodinu (muž + žena).",
-      "5": "Povinný tradiční model, zákaz alternativ."
+      "1": "Lidé si sami určují svazky, stát nezasahuje",
+      "2": "Manželství pro všechny, stát jen registruje",
+      "3": "Současný model (tradiční + partnerství)",
+      "4": "Stát chrání tradiční rodinu (muž + žena)",
+      "5": "Povinný tradiční model, zákaz alternativ"
     }
   },
   {
@@ -200,11 +200,11 @@
     "dimension": "SOC",
     "polarity": -1,
     "answers": {
-      "1": "Čistě rozhodnutí ženy a lékaře.",
-      "2": "Legální s určitými omezeními.",
-      "3": "Současný stav.",
-      "4": "Přísné omezení potratů.",
-      "5": "Úplný zákaz potratů."
+      "1": "Čistě rozhodnutí ženy a lékaře",
+      "2": "Legální s určitými omezeními",
+      "3": "Současný stav",
+      "4": "Přísné omezení potratů",
+      "5": "Úplný zákaz potratů"
     }
   },
   {
@@ -213,11 +213,11 @@
     "dimension": "SOC",
     "polarity": -1,
     "answers": {
-      "1": "Legální všechny drogy.",
-      "2": "Legální s omezeními.",
-      "3": "Současný model.",
-      "4": "Přísnější represe.",
-      "5": "Úplný zákaz včetně alkoholu."
+      "1": "Legální všechny drogy",
+      "2": "Legální s omezeními",
+      "3": "Současný model",
+      "4": "Přísnější represe",
+      "5": "Úplný zákaz včetně alkoholu"
     }
   },
   {
@@ -226,11 +226,11 @@
     "dimension": "SOC",
     "polarity": -1,
     "answers": {
-      "1": "Bez omezení.",
-      "2": "Omezení jen při přímém ohrožení.",
-      "3": "Současný model.",
-      "4": "Silnější omezení 'škodlivých názorů'.",
-      "5": "Povinná cenzura, státní propaganda."
+      "1": "Bez omezení",
+      "2": "Omezení jen při přímém ohrožení",
+      "3": "Současný model",
+      "4": "Silnější omezení 'škodlivých názorů'",
+      "5": "Povinná cenzura, státní propaganda"
     }
   },
   {
@@ -239,11 +239,11 @@
     "dimension": "SOC",
     "polarity": -1,
     "answers": {
-      "1": "Otevřené hranice.",
-      "2": "Volný pohyb s registrací.",
-      "3": "Současný model (víza, kvóty).",
-      "4": "Přísné limity a kontroly.",
-      "5": "Úplný zákaz migrace."
+      "1": "Otevřené hranice",
+      "2": "Volný pohyb s registrací",
+      "3": "Současný model (víza, kvóty)",
+      "4": "Přísné limity a kontroly",
+      "5": "Úplný zákaz migrace"
     }
   },
   {
@@ -252,11 +252,11 @@
     "dimension": "SOC",
     "polarity": -1,
     "answers": {
-      "1": "Žádná regulace.",
-      "2": "Omezení jen při porušování práv.",
-      "3": "Současný model.",
-      "4": "Zvýšená podpora 'tradičního náboženství'.",
-      "5": "Povinné státní náboženství."
+      "1": "Žádná regulace",
+      "2": "Omezení jen při porušování práv",
+      "3": "Současný model",
+      "4": "Zvýšená podpora 'tradičního náboženství'",
+      "5": "Povinné státní náboženství"
     }
   },
   {
@@ -265,11 +265,11 @@
     "dimension": "SOC",
     "polarity": -1,
     "answers": {
-      "1": "Bez dotací, čistě dobrovolně.",
-      "2": "Minimální státní podpora.",
-      "3": "Současný model (dotace i komerce).",
-      "4": "Silné státní programy.",
-      "5": "Jen státní kultura, zákaz soukromé."
+      "1": "Bez dotací, čistě dobrovolně",
+      "2": "Minimální státní podpora",
+      "3": "Současný model (dotace i komerce)",
+      "4": "Silné státní programy",
+      "5": "Jen státní kultura, zákaz soukromé"
     }
   },
   {
@@ -278,11 +278,11 @@
     "dimension": "SUV",
     "polarity": 1,
     "answers": {
-      "1": "Vystoupit.",
-      "2": "Omezit vliv EU.",
-      "3": "Současný model.",
-      "4": "Posílit integraci.",
-      "5": "EU federální stát."
+      "1": "Vystoupit",
+      "2": "Omezit vliv EU",
+      "3": "Současný model",
+      "4": "Posílit integraci",
+      "5": "EU federální stát"
     }
   },
   {
@@ -291,11 +291,11 @@
     "dimension": "SUV",
     "polarity": 1,
     "answers": {
-      "1": "Volné měny, stát nevydává měnu.",
-      "2": "Národní měna s konkurencí.",
-      "3": "Koruna.",
-      "4": "Euro.",
-      "5": "Jednotná globální měna."
+      "1": "Volné měny, stát nevydává měnu",
+      "2": "Národní měna s konkurencí",
+      "3": "Koruna",
+      "4": "Euro",
+      "5": "Jednotná globální měna"
     }
   },
   {
@@ -304,11 +304,11 @@
     "dimension": "SUV",
     "polarity": 1,
     "answers": {
-      "1": "Dobrovolně, bez zásahů.",
-      "2": "Minimální rámec.",
-      "3": "Současný mix.",
-      "4": "Silnější závazky.",
-      "5": "Globální centrální řízení."
+      "1": "Dobrovolně, bez zásahů státu",
+      "2": "Minimální regulatorní rámec",
+      "3": "Současný mix",
+      "4": "Silnější závazky, regulace",
+      "5": "Globální centrální řízení"
     }
   },
   {
@@ -317,11 +317,11 @@
     "dimension": "SUV",
     "polarity": 1,
     "answers": {
-      "1": "Bez členství, dobrovolné aliance.",
-      "2": "Spolupráce jen v případě napadení.",
-      "3": "Současný model.",
-      "4": "Aktivní účast ve všech misích.",
-      "5": "Globální armáda."
+      "1": "Neutralita, ad-hoc dobrovolné dohody",
+      "2": "Omezená spolupráce (obrana jen v případě útoku)",
+      "3": "Status quo (členství v NATO)",
+      "4": "Expanzivní angažovanost (účast na všech misích)",
+      "5": "Centralizovaná globální obranná struktura"
     }
   },
   {
@@ -330,11 +330,11 @@
     "dimension": "SUV",
     "polarity": 1,
     "answers": {
-      "1": "Plně otevřené hranice.",
-      "2": "Volný pohyb v rámci dobrovolných dohod.",
-      "3": "Současný model.",
-      "4": "Povinné kvóty.",
-      "5": "Globální správa migrace."
+      "1": "Plně otevřené hranice",
+      "2": "Volný pohyb v rámci dobrovolných dohod",
+      "3": "Současný model",
+      "4": "Povinné kvóty",
+      "5": "Globální správa migrace"
     }
   },
   {
@@ -343,11 +343,11 @@
     "dimension": "SUV",
     "polarity": 1,
     "answers": {
-      "1": "Volný obchod bez cel.",
-      "2": "Minimální dohody.",
-      "3": "Současný model.",
-      "4": "Silná role EU/OSN.",
-      "5": "Globální centrální obchodní správa."
+      "1": "Volný obchod bez cel",
+      "2": "Minimální dohody",
+      "3": "Současný model",
+      "4": "Silná role EU/OSN",
+      "5": "Globální centrální obchodní správa"
     }
   },
   {
@@ -356,11 +356,11 @@
     "dimension": "SUV",
     "polarity": 1,
     "answers": {
-      "1": "Jednotlivci a komunity.",
-      "2": "Národní stát.",
-      "3": "Kombinace ČR + EU.",
-      "4": "Většina rozhodnutí v EU.",
-      "5": "Globální instituce."
+      "1": "Jednotlivci a komunity",
+      "2": "Národní stát",
+      "3": "Kombinace ČR + EU",
+      "4": "Většina rozhodnutí v EU",
+      "5": "Globální instituce"
     }
   }
 ]
